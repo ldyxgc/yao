@@ -1,0 +1,2 @@
+add_executable(yao__prt__impl__func__osprintf yao__prt__impl__func__osprintf.cpp)
+target_link_libraries(yao__prt__impl__func__osprintf yao)

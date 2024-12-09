@@ -1,0 +1,3 @@
+add_executable(tst__yao__prt__impl__tmpl__osprintf tst__yao__prt__impl__tmpl__osprintf.cpp)
+target_link_libraries(tst__yao__prt__impl__tmpl__osprintf yao)
+add_test(tst__yao__prt__impl__tmpl__osprintf tst__yao__prt__impl__tmpl__osprintf)
