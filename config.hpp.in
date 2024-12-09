@@ -19,4 +19,12 @@
 #error "YAO_CONFIG__COMPILER"
 #endif
 
+#define YAO_CONFIG__OSPRINTF__FUNCTION 1 // Variadic arguments
+#define YAO_CONFIG__OSPRINTF__TEMPLATE 2 // Parameter pack
+#define YAO_CONFIG__OSPRINTF @YAO_CONFIG__OSPRINTF@
+#if (YAO_CONFIG__OSPRINTF != YAO_CONFIG__OSPRINTF__FUNCTION) &&                \
+    (YAO_CONFIG__OSPRINTF != YAO_CONFIG__OSPRINTF__TEMPLATE)
+#error "YAO_CONFIG__OSPRINTF"
+#endif
+
 #endif
