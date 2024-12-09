@@ -1,0 +1,47 @@
+name: Release default config
+
+on:
+  workflow_run:
+    workflows: [Debug various config]
+    types: [completed]
+
+jobs:
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        GITHUB_RUNNER: [ubuntu-latest, macos-latest, windows-latest]
+        CMAKE_CXX_COMPILER: [c++, clang++]
+        exclude:
+          - GITHUB_RUNNER: macos-latest
+            CMAKE_CXX_COMPILER: clang++
+          - GITHUB_RUNNER: windows-latest
+            CMAKE_CXX_COMPILER: clang++
+
+        CMAKE_BUILD_TYPE: [Release]
+
+    runs-on: ${{ matrix.GITHUB_RUNNER }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Config
+        run: >
+          cmake -B build
+          -D CMAKE_CXX_COMPILER=${{ matrix.CMAKE_CXX_COMPILER }}
+          -D CMAKE_BUILD_TYPE=${{ matrix.CMAKE_BUILD_TYPE }}
+
+      - name: Build
+        run: >
+          cmake --build build
+          --config ${{ matrix.CMAKE_BUILD_TYPE }}
+          --parallel
+
+      - name: Test
+        run: >
+          ctest --test-dir build
+          --build-config ${{ matrix.CMAKE_BUILD_TYPE }}
+          --parallel

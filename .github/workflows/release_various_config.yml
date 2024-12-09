@@ -1,11 +1,14 @@
-name: Debug
+name: Release various config
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: [Release default config]
+    types: [completed]
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     strategy:
       fail-fast: false
 
@@ -18,7 +21,9 @@ jobs:
           - GITHUB_RUNNER: windows-latest
             CMAKE_CXX_COMPILER: clang++
 
-        CMAKE_BUILD_TYPE: [Debug]
+        CMAKE_BUILD_TYPE: [Release]
+        YAO_CONFIG__OSPRINTF:
+          [YAO_CONFIG__OSPRINTF__FUNCTION, YAO_CONFIG__OSPRINTF__TEMPLATE]
 
     runs-on: ${{ matrix.GITHUB_RUNNER }}
 
@@ -30,6 +35,7 @@ jobs:
           cmake -B build
           -D CMAKE_CXX_COMPILER=${{ matrix.CMAKE_CXX_COMPILER }}
           -D CMAKE_BUILD_TYPE=${{ matrix.CMAKE_BUILD_TYPE }}
+          -D YAO_CONFIG__OSPRINTF=${{ matrix.YAO_CONFIG__OSPRINTF }}
 
       - name: Build
         run: >
