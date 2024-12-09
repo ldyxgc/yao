@@ -10,3 +10,6 @@ file(GLOB_RECURSE YAO_SRC RELATIVE ${CMAKE_CURRENT_LIST_DIR} src/*.cpp)
 target_sources(yao PRIVATE ${YAO_SRC})
 
 add_subdirectory(exe)
+
+enable_testing()
+add_subdirectory(tst)
