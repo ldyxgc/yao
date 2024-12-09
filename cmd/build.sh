@@ -14,3 +14,8 @@ if [ $? -ne 0 ]; then exit 1; fi
 cmake --build build \
   --parallel
 if [ $? -ne 0 ]; then exit 1; fi
+
+# Test
+ctest --test-dir build \
+  --parallel
+if [ $? -ne 0 ]; then exit 1; fi
