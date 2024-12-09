@@ -41,6 +41,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
     /wd4710 # Function marked inline is not inlined by compiler
     /wd4711 # Function not marked inline is inlined by compiler
+    /wd5045 # Insert Spectre mitigation for memory load
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
