@@ -1,4 +1,4 @@
-#include "yao/prt/osprintf.hpp"
+#include "yao/prt/impl/func/osprintf.hpp"
 
 #include <cstdarg>
 #include <cstdio>
@@ -6,7 +6,7 @@
 #include "yao/def/claim.hpp"
 #include "yao/def/warn.hpp"
 
-namespace yao::prt {
+namespace yao::prt::impl::func {
 
 void osprintf(std::ostream &os, not_null<czstring> fmt, ...) {
   YAO_CLAIM(fmt != nullptr);
@@ -36,4 +36,4 @@ void osprintf(std::ostream &os, not_null<czstring> fmt, ...) {
   delete[] buf;
 }
 
-} // namespace yao::prt
+} // namespace yao::prt::impl::func

@@ -4,12 +4,13 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "yao/prt/osprintf.hpp"
+#include "yao/prt/impl/func/osprintf.hpp"
 
 #define YAO_CHECK(expr)                                                        \
   ((expr) ? void(0)                                                            \
-          : (yao::prt::osprintf(std::cerr, "%s:%i: Check `%s` failed\n",       \
-                                __FILE__, __LINE__, #expr),                    \
+          : (yao::prt::impl::func::osprintf(std::cerr,                         \
+                                            "%s:%i: Check `%s` failed\n",      \
+                                            __FILE__, __LINE__, #expr),        \
              std::exit(EXIT_FAILURE)))
 
 #endif

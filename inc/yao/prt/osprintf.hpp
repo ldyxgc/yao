@@ -1,13 +1,11 @@
 #ifndef __YAO__PRT__OSPRINTF__HPP__
 #define __YAO__PRT__OSPRINTF__HPP__
 
-#include <ostream>
-
-#include "yao/help.hpp"
+#include "yao/prt/impl/func/osprintf.hpp"
 
 namespace yao::prt {
 
-void osprintf(std::ostream &os, not_null<czstring> fmt, ...);
+constexpr auto osprintf = impl::func::osprintf;
 
 } // namespace yao::prt
 
