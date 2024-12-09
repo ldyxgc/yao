@@ -1,11 +1,14 @@
-name: Build
+name: Release
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: [Debug]
+    types: [completed]
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     strategy:
       fail-fast: false
 
@@ -18,6 +21,8 @@ jobs:
           - GITHUB_RUNNER: windows-latest
             CMAKE_CXX_COMPILER: clang++
 
+        CMAKE_BUILD_TYPE: [Release]
+
     runs-on: ${{ matrix.GITHUB_RUNNER }}
 
     steps:
@@ -27,13 +32,16 @@ jobs:
         run: >
           cmake -B build
           -D CMAKE_CXX_COMPILER=${{ matrix.CMAKE_CXX_COMPILER }}
+          -D CMAKE_BUILD_TYPE=${{ matrix.CMAKE_BUILD_TYPE }}
 
       - name: Build
         run: >
           cmake --build build
+          --config ${{ matrix.CMAKE_BUILD_TYPE }}
           --parallel
 
       - name: Test
         run: >
           ctest --test-dir build
+          --build-config ${{ matrix.CMAKE_BUILD_TYPE }}
           --parallel
