@@ -3,9 +3,11 @@
 
 #include <ostream>
 
+#include "yao/help.hpp"
+
 namespace yao::prt {
 
-void osprintf(std::ostream &os, const char *fmt, ...);
+void osprintf(std::ostream &os, not_null<czstring> fmt, ...);
 
 } // namespace yao::prt
 
