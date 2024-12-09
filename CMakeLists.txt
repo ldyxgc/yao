@@ -79,6 +79,7 @@ ProcessorCount(YAO_BUILD__PROCESSOR_COUNT)
 message("YAO_BUILD__PROCESSOR_COUNT = ${YAO_BUILD__PROCESSOR_COUNT}")
 
 add_library(yao)
+include(config.cmake) # ${CMAKE_CURRENT_SOURCE_DIR}/inc/yao/config.hpp
 target_include_directories(yao PUBLIC inc)
 file(GLOB_RECURSE YAO_SRC RELATIVE ${CMAKE_CURRENT_LIST_DIR} src/*.cpp)
 target_sources(yao PRIVATE ${YAO_SRC})
