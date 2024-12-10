@@ -20,7 +20,7 @@ protected:
     DEAD,
   };
   template <typename T, bool ns = false, bool tp = false>
-    requires std::same_as<T, State>
+    requires std::same_as<T, EpsilonStateBase::State>
   static void osprint_type(std::ostream &os);
   template <bool ns = false, bool tp = false>
   static void osprint_value(std::ostream &os, State state);
