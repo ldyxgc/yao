@@ -1,0 +1,2 @@
+add_executable(yao__re__stt__EpsilonState yao__re__stt__EpsilonState.cpp)
+target_link_libraries(yao__re__stt__EpsilonState yao)
