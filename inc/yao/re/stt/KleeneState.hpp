@@ -10,6 +10,9 @@
 
 namespace yao::re::stt {
 
+YAO_WARN_PUSH
+YAO_WARN_OFF__PADDING
+
 template <typename SubState>
   requires c_o_State<SubState>
 class KleeneState : private StateBase<KleeneState<SubState>> {
@@ -38,6 +41,8 @@ private:
   std::set<SubState> _sub_state_set;
   bool _is_final;
 };
+
+YAO_WARN_POP
 
 template <typename SubState>
   requires c_o_State<SubState>

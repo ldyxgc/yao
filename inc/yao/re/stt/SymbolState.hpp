@@ -34,6 +34,9 @@ public:
 
 } // namespace impl
 
+YAO_WARN_PUSH
+YAO_WARN_OFF__PADDING
+
 template <typename _Symbol>
   requires c_t_Symbol<_Symbol>
 class SymbolState : private StateBase<SymbolState<_Symbol>>,
@@ -62,6 +65,8 @@ private:
   Symbol _symbol; // const
   State _state;
 };
+
+YAO_WARN_POP
 
 template <typename Symbol>
   requires c_t_Symbol<Symbol>

@@ -17,6 +17,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 
     -Wconversion
     -Wformat=2
+    -Wpadded
     -Wsign-conversion # Disabled by default with -Wconversion
     -Wswitch-default
     -Wswitch-enum
