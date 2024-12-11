@@ -5,6 +5,7 @@
 #include <ostream>
 
 #include "yao/def/attr.hpp"
+#include "yao/def/warn.hpp"
 #include "yao/re/c_t_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 
@@ -26,6 +27,9 @@ protected:
   static void osprint_type(std::ostream &os);
   template <bool ns = false, bool tp = false>
   static void osprint_value(std::ostream &os, State state);
+
+public:
+  auto operator<=>(const SymbolStateBase &rhs) const = default;
 };
 
 } // namespace impl
@@ -39,6 +43,11 @@ public:
 
 public:
   SymbolState(const Symbol &symbol);
+
+  YAO_WARN_PUSH
+  YAO_WARN_OFF__ZERO_AS_NULL_POINTER_CONSTANT
+  auto operator<=>(const SymbolState &rhs) const = default;
+  YAO_WARN_POP
 
   void match(const Symbol &symbol);
   bool is_final() const;

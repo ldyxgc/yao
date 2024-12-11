@@ -10,6 +10,13 @@ int main() {
   {
     EpsilonState<int> epsilon_state;
     YAO_CHECK(c_o_State<decltype(epsilon_state)>);
+
+    YAO_CHECK((epsilon_state == epsilon_state) == true);
+    YAO_CHECK((epsilon_state != epsilon_state) == false);
+    YAO_CHECK((epsilon_state < epsilon_state) == false);
+    YAO_CHECK((epsilon_state <= epsilon_state) == true);
+    YAO_CHECK((epsilon_state > epsilon_state) == false);
+    YAO_CHECK((epsilon_state >= epsilon_state) == true);
   }
 
   {

@@ -10,6 +10,13 @@ int main() {
   {
     SymbolState symbol_state{0};
     YAO_CHECK(c_o_State<decltype(symbol_state)>);
+
+    YAO_CHECK((symbol_state == symbol_state) == true);
+    YAO_CHECK((symbol_state != symbol_state) == false);
+    YAO_CHECK((symbol_state < symbol_state) == false);
+    YAO_CHECK((symbol_state <= symbol_state) == true);
+    YAO_CHECK((symbol_state > symbol_state) == false);
+    YAO_CHECK((symbol_state >= symbol_state) == true);
   }
 
   {

@@ -10,6 +10,7 @@
 
 #define YAO_WARN_OFF__FORMAT_NON_LITERAL                                       \
   _Pragma("GCC diagnostic ignored \"-Wformat-nonliteral\"")
+#define YAO_WARN_OFF__ZERO_AS_NULL_POINTER_CONSTANT
 
 #elif YAO_CONFIG__COMPILER == YAO_CONFIG__COMPILER__CLANG
 
@@ -18,6 +19,8 @@
 
 #define YAO_WARN_OFF__FORMAT_NON_LITERAL                                       \
   _Pragma("clang diagnostic ignored \"-Wformat-nonliteral\"")
+#define YAO_WARN_OFF__ZERO_AS_NULL_POINTER_CONSTANT                            \
+  _Pragma("clang diagnostic ignored \"-Wzero-as-null-pointer-constant\"")
 
 #elif YAO_CONFIG__COMPILER == YAO_CONFIG__COMPILER__MSVC
 
@@ -25,6 +28,7 @@
 #define YAO_WARN_POP _Pragma("warning(pop)")
 
 #define YAO_WARN_OFF__FORMAT_NON_LITERAL _Pragma("warning(disable:4774)")
+#define YAO_WARN_OFF__ZERO_AS_NULL_POINTER_CONSTANT
 
 #endif
 

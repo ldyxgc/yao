@@ -8,6 +8,9 @@ namespace yao::re::stt {
 template <typename State> class YAO_ATTR__EMPTY_BASES StateBase {
 protected:
   StateBase();
+
+public:
+  auto operator<=>(const StateBase &rhs) const = default;
 };
 
 } // namespace yao::re::stt

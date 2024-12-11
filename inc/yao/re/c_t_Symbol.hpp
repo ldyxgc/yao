@@ -11,7 +11,7 @@ namespace yao::re {
 // c: concept, t: type
 template <typename Symbol>
 concept c_t_Symbol =
-    std::equality_comparable<Symbol> && //
+    std::totally_ordered<Symbol> && std::three_way_comparable<Symbol> &&
     prt::c_f_osprint_type<Symbol> && prt::c_f_osprint_value<Symbol>;
 
 } // namespace yao::re

@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/StateBase.hpp"
 
+#include <concepts>
+
 #include "yao/prt/c_mf_osprint_value.hpp"
 #include "yao/prt/c_smf_osprint_type.hpp"
 #include "yao/re/c_t_Symbol.hpp"
@@ -15,6 +17,7 @@ namespace impl {
 template <typename State, typename Symbol = typename State::Symbol>
 concept c_o_State =
     c_t_Symbol<Symbol> && //
+    std::totally_ordered<State> && std::three_way_comparable<State> &&
     requires {
       static_cast<void (State::*)(const Symbol &symbol)>(&State::match);
       static_cast<bool (State::*)() const>(&State::is_final);
