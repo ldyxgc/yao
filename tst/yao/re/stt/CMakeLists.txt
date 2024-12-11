@@ -1,3 +1,7 @@
+add_executable(tst__yao__re__stt__ConcatState tst__yao__re__stt__ConcatState.cpp)
+target_link_libraries(tst__yao__re__stt__ConcatState yao)
+add_test(tst__yao__re__stt__ConcatState tst__yao__re__stt__ConcatState)
+
 add_executable(tst__yao__re__stt__EpsilonState tst__yao__re__stt__EpsilonState.cpp)
 target_link_libraries(tst__yao__re__stt__EpsilonState yao)
 add_test(tst__yao__re__stt__EpsilonState tst__yao__re__stt__EpsilonState)
