@@ -8,6 +8,7 @@
 #include "yao/def/warn.hpp"
 #include "yao/re/c_t_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
+#include "yao/re/stt/StateType.hpp"
 
 namespace yao::re::stt {
 
@@ -51,6 +52,8 @@ public:
   YAO_WARN_OFF__ZERO_AS_NULL_POINTER_CONSTANT
   auto operator<=>(const SymbolState &rhs) const = default;
   YAO_WARN_POP
+
+  StateType type() const;
 
   void match(const Symbol &symbol);
   bool is_final() const;

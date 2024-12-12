@@ -17,6 +17,12 @@ KleeneState<SubState>::KleeneState(const SubState &sub_state)
 
 template <typename SubState>
   requires c_o_State<SubState>
+StateType KleeneState<SubState>::type() const {
+  return StateType::KleeneState;
+}
+
+template <typename SubState>
+  requires c_o_State<SubState>
 void KleeneState<SubState>::match(const Symbol &symbol) {
   std::set<SubState> new_sub_state_set;
   if (_is_final) {

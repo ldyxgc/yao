@@ -16,6 +16,12 @@ UnionState<LhsState, RhsState>::UnionState(const LhsState &lhs_state,
 
 template <typename LhsState, typename RhsState>
   requires impl::c_r_UnionState<LhsState, RhsState>
+StateType UnionState<LhsState, RhsState>::type() const {
+  return StateType::UnionState;
+}
+
+template <typename LhsState, typename RhsState>
+  requires impl::c_r_UnionState<LhsState, RhsState>
 void UnionState<LhsState, RhsState>::match(const Symbol &symbol) {
   _lhs_state.match(symbol);
   _rhs_state.match(symbol);

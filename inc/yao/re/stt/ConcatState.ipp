@@ -19,6 +19,12 @@ ConcatState<LhsState, RhsState>::ConcatState(const LhsState &lhs_state,
 
 template <typename LhsState, typename RhsState>
   requires impl::c_r_ConcatState<LhsState, RhsState>
+StateType ConcatState<LhsState, RhsState>::type() const {
+  return StateType::ConcatState;
+}
+
+template <typename LhsState, typename RhsState>
+  requires impl::c_r_ConcatState<LhsState, RhsState>
 void ConcatState<LhsState, RhsState>::match(const Symbol &symbol) {
   std::set<RhsState> new_rhs_state_set;
   _is_final = false;

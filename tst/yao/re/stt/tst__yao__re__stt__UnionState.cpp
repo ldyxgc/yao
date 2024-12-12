@@ -1,4 +1,5 @@
 #include "yao/def/check.hpp"
+#include "yao/re/stt/StateType.hpp"
 #include "yao/re/stt/SymbolState.hpp"
 #include "yao/re/stt/UnionState.hpp"
 #include "yao/re/stt/c_o_State.hpp"
@@ -6,6 +7,7 @@
 int main() {
 
   using yao::re::stt::c_o_State;
+  using yao::re::stt::StateType;
   using yao::re::stt::SymbolState;
   using yao::re::stt::UnionState;
 
@@ -19,6 +21,8 @@ int main() {
     YAO_CHECK((union_state <= union_state) == true);
     YAO_CHECK((union_state > union_state) == false);
     YAO_CHECK((union_state >= union_state) == true);
+
+    YAO_CHECK(union_state.type() == StateType::UnionState);
   }
 
   { // 0|1

@@ -34,6 +34,9 @@ int main() {
     print_value.operator()<true>(concat_state);
     print_value.operator()<false, true>(concat_state);
     print_value.operator()<true, true>(concat_state);
+    cout << '\n';
+    osprint_value(cout, concat_state.type());
+    cout << '\n';
   }
   cout << '\n';
   {

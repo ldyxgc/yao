@@ -34,6 +34,9 @@ int main() {
     print_value.operator()<true>(kleene_state);
     print_value.operator()<false, true>(kleene_state);
     print_value.operator()<true, true>(kleene_state);
+    cout << '\n';
+    osprint_value(cout, kleene_state.type());
+    cout << '\n';
   }
   cout << '\n';
   {

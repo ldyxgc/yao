@@ -1,11 +1,13 @@
 #include "yao/def/check.hpp"
 #include "yao/re/stt/EpsilonState.hpp"
+#include "yao/re/stt/StateType.hpp"
 #include "yao/re/stt/c_o_State.hpp"
 
 int main() {
 
   using yao::re::stt::c_o_State;
   using yao::re::stt::EpsilonState;
+  using yao::re::stt::StateType;
 
   {
     EpsilonState<int> epsilon_state;
@@ -17,6 +19,8 @@ int main() {
     YAO_CHECK((epsilon_state <= epsilon_state) == true);
     YAO_CHECK((epsilon_state > epsilon_state) == false);
     YAO_CHECK((epsilon_state >= epsilon_state) == true);
+
+    YAO_CHECK(epsilon_state.type() == StateType::EpsilonState);
   }
 
   {

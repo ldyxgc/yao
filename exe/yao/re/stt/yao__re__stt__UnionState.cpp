@@ -34,6 +34,9 @@ int main() {
     print_value.operator()<true>(union_state);
     print_value.operator()<false, true>(union_state);
     print_value.operator()<true, true>(union_state);
+    cout << '\n';
+    osprint_value(cout, union_state.type());
+    cout << '\n';
   }
   cout << '\n';
   { // 0|1

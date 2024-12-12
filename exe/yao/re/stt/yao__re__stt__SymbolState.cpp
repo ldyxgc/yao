@@ -32,6 +32,9 @@ int main() {
     print_value.operator()<true>(symbol_state);
     print_value.operator()<false, true>(symbol_state);
     print_value.operator()<true, true>(symbol_state);
+    cout << '\n';
+    osprint_value(cout, symbol_state.type());
+    cout << '\n';
   }
   cout << '\n';
   {

@@ -48,6 +48,12 @@ SymbolState<_Symbol>::SymbolState(const Symbol &symbol)
 
 template <typename _Symbol>
   requires c_t_Symbol<_Symbol>
+StateType SymbolState<_Symbol>::type() const {
+  return StateType::SymbolState;
+}
+
+template <typename _Symbol>
+  requires c_t_Symbol<_Symbol>
 void SymbolState<_Symbol>::match(const Symbol &symbol) {
   switch (_state) {
   case State::START:

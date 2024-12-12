@@ -32,6 +32,9 @@ int main() {
     print_value.operator()<true>(epsilon_state);
     print_value.operator()<false, true>(epsilon_state);
     print_value.operator()<true, true>(epsilon_state);
+    cout << '\n';
+    osprint_value(cout, epsilon_state.type());
+    cout << '\n';
   }
   cout << '\n';
   {

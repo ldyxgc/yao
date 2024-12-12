@@ -1,5 +1,6 @@
 #include "yao/def/check.hpp"
 #include "yao/re/stt/KleeneState.hpp"
+#include "yao/re/stt/StateType.hpp"
 #include "yao/re/stt/SymbolState.hpp"
 #include "yao/re/stt/c_o_State.hpp"
 
@@ -7,6 +8,7 @@ int main() {
 
   using yao::re::stt::c_o_State;
   using yao::re::stt::KleeneState;
+  using yao::re::stt::StateType;
   using yao::re::stt::SymbolState;
 
   {
@@ -48,6 +50,8 @@ int main() {
     YAO_CHECK((kleene_state <= kleene_state) == true);
     YAO_CHECK((kleene_state > kleene_state) == false);
     YAO_CHECK((kleene_state >= kleene_state) == true);
+
+    YAO_CHECK(kleene_state.type() == StateType::KleeneState);
   }
 
   {

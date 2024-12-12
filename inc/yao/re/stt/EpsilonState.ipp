@@ -43,6 +43,12 @@ EpsilonState<_Symbol>::EpsilonState() : _state{State::FINAL} {}
 
 template <typename _Symbol>
   requires c_t_Symbol<_Symbol>
+StateType EpsilonState<_Symbol>::type() const {
+  return StateType::EpsilonState;
+}
+
+template <typename _Symbol>
+  requires c_t_Symbol<_Symbol>
 void EpsilonState<_Symbol>::match(const Symbol &) {
   switch (_state) {
   case State::FINAL:
