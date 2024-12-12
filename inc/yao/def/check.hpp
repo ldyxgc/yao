@@ -6,11 +6,11 @@
 
 #include "yao/prt/impl/func/osprintf.hpp"
 
-#define YAO_CHECK(expr)                                                        \
-  ((expr) ? void(0)                                                            \
-          : (yao::prt::impl::func::osprintf(std::cerr,                         \
-                                            "%s:%i: Check `%s` failed\n",      \
-                                            __FILE__, __LINE__, #expr),        \
-             std::exit(EXIT_FAILURE)))
+#define YAO_CHECK(...)                                                         \
+  ((__VA_ARGS__) ? void(0)                                                     \
+                 : (yao::prt::impl::func::osprintf(                            \
+                        std::cerr, "%s:%i: Check `%s` failed\n", __FILE__,     \
+                        __LINE__, #__VA_ARGS__),                               \
+                    std::exit(EXIT_FAILURE)))
 
 #endif

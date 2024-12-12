@@ -82,8 +82,8 @@ int main() {
       YAO_CHECK(epsilon_virtual_state->is_dead() == true);
 
       auto copied_virtual_state{epsilon_virtual_state->copy_rptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(epsilon_virtual_state)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(epsilon_virtual_state)>);
 
       delete epsilon_virtual_state;
       delete copied_virtual_state;
@@ -98,8 +98,8 @@ int main() {
       YAO_CHECK(virtual_state_epsilon->is_dead() == true);
 
       auto copied_virtual_state{virtual_state_epsilon->copy_rptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(virtual_state_epsilon)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(virtual_state_epsilon)>);
 
       delete virtual_state_epsilon;
       delete copied_virtual_state;
@@ -117,8 +117,8 @@ int main() {
       YAO_CHECK(symbol_virtual_state->is_dead() == true);
 
       auto copied_virtual_state{symbol_virtual_state->copy_rptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(symbol_virtual_state)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(symbol_virtual_state)>);
 
       delete symbol_virtual_state;
       delete copied_virtual_state;
@@ -136,8 +136,8 @@ int main() {
       YAO_CHECK(virtual_state_symbol->is_dead() == true);
 
       auto copied_virtual_state{virtual_state_symbol->copy_rptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(virtual_state_symbol)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(virtual_state_symbol)>);
 
       delete virtual_state_symbol;
       delete copied_virtual_state;
@@ -155,8 +155,8 @@ int main() {
       YAO_CHECK(kleene_virtual_state->is_dead() == true);
 
       auto copied_virtual_state{kleene_virtual_state->copy_uptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(kleene_virtual_state)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(kleene_virtual_state)>);
     }
     {
       not_null<std::unique_ptr<VirtualStateBase>> virtual_state_kleene{
@@ -174,8 +174,8 @@ int main() {
       YAO_CHECK(virtual_state_kleene->is_dead() == true);
 
       auto copied_virtual_state{virtual_state_kleene->copy_uptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(virtual_state_kleene)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(virtual_state_kleene)>);
     }
   }
 
@@ -190,8 +190,8 @@ int main() {
       YAO_CHECK(concat_virtual_state->is_dead() == true);
 
       auto copied_virtual_state{concat_virtual_state->copy_uptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(concat_virtual_state)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(concat_virtual_state)>);
     }
     {
       not_null<std::unique_ptr<VirtualStateBase>> virtual_state_concat{
@@ -209,8 +209,8 @@ int main() {
       YAO_CHECK(virtual_state_concat->is_dead() == true);
 
       auto copied_virtual_state{virtual_state_concat->copy_uptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(virtual_state_concat)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(virtual_state_concat)>);
     }
   }
 
@@ -225,8 +225,8 @@ int main() {
       YAO_CHECK(union_virtual_state->is_dead() == true);
 
       auto copied_virtual_state{union_virtual_state->copy_uptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(union_virtual_state)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(union_virtual_state)>);
     }
     {
       not_null<std::unique_ptr<VirtualStateBase>> virtual_state_union{
@@ -241,8 +241,8 @@ int main() {
       YAO_CHECK(virtual_state_union->is_dead() == true);
 
       auto copied_virtual_state{virtual_state_union->copy_uptr()};
-      YAO_CHECK((std::same_as<decltype(copied_virtual_state),
-                              decltype(virtual_state_union)>));
+      YAO_CHECK(std::same_as<decltype(copied_virtual_state),
+                             decltype(virtual_state_union)>);
     }
   }
 
