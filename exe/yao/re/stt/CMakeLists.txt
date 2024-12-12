@@ -4,6 +4,9 @@ target_link_libraries(yao__re__stt__ConcatState yao)
 add_executable(yao__re__stt__EpsilonState yao__re__stt__EpsilonState.cpp)
 target_link_libraries(yao__re__stt__EpsilonState yao)
 
+add_executable(yao__re__stt__ErasedState yao__re__stt__ErasedState.cpp)
+target_link_libraries(yao__re__stt__ErasedState yao)
+
 add_executable(yao__re__stt__KleeneState yao__re__stt__KleeneState.cpp)
 target_link_libraries(yao__re__stt__KleeneState yao)
 
