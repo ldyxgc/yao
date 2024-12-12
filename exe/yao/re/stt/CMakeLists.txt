@@ -1,3 +1,5 @@
+add_subdirectory(impl)
+
 add_executable(yao__re__stt__ConcatState yao__re__stt__ConcatState.cpp)
 target_link_libraries(yao__re__stt__ConcatState yao)
 
