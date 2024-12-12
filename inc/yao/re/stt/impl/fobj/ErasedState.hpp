@@ -1,5 +1,5 @@
-#ifndef __YAO__RE__STT__IMPL__VTAB__ERASED_STATE__HPP__
-#define __YAO__RE__STT__IMPL__VTAB__ERASED_STATE__HPP__
+#ifndef __YAO__RE__STT__IMPL__FOBJ__ERASED_STATE__HPP__
+#define __YAO__RE__STT__IMPL__FOBJ__ERASED_STATE__HPP__
 
 #include <compare>
 #include <functional>
@@ -12,7 +12,7 @@
 #include "yao/re/stt/StateType.hpp"
 #include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
 
-namespace yao::re::stt::impl::vtab {
+namespace yao::re::stt::impl::fobj {
 
 template <typename _Symbol>
   requires c_t_Symbol<_Symbol>
@@ -49,31 +49,31 @@ public:
 private:
   not_null<owner<void *>> _abstract_state;
   std::function<not_null<owner<void *>>(not_null<void *> abstract_state)>
-      _func__copy_rptr;
+      _fobj__copy_rptr;
   std::function<bool(not_null<void *> abstract_state,
                      not_null<void *> rhs_abstract_state)>
-      _func__equal;
+      _fobj__equal;
   std::function<std::strong_ordering(not_null<void *> abstract_state,
                                      not_null<void *> rhs_abstract_state)>
-      _func__order;
-  std::function<StateType(not_null<void *> abstract_state)> _func__type;
+      _fobj__order;
+  std::function<StateType(not_null<void *> abstract_state)> _fobj__type;
   std::function<void(not_null<void *> abstract_state, const Symbol &)>
-      _func__match;
-  std::function<bool(not_null<void *> abstract_state)> _func__is_final;
-  std::function<bool(not_null<void *> abstract_state)> _func__is_dead;
+      _fobj__match;
+  std::function<bool(not_null<void *> abstract_state)> _fobj__is_final;
+  std::function<bool(not_null<void *> abstract_state)> _fobj__is_dead;
   std::function<void(not_null<void *> abstract_state, std::ostream &os)>
-      _func__osprint_value__false_false;
+      _fobj__osprint_value__false_false;
   std::function<void(not_null<void *> abstract_state, std::ostream &os)>
-      _func__osprint_value__true_false;
+      _fobj__osprint_value__true_false;
   std::function<void(not_null<void *> abstract_state, std::ostream &os)>
-      _func__osprint_value__false_true;
+      _fobj__osprint_value__false_true;
   std::function<void(not_null<void *> abstract_state, std::ostream &os)>
-      _func__osprint_value__true_true;
-  std::function<void(not_null<void *> abstract_state)> _func__delete;
+      _fobj__osprint_value__true_true;
+  std::function<void(not_null<void *> abstract_state)> _fobj__delete;
 };
 
-} // namespace yao::re::stt::impl::vtab
+} // namespace yao::re::stt::impl::fobj
 
-#include "yao/re/stt/impl/vtab/ErasedState.ipp"
+#include "yao/re/stt/impl/fobj/ErasedState.ipp"
 
 #endif

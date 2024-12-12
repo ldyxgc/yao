@@ -1,13 +1,13 @@
-#ifndef __YAO__RE__STT__IMPL__VIRT__ERASED_STATE__IPP__
-#define __YAO__RE__STT__IMPL__VIRT__ERASED_STATE__IPP__
+#ifndef __YAO__RE__STT__IMPL__VFUN__ERASED_STATE__IPP__
+#define __YAO__RE__STT__IMPL__VFUN__ERASED_STATE__IPP__
 
-#include "yao/re/stt/impl/virt/ErasedState.hpp"
+#include "yao/re/stt/impl/vfun/ErasedState.hpp"
 
 #include "yao/prt/osprint_type.hpp"
 #include "yao/prt/osprint_value.hpp"
 #include "yao/re/stt/VirtualState.hpp"
 
-namespace yao::re::stt::impl::virt {
+namespace yao::re::stt::impl::vfun {
 
 template <typename _Symbol>
   requires c_t_Symbol<_Symbol>
@@ -71,7 +71,7 @@ template <typename _Symbol>
 template <bool ns, bool tp>
 void ErasedState<_Symbol>::osprint_type(std::ostream &os) {
   if constexpr (ns)
-    os << "yao::re::stt::impl::virt";
+    os << "yao::re::stt::impl::vfun";
   os << "ErasedState";
   if constexpr (tp) {
     os << '<';
@@ -90,6 +90,6 @@ void ErasedState<_Symbol>::osprint_value(std::ostream &os) const {
   os << '}';
 }
 
-} // namespace yao::re::stt::impl::virt
+} // namespace yao::re::stt::impl::vfun
 
 #endif

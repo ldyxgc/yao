@@ -1,0 +1,2 @@
+add_executable(yao__re__stt__impl__vfun__ErasedState yao__re__stt__impl__vfun__ErasedState.cpp)
+target_link_libraries(yao__re__stt__impl__vfun__ErasedState yao)

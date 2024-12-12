@@ -1,3 +1,3 @@
-add_subdirectory(virt)
+add_subdirectory(fobj)
 
-add_subdirectory(vtab)
+add_subdirectory(vfun)

@@ -6,11 +6,11 @@
 #include "yao/re/stt/EpsilonState.hpp"
 #include "yao/re/stt/KleeneState.hpp"
 #include "yao/re/stt/SymbolState.hpp"
-#include "yao/re/stt/impl/virt/ErasedState.hpp"
+#include "yao/re/stt/impl/vfun/ErasedState.hpp"
 
 int main() {
 
-  using ErasedState = yao::re::stt::impl::virt::ErasedState<int>;
+  using ErasedState = yao::re::stt::impl::vfun::ErasedState<int>;
   const std::size_t CNT_MAX = 1024 * 32;
   const int NUM_MAX = 10;
 

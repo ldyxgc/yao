@@ -6,14 +6,14 @@
 #include "yao/re/stt/SymbolState.hpp"
 #include "yao/re/stt/UnionState.hpp"
 #include "yao/re/stt/c_o_State.hpp"
-#include "yao/re/stt/impl/virt/ErasedState.hpp"
+#include "yao/re/stt/impl/vfun/ErasedState.hpp"
 
 int main() {
 
   using yao::re::stt::c_o_State;
   using yao::re::stt::StateType;
 
-  using ErasedState = yao::re::stt::impl::virt::ErasedState<int>;
+  using ErasedState = yao::re::stt::impl::vfun::ErasedState<int>;
   using EpsilonState = yao::re::stt::EpsilonState<int>;
   using SymbolState = yao::re::stt::SymbolState<int>;
   using KleeneErasedState = yao::re::stt::KleeneState<ErasedState>;

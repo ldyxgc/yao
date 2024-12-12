@@ -1,5 +1,5 @@
-#ifndef __YAO__RE__STT__IMPL__VIRT__ERASED_STATE__HPP__
-#define __YAO__RE__STT__IMPL__VIRT__ERASED_STATE__HPP__
+#ifndef __YAO__RE__STT__IMPL__VFUN__ERASED_STATE__HPP__
+#define __YAO__RE__STT__IMPL__VFUN__ERASED_STATE__HPP__
 
 #include <memory>
 #include <ostream>
@@ -11,7 +11,7 @@
 #include "yao/re/stt/VirtualStateBase.hpp"
 #include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
 
-namespace yao::re::stt::impl::virt {
+namespace yao::re::stt::impl::vfun {
 
 template <typename _Symbol>
   requires c_t_Symbol<_Symbol>
@@ -47,8 +47,8 @@ private:
   std::unique_ptr<VirtualStateBase<Symbol>> _virtual_state;
 };
 
-} // namespace yao::re::stt::impl::virt
+} // namespace yao::re::stt::impl::vfun
 
-#include "yao/re/stt/impl/virt/ErasedState.ipp"
+#include "yao/re/stt/impl/vfun/ErasedState.ipp"
 
 #endif
