@@ -2,7 +2,6 @@
 #define __YAO__RE__STT__VIRTUAL_STATE__HPP__
 
 #include <compare>
-#include <concepts>
 #include <memory>
 #include <ostream>
 
@@ -12,6 +11,7 @@
 #include "yao/re/stt/StateType.hpp"
 #include "yao/re/stt/VirtualStateBase.hpp"
 #include "yao/re/stt/c_o_State.hpp"
+#include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
 
 namespace yao::re::stt {
 
@@ -35,16 +35,12 @@ public:
   bool operator==(const VirtualState &rhs) const;
   auto operator<=>(const VirtualState &rhs) const;
   template <typename OtherConcreteState>
-    requires c_o_State<OtherConcreteState> &&
-             std::same_as<typename OtherConcreteState::Symbol,
-                          typename ConcreteState::Symbol> &&
-             (!std::same_as<OtherConcreteState, ConcreteState>)
+    requires c_r_different_State_with_same_Symbol<OtherConcreteState,
+                                                  ConcreteState>
   bool operator==(const VirtualState<OtherConcreteState> &rhs) const;
   template <typename OtherConcreteState>
-    requires c_o_State<OtherConcreteState> &&
-             std::same_as<typename OtherConcreteState::Symbol,
-                          typename ConcreteState::Symbol> &&
-             (!std::same_as<OtherConcreteState, ConcreteState>)
+    requires c_r_different_State_with_same_Symbol<OtherConcreteState,
+                                                  ConcreteState>
   auto operator<=>(const VirtualState<OtherConcreteState> &rhs) const;
   bool operator==(const VirtualStateBase<Symbol> &rhs) const override;
   std::strong_ordering

@@ -56,10 +56,8 @@ auto VirtualState<ConcreteState>::operator<=>(const VirtualState &rhs) const {
 template <typename ConcreteState>
   requires c_o_State<ConcreteState>
 template <typename OtherConcreteState>
-  requires c_o_State<OtherConcreteState> &&
-           std::same_as<typename OtherConcreteState::Symbol,
-                        typename ConcreteState::Symbol> &&
-           (!std::same_as<OtherConcreteState, ConcreteState>)
+  requires c_r_different_State_with_same_Symbol<OtherConcreteState,
+                                                ConcreteState>
 bool VirtualState<ConcreteState>::operator==(
     const VirtualState<OtherConcreteState> &) const {
   return false;
@@ -68,10 +66,8 @@ bool VirtualState<ConcreteState>::operator==(
 template <typename ConcreteState>
   requires c_o_State<ConcreteState>
 template <typename OtherConcreteState>
-  requires c_o_State<OtherConcreteState> &&
-           std::same_as<typename OtherConcreteState::Symbol,
-                        typename ConcreteState::Symbol> &&
-           (!std::same_as<OtherConcreteState, ConcreteState>)
+  requires c_r_different_State_with_same_Symbol<OtherConcreteState,
+                                                ConcreteState>
 auto VirtualState<ConcreteState>::operator<=>(
     const VirtualState<OtherConcreteState> &rhs) const {
   return type() <=> rhs.type();

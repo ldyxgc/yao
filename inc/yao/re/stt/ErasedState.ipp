@@ -17,11 +17,9 @@ ErasedState<_Symbol>::ErasedState(const ErasedState &erased_state)
 template <typename _Symbol>
   requires c_t_Symbol<_Symbol>
 template <typename ConcreteState,
-          std::enable_if_t<
-              c_o_State<ConcreteState> &&
-                  std::same_as<typename ConcreteState::Symbol, _Symbol> &&
-                  (!std::same_as<ConcreteState, ErasedState<_Symbol>>),
-              int>>
+          std::enable_if_t<c_r_different_State_with_same_Symbol<
+                               ConcreteState, ErasedState<_Symbol>>,
+                           int>>
 ErasedState<_Symbol>::ErasedState(const ConcreteState &concrete_state)
     : _virtual_state{VirtualState<ConcreteState>::make_uptr(concrete_state)} {}
 

@@ -1,32 +1,21 @@
 #ifndef __YAO__RE__STT__CONCAT_STATE__HPP__
 #define __YAO__RE__STT__CONCAT_STATE__HPP__
 
-#include <concepts>
 #include <ostream>
 #include <set>
 
 #include "yao/def/warn.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/StateType.hpp"
-#include "yao/re/stt/c_o_State.hpp"
+#include "yao/re/stt/c_r_State_with_same_Symbol.hpp"
 
 namespace yao::re::stt {
-
-namespace impl {
-
-// c: concept, r: require
-template <typename LhsState, typename RhsState>
-concept c_r_ConcatState =
-    c_o_State<LhsState> && c_o_State<RhsState> &&
-    std::same_as<typename LhsState::Symbol, typename RhsState::Symbol>;
-
-} // namespace impl
 
 YAO_WARN_PUSH
 YAO_WARN_OFF__PADDING
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 class ConcatState : private StateBase<ConcatState<LhsState, RhsState>> {
 public:
   using Symbol = typename LhsState::Symbol;
@@ -60,7 +49,7 @@ private:
 YAO_WARN_POP
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 ConcatState(const LhsState &lhs_state,
             const RhsState &rhs_state) -> ConcatState<LhsState, RhsState>;
 

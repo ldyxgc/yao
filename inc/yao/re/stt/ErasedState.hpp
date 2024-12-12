@@ -1,7 +1,6 @@
 #ifndef __YAO__RE__STT__ERASED_STATE__HPP__
 #define __YAO__RE__STT__ERASED_STATE__HPP__
 
-#include <concepts>
 #include <memory>
 #include <ostream>
 #include <type_traits>
@@ -10,7 +9,7 @@
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/StateType.hpp"
 #include "yao/re/stt/VirtualStateBase.hpp"
-#include "yao/re/stt/c_o_State.hpp"
+#include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
 
 namespace yao::re::stt {
 
@@ -23,11 +22,9 @@ public:
 public:
   ErasedState(const ErasedState &erased_state);
   template <typename ConcreteState,
-            std::enable_if_t<
-                c_o_State<ConcreteState> &&
-                    std::same_as<typename ConcreteState::Symbol, _Symbol> &&
-                    (!std::same_as<ConcreteState, ErasedState<_Symbol>>),
-                int> = 0>
+            std::enable_if_t<c_r_different_State_with_same_Symbol<
+                                 ConcreteState, ErasedState<_Symbol>>,
+                             int> = 0>
   ErasedState(const ConcreteState &concrete_state);
 
   ErasedState &operator=(const ErasedState &rhs);

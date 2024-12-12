@@ -1,28 +1,17 @@
 #ifndef __YAO__RE__STT__UNION_STATE__HPP__
 #define __YAO__RE__STT__UNION_STATE__HPP__
 
-#include <concepts>
 #include <ostream>
 
 #include "yao/def/warn.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/StateType.hpp"
-#include "yao/re/stt/c_o_State.hpp"
+#include "yao/re/stt/c_r_State_with_same_Symbol.hpp"
 
 namespace yao::re::stt {
 
-namespace impl {
-
-// c: concept, r: require
 template <typename LhsState, typename RhsState>
-concept c_r_UnionState =
-    c_o_State<LhsState> && c_o_State<RhsState> &&
-    std::same_as<typename LhsState::Symbol, typename RhsState::Symbol>;
-
-} // namespace impl
-
-template <typename LhsState, typename RhsState>
-  requires impl::c_r_UnionState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 class UnionState : private StateBase<UnionState<LhsState, RhsState>> {
 public:
   using Symbol = typename LhsState::Symbol;
@@ -52,7 +41,7 @@ private:
 };
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_UnionState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 UnionState(const LhsState &lhs_state,
            const RhsState &rhs_state) -> UnionState<LhsState, RhsState>;
 

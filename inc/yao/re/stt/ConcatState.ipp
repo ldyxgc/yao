@@ -11,20 +11,20 @@
 namespace yao::re::stt {
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 ConcatState<LhsState, RhsState>::ConcatState(const LhsState &lhs_state,
                                              const RhsState &rhs_state)
     : _lhs_state{lhs_state}, _raw_rhs_state{rhs_state}, _rhs_state_set{},
       _is_final{_lhs_state.is_final() && _raw_rhs_state.is_final()} {}
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 StateType ConcatState<LhsState, RhsState>::type() const {
   return StateType::ConcatState;
 }
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 void ConcatState<LhsState, RhsState>::match(const Symbol &symbol) {
   std::set<RhsState> new_rhs_state_set;
   _is_final = false;
@@ -51,19 +51,19 @@ void ConcatState<LhsState, RhsState>::match(const Symbol &symbol) {
 }
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 bool ConcatState<LhsState, RhsState>::is_final() const {
   return _is_final;
 }
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 bool ConcatState<LhsState, RhsState>::is_dead() const {
   return _lhs_state.is_dead() && _rhs_state_set.empty();
 }
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 template <bool ns, bool tp>
 void ConcatState<LhsState, RhsState>::osprint_type(std::ostream &os) {
   if constexpr (ns)
@@ -79,7 +79,7 @@ void ConcatState<LhsState, RhsState>::osprint_type(std::ostream &os) {
 }
 
 template <typename LhsState, typename RhsState>
-  requires impl::c_r_ConcatState<LhsState, RhsState>
+  requires c_r_State_with_same_Symbol<LhsState, RhsState>
 template <bool ns, bool tp>
 void ConcatState<LhsState, RhsState>::osprint_value(std::ostream &os) const {
   prt::osprint_type<ConcatState, ns, tp>(os);
