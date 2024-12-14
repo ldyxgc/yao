@@ -1,8 +1,8 @@
 add_subdirectory(def)
 
-add_subdirectory(prt)
+add_subdirectory(lab)
 
-add_subdirectory(re)
+add_subdirectory(prt)
 
 add_executable(tst__yao__help____not_null tst__yao__help____not_null.cpp)
 target_link_libraries(tst__yao__help____not_null yao)

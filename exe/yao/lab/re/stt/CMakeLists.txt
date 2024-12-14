@@ -1,0 +1,22 @@
+add_subdirectory(impl)
+
+add_executable(yao__lab__re__stt__ConcatState yao__lab__re__stt__ConcatState.cpp)
+target_link_libraries(yao__lab__re__stt__ConcatState yao)
+
+add_executable(yao__lab__re__stt__EpsilonState yao__lab__re__stt__EpsilonState.cpp)
+target_link_libraries(yao__lab__re__stt__EpsilonState yao)
+
+add_executable(yao__lab__re__stt__ErasedState yao__lab__re__stt__ErasedState.cpp)
+target_link_libraries(yao__lab__re__stt__ErasedState yao)
+
+add_executable(yao__lab__re__stt__KleeneState yao__lab__re__stt__KleeneState.cpp)
+target_link_libraries(yao__lab__re__stt__KleeneState yao)
+
+add_executable(yao__lab__re__stt__SymbolState yao__lab__re__stt__SymbolState.cpp)
+target_link_libraries(yao__lab__re__stt__SymbolState yao)
+
+add_executable(yao__lab__re__stt__UnionState yao__lab__re__stt__UnionState.cpp)
+target_link_libraries(yao__lab__re__stt__UnionState yao)
+
+add_executable(yao__lab__re__stt__VirtualState yao__lab__re__stt__VirtualState.cpp)
+target_link_libraries(yao__lab__re__stt__VirtualState yao)

@@ -1,10 +1,4 @@
 add_subdirectory(impl)
 
-add_executable(yao__prt__osprint_type yao__prt__osprint_type.cpp)
-target_link_libraries(yao__prt__osprint_type yao)
-
-add_executable(yao__prt__osprint_value yao__prt__osprint_value.cpp)
-target_link_libraries(yao__prt__osprint_value yao)
-
 add_executable(yao__prt__osprintf yao__prt__osprintf.cpp)
 target_link_libraries(yao__prt__osprintf yao)

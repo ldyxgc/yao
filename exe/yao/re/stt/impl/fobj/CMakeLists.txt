@@ -1,2 +1,0 @@
-add_executable(yao__re__stt__impl__fobj__ErasedState yao__re__stt__impl__fobj__ErasedState.cpp)
-target_link_libraries(yao__re__stt__impl__fobj__ErasedState yao)

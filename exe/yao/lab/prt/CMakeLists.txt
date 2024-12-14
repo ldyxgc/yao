@@ -1,0 +1,5 @@
+add_executable(yao__lab__prt__osprint_type yao__lab__prt__osprint_type.cpp)
+target_link_libraries(yao__lab__prt__osprint_type yao)
+
+add_executable(yao__lab__prt__osprint_value yao__lab__prt__osprint_value.cpp)
+target_link_libraries(yao__lab__prt__osprint_value yao)
