@@ -3,7 +3,8 @@
 
 #include "yao/config.hpp"
 
-#if YAO_CONFIG__RE_ERASED_STATE == YAO_CONFIG__RE_ERASED_STATE__VIRTUAL_FUNCTION
+#if YAO_CONFIG__LAB__RE_ERASED_STATE ==                                        \
+    YAO_CONFIG__LAB__RE_ERASED_STATE__VIRTUAL_FUNCTION
 
 #include "yao/lab/re/stt/impl/vfun/ErasedState.hpp"
 
@@ -13,8 +14,8 @@ using impl::vfun::ErasedState;
 
 } // namespace yao::lab::re::stt
 
-#elif YAO_CONFIG__RE_ERASED_STATE ==                                           \
-    YAO_CONFIG__RE_ERASED_STATE__FUNCTION_POINTER
+#elif YAO_CONFIG__LAB__RE_ERASED_STATE ==                                      \
+    YAO_CONFIG__LAB__RE_ERASED_STATE__FUNCTION_POINTER
 
 #include "yao/lab/re/stt/impl/fptr/ErasedState.hpp"
 
@@ -24,8 +25,8 @@ using impl::fptr::ErasedState;
 
 } // namespace yao::lab::re::stt
 
-#elif YAO_CONFIG__RE_ERASED_STATE ==                                           \
-    YAO_CONFIG__RE_ERASED_STATE__FUNCTION_OBJECT
+#elif YAO_CONFIG__LAB__RE_ERASED_STATE ==                                      \
+    YAO_CONFIG__LAB__RE_ERASED_STATE__FUNCTION_OBJECT
 
 #include "yao/lab/re/stt/impl/fobj/ErasedState.hpp"
 
