@@ -12,7 +12,10 @@ EpsilonState<Symbol>::EpsilonState() : _state{State::FINAL} {}
 
 template <typename Symbol>
 std::unique_ptr<EpsilonState<Symbol>> EpsilonState<Symbol>::make() {
+  YAO_WARN_PUSH
+  YAO_WARN_OFF__DEPRECATED_DECLARATION
   return std::make_unique<EpsilonState>();
+  YAO_WARN_POP
 }
 
 template <typename Symbol> void EpsilonState<Symbol>::match(const Symbol &) {
