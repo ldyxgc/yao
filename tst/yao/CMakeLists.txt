@@ -4,6 +4,8 @@ add_subdirectory(lab)
 
 add_subdirectory(prt)
 
+add_subdirectory(re)
+
 add_executable(tst__yao__help____not_null tst__yao__help____not_null.cpp)
 target_link_libraries(tst__yao__help____not_null yao)
 add_test(tst__yao__help____not_null tst__yao__help____not_null)
