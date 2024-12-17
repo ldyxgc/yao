@@ -8,7 +8,7 @@
 namespace yao::re::stt {
 
 template <typename Symbol>
-EpsilonState<Symbol>::EpsilonState() : _state{State::FINAL} {}
+EpsilonState<Symbol>::EpsilonState() : _label{Label::FINAL} {}
 
 template <typename Symbol>
 std::unique_ptr<EpsilonState<Symbol>> EpsilonState<Symbol>::make() {
@@ -19,11 +19,11 @@ std::unique_ptr<EpsilonState<Symbol>> EpsilonState<Symbol>::make() {
 }
 
 template <typename Symbol> void EpsilonState<Symbol>::match(const Symbol &) {
-  switch (_state) {
-  case State::FINAL:
-    _state = State::DEAD;
+  switch (_label) {
+  case Label::FINAL:
+    _label = Label::DEAD;
     break;
-  case State::DEAD:
+  case Label::DEAD:
     break;
   default:
     YAO_CLAIM(false);
@@ -32,11 +32,11 @@ template <typename Symbol> void EpsilonState<Symbol>::match(const Symbol &) {
 }
 
 template <typename Symbol> bool EpsilonState<Symbol>::is_final() const {
-  return _state == State::FINAL;
+  return _label == Label::FINAL;
 }
 
 template <typename Symbol> bool EpsilonState<Symbol>::is_dead() const {
-  return _state == State::DEAD;
+  return _label == Label::DEAD;
 }
 
 } // namespace yao::re::stt

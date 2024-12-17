@@ -26,7 +26,7 @@ public:
   SymbolState &operator=(SymbolState &&) = delete;
 
 private:
-  enum class State {
+  enum class Label {
     START,
     FINAL,
     DEAD,
@@ -34,7 +34,7 @@ private:
 
 private:
   const Symbol _symbol;
-  State _state;
+  Label _label;
 };
 
 YAO_WARN_POP

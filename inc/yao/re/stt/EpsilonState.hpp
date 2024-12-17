@@ -26,13 +26,13 @@ public:
   EpsilonState &operator=(EpsilonState &&) = delete;
 
 private:
-  enum class State {
+  enum class Label {
     FINAL,
     DEAD,
   };
 
 private:
-  State _state;
+  Label _label;
 };
 
 YAO_WARN_POP

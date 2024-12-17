@@ -9,7 +9,7 @@ namespace yao::re::stt {
 
 template <typename Symbol>
 SymbolState<Symbol>::SymbolState(const Symbol &symbol)
-    : _symbol{symbol}, _state{State::START} {}
+    : _symbol{symbol}, _label{Label::START} {}
 
 template <typename Symbol>
 std::unique_ptr<SymbolState<Symbol>>
@@ -22,14 +22,14 @@ SymbolState<Symbol>::make(const Symbol &symbol) {
 
 template <typename Symbol>
 void SymbolState<Symbol>::match(const Symbol &symbol) {
-  switch (_state) {
-  case State::START:
-    _state = _symbol == symbol ? State::FINAL : State::DEAD;
+  switch (_label) {
+  case Label::START:
+    _label = _symbol == symbol ? Label::FINAL : Label::DEAD;
     break;
-  case State::FINAL:
-    _state = State::DEAD;
+  case Label::FINAL:
+    _label = Label::DEAD;
     break;
-  case State::DEAD:
+  case Label::DEAD:
     break;
   default:
     YAO_CLAIM(false);
@@ -38,11 +38,11 @@ void SymbolState<Symbol>::match(const Symbol &symbol) {
 }
 
 template <typename Symbol> bool SymbolState<Symbol>::is_final() const {
-  return _state == State::FINAL;
+  return _label == Label::FINAL;
 }
 
 template <typename Symbol> bool SymbolState<Symbol>::is_dead() const {
-  return _state == State::DEAD;
+  return _label == Label::DEAD;
 }
 
 } // namespace yao::re::stt
