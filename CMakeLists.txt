@@ -14,6 +14,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     -Wall
     -Wextra
     -Wpedantic
+
+    -Wconversion
+    -Wformat=2
+    -Wsign-conversion # Disabled by default with -Wconversion
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
@@ -22,13 +26,21 @@ elseif((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") OR
        (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang"))
   string(JOIN " " CMAKE_CXX_FLAGS
     -Weverything
+
+    -Wno-c++98-compat
+    -Wno-reserved-macro-identifier
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
   endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   string(JOIN " " CMAKE_CXX_FLAGS
+    /EHsc # Warning C4577; Exception handling model
+
     /Wall
+
+    /wd4710 # Function marked inline is not inlined by compiler
+    /wd4711 # Function not marked inline is inlined by compiler
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
