@@ -1,3 +1,11 @@
 add_subdirectory(def)
 
 add_subdirectory(prt)
+
+add_executable(tst__yao__help____not_null tst__yao__help____not_null.cpp)
+target_link_libraries(tst__yao__help____not_null yao)
+add_test(tst__yao__help____not_null tst__yao__help____not_null)
+
+add_executable(tst__yao__help____owner tst__yao__help____owner.cpp)
+target_link_libraries(tst__yao__help____owner yao)
+add_test(tst__yao__help____owner tst__yao__help____owner)
