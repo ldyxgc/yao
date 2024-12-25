@@ -1,0 +1,5 @@
+add_executable(yao__def__check____YAO_CHECK____false yao__def__check____YAO_CHECK____false.cpp)
+target_link_libraries(yao__def__check____YAO_CHECK____false yao)
+
+add_executable(yao__def__check____YAO_CHECK____true yao__def__check____YAO_CHECK____true.cpp)
+target_link_libraries(yao__def__check____YAO_CHECK____true yao)
