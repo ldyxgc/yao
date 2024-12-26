@@ -10,3 +10,6 @@ file(GLOB_RECURSE YAO_SRC src/*.cpp)
 target_sources(yao PRIVATE ${YAO_SRC})
 
 add_subdirectory(exe)
+
+enable_testing()
+add_subdirectory(tst)
