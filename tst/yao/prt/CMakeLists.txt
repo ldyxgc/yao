@@ -1,0 +1,3 @@
+add_executable(tst__yao__prt__print_format tst__yao__prt__print_format.cpp)
+target_link_libraries(tst__yao__prt__print_format yao)
+add_test(tst__yao__prt__print_format tst__yao__prt__print_format)
