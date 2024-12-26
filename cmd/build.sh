@@ -13,4 +13,4 @@ CMAKE_BUILD_TYPE=$(cmake -L -N build | grep CMAKE_BUILD_TYPE | cut -d '=' -f 2)
 cmake --build build --config ${CMAKE_BUILD_TYPE}
 
 # Test
-ctest --test-dir build --build-config ${CMAKE_BUILD_TYPE}
+ctest --test-dir build --build-config ${CMAKE_BUILD_TYPE} --timeout 5
