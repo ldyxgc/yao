@@ -8,3 +8,6 @@ cmake -B build
 
 # Build
 cmake --build build
+
+# Test
+ctest --test-dir build
