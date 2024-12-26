@@ -2,6 +2,18 @@ cmake_minimum_required(VERSION 3.31.3)
 
 project(yao)
 
+set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE STRING
+  "The available build types on multi-config generators" FORCE)
+
+set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING
+  "The build type on single-config generators" FORCE)
+if(CMAKE_BUILD_TYPE STREQUAL "")
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE Debug)
+elseif(NOT CMAKE_BUILD_TYPE IN_LIST CMAKE_CONFIGURATION_TYPES)
+  message(FATAL_ERROR
+    "CMAKE_BUILD_TYPE: `${CMAKE_BUILD_TYPE}` is not supported.")
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 
 message("CMAKE_VERSION = ${CMAKE_VERSION}")
