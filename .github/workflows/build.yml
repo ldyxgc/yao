@@ -1,7 +1,7 @@
 on: push
 
 jobs:
-  build:
+  debug:
     strategy:
       fail-fast: false
 
@@ -13,4 +13,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: bash cmd/build.sh
+      - run: bash cmd/debug.sh
+
+  release:
+    needs: debug
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        GITHUB_RUNNER: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.GITHUB_RUNNER }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: bash cmd/release.sh
