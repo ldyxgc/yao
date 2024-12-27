@@ -4,6 +4,7 @@ project(yao)
 
 set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE STRING
   "The available build types on multi-config generators" FORCE)
+
 set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING
   "The build type on single-config generators" FORCE)
 if(CMAKE_BUILD_TYPE STREQUAL "")
@@ -12,10 +13,38 @@ elseif(NOT CMAKE_BUILD_TYPE IN_LIST CMAKE_CONFIGURATION_TYPES)
   message(FATAL_ERROR "CMAKE_BUILD_TYPE not in ${CMAKE_CONFIGURATION_TYPES}")
 endif()
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  string(JOIN " " CMAKE_CXX_FLAGS -Wall -Wextra -Wpedantic)
+  if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
+  endif()
+elseif((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") OR
+       (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang"))
+  string(JOIN " " CMAKE_CXX_FLAGS -Weverything)
+  if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
+  endif()
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  string(JOIN " " CMAKE_CXX_FLAGS /Wall)
+  if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} /WX)
+  endif()
+else()
+  message(FATAL_ERROR "CMAKE_CXX_COMPILER_ID: unknown compiler")
+endif()
+
 message("CMAKE_VERSION = ${CMAKE_VERSION}")
 message("CMAKE_PROJECT_NAME = ${CMAKE_PROJECT_NAME}")
 message("CMAKE_CONFIGURATION_TYPES = ${CMAKE_CONFIGURATION_TYPES}")
 message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
+message(
+  "CMAKE_CXX:\n"
+  "  CMAKE_CXX_COMPILER = ${CMAKE_CXX_COMPILER}\n"
+  "  CMAKE_CXX_COMPILER_ID = ${CMAKE_CXX_COMPILER_ID}\n"
+  "  CMAKE_CXX_COMPILER_VERSION = ${CMAKE_CXX_COMPILER_VERSION}\n"
+  "  CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}\n"
+  "  CMAKE_CXX_FLAGS = ${CMAKE_CXX_FLAGS}"
+)
 
 add_library(yao INTERFACE)
 include(config.cmake) # ${PROJECT_SOURCE_DIR}/inc/yao/config.hpp
