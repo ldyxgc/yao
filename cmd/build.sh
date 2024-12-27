@@ -16,4 +16,4 @@ cmake --build build --config ${CMAKE_BUILD_TYPE}
 
 # Test
 time \
-ctest --test-dir build --build-config ${CMAKE_BUILD_TYPE}
+ctest --test-dir build --build-config ${CMAKE_BUILD_TYPE} --timeout 5
