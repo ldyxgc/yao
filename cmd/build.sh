@@ -10,7 +10,7 @@ cmake -B build $@
 CMAKE_BUILD_TYPE=$(cmake -L -N build | grep CMAKE_BUILD_TYPE | cut -d '=' -f 2)
 
 # Build
-cmake --build build --config ${CMAKE_BUILD_TYPE}
+cmake --build build --config ${CMAKE_BUILD_TYPE} --parallel
 
 # Test
-ctest --test-dir build --build-config ${CMAKE_BUILD_TYPE} --timeout 5
+ctest --test-dir build --build-config ${CMAKE_BUILD_TYPE} --timeout 5 --parallel
