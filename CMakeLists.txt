@@ -29,8 +29,11 @@ elseif((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") OR
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   string(JOIN " " CMAKE_CXX_FLAGS
     /EHsc # Warning C4530 and C4577; Exception handling model
+
     /Wall
+
     /wd4710 # Function marked inline is not inlined by compiler
+    /wd4711 # Function not marked inline is inlined by compiler
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} /WX)
