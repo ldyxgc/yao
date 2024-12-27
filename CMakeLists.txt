@@ -12,6 +12,11 @@ elseif(NOT CMAKE_BUILD_TYPE IN_LIST CMAKE_CONFIGURATION_TYPES)
   message(FATAL_ERROR "CMAKE_BUILD_TYPE not in ${CMAKE_CONFIGURATION_TYPES}")
 endif()
 
+message("CMAKE_VERSION = ${CMAKE_VERSION}")
+message("CMAKE_PROJECT_NAME = ${CMAKE_PROJECT_NAME}")
+message("CMAKE_CONFIGURATION_TYPES = ${CMAKE_CONFIGURATION_TYPES}")
+message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
+
 add_library(yao INTERFACE)
 include(config.cmake) # ${PROJECT_SOURCE_DIR}/inc/yao/config.hpp
 target_include_directories(yao INTERFACE inc)
