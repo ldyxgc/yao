@@ -30,6 +30,7 @@ message(
 )
 
 add_library(yao)
+include(config.cmake) # ${PROJECT_SOURCE_DIR}/inc/yao/config.hpp
 target_include_directories(yao PUBLIC inc)
 file(GLOB_RECURSE YAO_SRC src/*.cpp)
 target_sources(yao PRIVATE ${YAO_SRC})
