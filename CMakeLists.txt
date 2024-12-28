@@ -16,6 +16,19 @@ endif()
 
 set(CMAKE_CXX_STANDARD 20)
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  string(JOIN " " CMAKE_CXX_FLAGS -Wall -Wextra -Wpedantic)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  string(JOIN " " CMAKE_CXX_FLAGS -Weverything)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+  string(JOIN " " CMAKE_CXX_FLAGS -Weverything)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  string(JOIN " " CMAKE_CXX_FLAGS /Wall)
+else()
+  message(FATAL_ERROR
+    "CMAKE_CXX_COMPILER_ID: `${CMAKE_CXX_COMPILER_ID}` is not supported.")
+endif()
+
 message("CMAKE_VERSION = ${CMAKE_VERSION}")
 message("CMAKE_PROJECT_NAME = ${CMAKE_PROJECT_NAME}")
 message("CMAKE_CONFIGURATION_TYPES = ${CMAKE_CONFIGURATION_TYPES}")
