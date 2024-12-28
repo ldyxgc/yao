@@ -21,7 +21,7 @@ void print_format(std::ostream &os, not_null<czstring> fmt, ...) {
   std::vector<char> buf(len);
 
   va_start(args, fmt);
-  int res = std::vsnprintf(buf.data(), len, fmt, args);
+  [[maybe_unused]] int res = std::vsnprintf(buf.data(), len, fmt, args);
   va_end(args);
   YAO_CLAIM(res >= 0);
 
