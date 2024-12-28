@@ -1,3 +1,7 @@
 add_executable(tst__yao__re__stt__EpsilonState tst__yao__re__stt__EpsilonState.cpp)
 target_link_libraries(tst__yao__re__stt__EpsilonState yao)
 add_test(tst__yao__re__stt__EpsilonState tst__yao__re__stt__EpsilonState)
+
+add_executable(tst__yao__re__stt__SymbolState tst__yao__re__stt__SymbolState.cpp)
+target_link_libraries(tst__yao__re__stt__SymbolState yao)
+add_test(tst__yao__re__stt__SymbolState tst__yao__re__stt__SymbolState)
