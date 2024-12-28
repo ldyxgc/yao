@@ -1,0 +1,7 @@
+add_executable(tst__yao__com__not_null tst__yao__com__not_null.cpp)
+target_link_libraries(tst__yao__com__not_null yao)
+add_test(tst__yao__com__not_null tst__yao__com__not_null)
+
+add_executable(tst__yao__com__owner tst__yao__com__owner.cpp)
+target_link_libraries(tst__yao__com__owner yao)
+add_test(tst__yao__com__owner tst__yao__com__owner)
