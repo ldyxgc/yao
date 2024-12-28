@@ -17,10 +17,11 @@ void print_format(std::ostream &os, not_null<czstring> fmt, ...) {
   va_end(args);
   YAO_CLAIM(res_num >= 0);
 
-  std::vector<char> buf(1 + res_num);
+  std::size_t len = static_cast<std::size_t>(res_num) + 1u;
+  std::vector<char> buf(len);
 
   va_start(args, fmt);
-  int res = std::vsnprintf(buf.data(), buf.size(), fmt, args);
+  int res = std::vsnprintf(buf.data(), len, fmt, args);
   va_end(args);
   YAO_CLAIM(res >= 0);
 
