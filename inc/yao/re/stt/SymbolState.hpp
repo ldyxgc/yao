@@ -6,6 +6,7 @@ namespace yao::re::stt {
 template <typename Symbol> class SymbolState {
 public:
   SymbolState(const Symbol &symbol);
+  SymbolState(Symbol &&symbol);
 
   void match(const Symbol &symbol);
   bool is_final() const;

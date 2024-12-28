@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/SymbolState.hpp"
 
+#include <utility>
+
 #include "yao/def/claim.hpp"
 
 namespace yao::re::stt {
@@ -10,6 +12,10 @@ namespace yao::re::stt {
 template <typename Symbol>
 SymbolState<Symbol>::SymbolState(const Symbol &symbol)
     : _symbol{symbol}, _label{Label::START} {}
+
+template <typename Symbol>
+SymbolState<Symbol>::SymbolState(Symbol &&symbol)
+    : _symbol{std::move(symbol)}, _label{Label::START} {}
 
 template <typename Symbol>
 void SymbolState<Symbol>::match(const Symbol &symbol) {
