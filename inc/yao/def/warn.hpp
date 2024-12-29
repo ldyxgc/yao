@@ -8,7 +8,8 @@
 #define YAO_WARN_PUSH _Pragma("GCC diagnostic push")
 #define YAO_WARN_POP _Pragma("GCC diagnostic pop")
 
-#define YAO_WARN_OFF__FORMAT_NON_LITERAL
+#define YAO_WARN_OFF__FORMAT_NON_LITERAL                                       \
+  _Pragma("GCC diagnostic ignored \"-Wformat-nonliteral\"")
 
 #elif YAO_CONFIG__COMPILER == YAO_CONFIG__COMPILER__CLANG
 
@@ -23,7 +24,7 @@
 #define YAO_WARN_PUSH _Pragma("warning(push)")
 #define YAO_WARN_POP _Pragma("warning(pop)")
 
-#define YAO_WARN_OFF__FORMAT_NON_LITERAL
+#define YAO_WARN_OFF__FORMAT_NON_LITERAL _Pragma("warning(disable:4774)")
 
 #endif
 
