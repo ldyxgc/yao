@@ -1,13 +1,11 @@
 #ifndef __YAO__PRT__PRINT_FORMAT__HPP__
 #define __YAO__PRT__PRINT_FORMAT__HPP__
 
-#include <ostream>
-
-#include "yao/com.hpp"
+#include "yao/prt/impl/func/print_format.hpp"
 
 namespace yao::prt {
 
-void print_format(std::ostream &os, not_null<czstring> fmt, ...);
+constexpr auto print_format = impl::func::print_format;
 
 } // namespace yao::prt
 

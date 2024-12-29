@@ -1,4 +1,4 @@
-#include "yao/prt/print_format.hpp"
+#include "yao/prt/impl/func/print_format.hpp"
 
 #include <cstdarg>
 #include <cstdio>
@@ -6,7 +6,7 @@
 #include "yao/def/claim.hpp"
 #include "yao/def/warn.hpp"
 
-namespace yao::prt {
+namespace yao::prt::impl::func {
 
 void print_format(std::ostream &os, not_null<czstring> fmt, ...) {
   YAO_CLAIM(fmt != nullptr);
@@ -35,4 +35,4 @@ void print_format(std::ostream &os, not_null<czstring> fmt, ...) {
   delete[] buf;
 }
 
-} // namespace yao::prt
+} // namespace yao::prt::impl::func
