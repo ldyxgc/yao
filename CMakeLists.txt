@@ -58,7 +58,12 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     /wd5045 # Insert Spectre mitigation for memory load
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} /WX)
+    string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}
+      /WX # Treats all compiler warnings as errors
+
+      /wd4710 # Function marked inline is not inlined by compiler
+      /wd4711 # Function not marked inline is inlined by compiler
+    )
   endif()
 else()
   message(FATAL_ERROR
