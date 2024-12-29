@@ -13,23 +13,28 @@ namespace yao::prt::impl::tmpl {
 void print_format(std::ostream &os, not_null<czstring> fmt, auto... args) {
   YAO_CLAIM(fmt != nullptr);
 
-  YAO_WARN_PUSH
-  YAO_WARN_OFF__FORMAT_NON_LITERAL
-  int res_num = std::snprintf(nullptr, 0, fmt, args...);
-  YAO_WARN_POP
-  YAO_CLAIM(res_num >= 0);
+  if constexpr (sizeof...(args) == 0) {
+    os << fmt;
 
-  std::size_t len = static_cast<std::size_t>(res_num) + 1u;
-  not_null<owner<zstring>> buf = new char[len];
+  } else {
+    YAO_WARN_PUSH
+    YAO_WARN_OFF__FORMAT_NON_LITERAL
+    int res_num = std::snprintf(nullptr, 0, fmt, args...);
+    YAO_WARN_POP
+    YAO_CLAIM(res_num >= 0);
 
-  YAO_WARN_PUSH
-  YAO_WARN_OFF__FORMAT_NON_LITERAL
-  [[maybe_unused]] int res = std::snprintf(buf, len, fmt, args...);
-  YAO_WARN_POP
-  YAO_CLAIM(res >= 0);
+    std::size_t len = static_cast<std::size_t>(res_num) + 1u;
+    not_null<owner<zstring>> buf = new char[len];
 
-  os << buf;
-  delete[] buf;
+    YAO_WARN_PUSH
+    YAO_WARN_OFF__FORMAT_NON_LITERAL
+    [[maybe_unused]] int res = std::snprintf(buf, len, fmt, args...);
+    YAO_WARN_POP
+    YAO_CLAIM(res >= 0);
+
+    os << buf;
+    delete[] buf;
+  }
 }
 
 } // namespace yao::prt::impl::tmpl
