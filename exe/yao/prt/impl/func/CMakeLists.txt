@@ -1,0 +1,2 @@
+add_executable(yao__prt__impl__func__print_format yao__prt__impl__func__print_format.cpp)
+target_link_libraries(yao__prt__impl__func__print_format yao)
