@@ -84,6 +84,7 @@ message(
 )
 
 add_library(yao INTERFACE)
+include(config.cmake) # ${PROJECT_SOURCE_DIR}/inc/yao/config.hpp
 target_include_directories(yao INTERFACE inc)
 
 add_subdirectory(exe)
