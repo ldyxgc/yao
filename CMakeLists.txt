@@ -26,6 +26,8 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     -Wconversion
     -Wformat=2
     -Wsign-conversion # Disabled by default with -Wconversion
+    -Wswitch-default
+    -Wswitch-enum
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
@@ -35,6 +37,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     -Weverything
 
     -Wno-c++98-compat
+    -Wno-covered-switch-default
     -Wno-reserved-identifier
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -45,6 +48,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     -Weverything
 
     -Wno-c++98-compat
+    -Wno-covered-switch-default
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
