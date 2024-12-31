@@ -6,9 +6,12 @@
 
 namespace yao::re::stt {
 
-template <typename Symbol>
-  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 class SymbolState {
+public:
+  using Symbol = _Symbol;
+
 public:
   SymbolState(const Symbol &symbol);
 

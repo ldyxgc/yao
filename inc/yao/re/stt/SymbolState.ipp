@@ -7,14 +7,14 @@
 
 namespace yao::re::stt {
 
-template <typename Symbol>
-  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
-SymbolState<Symbol>::SymbolState(const Symbol &symbol)
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+SymbolState<_Symbol>::SymbolState(const Symbol &symbol)
     : _symbol{symbol}, _label{Label::START} {}
 
-template <typename Symbol>
-  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
-void SymbolState<Symbol>::match(const Symbol &symbol) {
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+void SymbolState<_Symbol>::match(const Symbol &symbol) {
   switch (_label) {
   case Label::START:
     _label = _symbol == symbol ? Label::FINAL : Label::DEAD;
@@ -30,15 +30,15 @@ void SymbolState<Symbol>::match(const Symbol &symbol) {
   }
 }
 
-template <typename Symbol>
-  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
-bool SymbolState<Symbol>::is_final() const {
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+bool SymbolState<_Symbol>::is_final() const {
   return _label == Label::FINAL;
 }
 
-template <typename Symbol>
-  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
-bool SymbolState<Symbol>::is_dead() const {
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+bool SymbolState<_Symbol>::is_dead() const {
   return _label == Label::DEAD;
 }
 
