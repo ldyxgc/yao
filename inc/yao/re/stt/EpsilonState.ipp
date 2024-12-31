@@ -8,9 +8,12 @@
 namespace yao::re::stt {
 
 template <typename Symbol>
+  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
 EpsilonState<Symbol>::EpsilonState() : _label(Label::FINAL) {}
 
-template <typename Symbol> void EpsilonState<Symbol>::match(const Symbol &) {
+template <typename Symbol>
+  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
+void EpsilonState<Symbol>::match(const Symbol &) {
   switch (_label) {
   case Label::FINAL:
     _label = Label::DEAD;
@@ -23,11 +26,15 @@ template <typename Symbol> void EpsilonState<Symbol>::match(const Symbol &) {
   }
 }
 
-template <typename Symbol> bool EpsilonState<Symbol>::is_final() const {
+template <typename Symbol>
+  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
+bool EpsilonState<Symbol>::is_final() const {
   return _label == Label::FINAL;
 }
 
-template <typename Symbol> bool EpsilonState<Symbol>::is_dead() const {
+template <typename Symbol>
+  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
+bool EpsilonState<Symbol>::is_dead() const {
   return _label == Label::DEAD;
 }
 

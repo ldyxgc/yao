@@ -1,9 +1,14 @@
 #ifndef __YAO__RE__STT__SYMBOL_STATE__HPP__
 #define __YAO__RE__STT__SYMBOL_STATE__HPP__
 
+#include "yao/re/c_ct_Symbol.hpp"
+#include "yao/req/c_r_no_cvref.hpp"
+
 namespace yao::re::stt {
 
-template <typename Symbol> class SymbolState {
+template <typename Symbol>
+  requires req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>
+class SymbolState {
 public:
   SymbolState(const Symbol &symbol);
 
