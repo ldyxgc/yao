@@ -15,7 +15,7 @@ private:
   enum class Label { START, FINAL, DEAD };
 
 private:
-  const Symbol _symbol;
+  Symbol _symbol; // const
   Label _label;
 };
 
