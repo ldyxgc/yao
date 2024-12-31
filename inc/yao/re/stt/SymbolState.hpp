@@ -19,6 +19,9 @@ private:
   Label _label;
 };
 
+template <typename Symbol>
+SymbolState(const Symbol &symbol) -> SymbolState<Symbol>;
+
 } // namespace yao::re::stt
 
 #include "yao/re/stt/SymbolState.ipp"
