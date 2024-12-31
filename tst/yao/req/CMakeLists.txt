@@ -1,0 +1,3 @@
+add_executable(tst__yao__req__c_r_no_cvref tst__yao__req__c_r_no_cvref.cpp)
+target_link_libraries(tst__yao__req__c_r_no_cvref yao)
+add_test(tst__yao__req__c_r_no_cvref tst__yao__req__c_r_no_cvref)
