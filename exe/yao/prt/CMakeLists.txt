@@ -1,2 +1,5 @@
 add_executable(yao__prt__print_type yao__prt__print_type.cpp)
 target_link_libraries(yao__prt__print_type yao)
+
+add_executable(yao__prt__print_value yao__prt__print_value.cpp)
+target_link_libraries(yao__prt__print_value yao)
