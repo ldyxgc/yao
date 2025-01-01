@@ -13,7 +13,7 @@ void print_type(std::ostream &os) {
   else if constexpr (std::same_as<T, char>)
     os << "char";
   else
-    static_assert(false);
+    static_assert([]() { return false; }());
 }
 
 template <typename T, bool ns, bool tp>
@@ -41,7 +41,7 @@ void print_type(std::ostream &os) {
   else if constexpr (std::same_as<T, std::uint64_t>)
     os << "uint64_t";
   else
-    static_assert(false);
+    static_assert([]() { return false; }());
 }
 
 } // namespace yao::prt
