@@ -1,6 +1,8 @@
 #ifndef __YAO__RE__STT__SYMBOL_STATE__HPP__
 #define __YAO__RE__STT__SYMBOL_STATE__HPP__
 
+#include <type_traits>
+
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
@@ -15,6 +17,7 @@ public:
 
 public:
   SymbolState(const Symbol &symbol);
+  SymbolState(Symbol &&symbol);
 
   void match(const Symbol &symbol);
   bool is_final() const;
@@ -31,7 +34,8 @@ private:
 };
 
 template <typename Symbol>
-SymbolState(const Symbol &symbol) -> SymbolState<Symbol>;
+  requires c_ct_Symbol<std::remove_cvref_t<Symbol>>
+SymbolState(Symbol &&symbol) -> SymbolState<std::remove_cvref_t<Symbol>>;
 
 } // namespace yao::re::stt
 

@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/SymbolState.hpp"
 
+#include <utility>
+
 #include "yao/def/claim.hpp"
 
 namespace yao::re::stt {
@@ -11,6 +13,11 @@ template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 SymbolState<_Symbol>::SymbolState(const Symbol &symbol)
     : _symbol{symbol}, _label{Label::START} {}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+SymbolState<_Symbol>::SymbolState(Symbol &&symbol)
+    : _symbol{std::move(symbol)}, _label{Label::START} {}
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
