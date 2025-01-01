@@ -49,6 +49,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
 
     -Wno-c++98-compat
     -Wno-covered-switch-default
+    -Wno-zero-as-null-pointer-constant
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
