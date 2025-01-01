@@ -1,20 +1,33 @@
-#include "yao/re/stt/EpsilonState.hpp"
-
 #include "yao/def/check.hpp"
+#include "yao/re/stt/EpsilonState.hpp"
 
 int main() {
 
-  yao::re::stt::EpsilonState<int> epsilon_state;
-  YAO_CHECK(epsilon_state.is_final() == true);
-  YAO_CHECK(epsilon_state.is_dead() == false);
+  using EpsilonState = yao::re::stt::EpsilonState<int>;
 
-  epsilon_state.match(0);
-  YAO_CHECK(epsilon_state.is_final() == false);
-  YAO_CHECK(epsilon_state.is_dead() == true);
+  {
+    EpsilonState epsilon_state;
+    YAO_CHECK(epsilon_state.is_final() == true);
+    YAO_CHECK(epsilon_state.is_dead() == false);
 
-  epsilon_state.match(0);
-  YAO_CHECK(epsilon_state.is_final() == false);
-  YAO_CHECK(epsilon_state.is_dead() == true);
+    epsilon_state.match(0);
+    YAO_CHECK(epsilon_state.is_final() == false);
+    YAO_CHECK(epsilon_state.is_dead() == true);
+
+    epsilon_state.match(0);
+    YAO_CHECK(epsilon_state.is_final() == false);
+    YAO_CHECK(epsilon_state.is_dead() == true);
+  }
+
+  {
+    EpsilonState epsilon_state;
+    YAO_CHECK((epsilon_state == epsilon_state) == true);
+    YAO_CHECK((epsilon_state != epsilon_state) == false);
+    YAO_CHECK((epsilon_state < epsilon_state) == false);
+    YAO_CHECK((epsilon_state <= epsilon_state) == true);
+    YAO_CHECK((epsilon_state > epsilon_state) == false);
+    YAO_CHECK((epsilon_state >= epsilon_state) == true);
+  }
 
   return 0;
 }
