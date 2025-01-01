@@ -6,6 +6,8 @@ namespace yao::re::stt {
 template <typename State> class StateBase {
 protected:
   StateBase();
+
+  friend auto operator<=>(StateBase lhs, StateBase rhs) = default;
 };
 
 } // namespace yao::re::stt

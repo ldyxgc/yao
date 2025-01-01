@@ -20,6 +20,8 @@ public:
   bool is_final() const;
   bool is_dead() const;
 
+  friend auto operator<=>(EpsilonState lhs, EpsilonState rhs) = default;
+
 private:
   enum class Label { FINAL, DEAD };
 

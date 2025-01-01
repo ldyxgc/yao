@@ -20,6 +20,8 @@ public:
   bool is_final() const;
   bool is_dead() const;
 
+  auto operator<=>(const SymbolState &rhs) const = default;
+
 private:
   enum class Label { START, FINAL, DEAD };
 
