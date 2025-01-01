@@ -47,7 +47,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   string(JOIN " " CMAKE_CXX_FLAGS
     -Weverything
 
-    -Wno-c++98-compat
+    -Wno-c++98-compat-pedantic
     -Wno-covered-switch-default
     -Wno-zero-as-null-pointer-constant
   )
