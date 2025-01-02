@@ -1,6 +1,8 @@
 #ifndef __YAO__RE__STT__EPSILON_STATE__HPP__
 #define __YAO__RE__STT__EPSILON_STATE__HPP__
 
+#include <ostream>
+
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
@@ -21,6 +23,11 @@ public:
   bool is_dead() const;
 
   friend auto operator<=>(EpsilonState lhs, EpsilonState rhs) = default;
+
+  template <bool ns = false, bool tp = false>
+  static void print_type(std::ostream &os);
+  template <bool ns = false, bool tp = false>
+  void print_value(std::ostream &os) const;
 
 private:
   enum class Label { FINAL, DEAD };

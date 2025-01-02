@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__SYMBOL_STATE__HPP__
 #define __YAO__RE__STT__SYMBOL_STATE__HPP__
 
+#include <ostream>
 #include <type_traits>
 
 #include "yao/re/c_ct_Symbol.hpp"
@@ -24,6 +25,11 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const SymbolState &rhs) const = default;
+
+  template <bool ns = false, bool tp = false>
+  static void print_type(std::ostream &os);
+  template <bool ns = false, bool tp = false>
+  void print_value(std::ostream &os) const;
 
 private:
   enum class Label { START, FINAL, DEAD };
