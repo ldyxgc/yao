@@ -38,6 +38,12 @@ void print_value(std::ostream &os, T t) {
     static_assert([]() { return false; }());
 }
 
+template <bool ns, bool tp, typename T>
+  requires c_mf_print_value<T>
+void print_value(std::ostream &os, const T &obj) {
+  obj.template print_value<ns, tp>(os);
+}
+
 } // namespace yao::prt
 
 #endif
