@@ -1,7 +1,44 @@
 #include <cstdint>
 #include <iostream>
+#include <ostream>
 
+#include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
+
+namespace box {
+
+template <typename T> struct Box {
+  T _t;
+  Box(const T &t = {});
+  template <bool ns, bool tp> static void print_type(std::ostream &os);
+  template <bool ns, bool tp> void print_value(std::ostream &os) const;
+};
+
+template <typename T> Box<T>::Box(const T &t) : _t{t} {}
+
+template <typename T>
+template <bool ns, bool tp>
+void Box<T>::print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "box::";
+  os << "Box";
+  if constexpr (tp) {
+    os << '<';
+    yao::prt::print_type<T, ns, tp>(os);
+    os << '>';
+  }
+}
+
+template <typename T>
+template <bool ns, bool tp>
+void Box<T>::print_value(std::ostream &os) const {
+  print_type<ns, tp>(os);
+  os << ": {_t:";
+  yao::prt::print_value<ns, tp>(os, _t);
+  os << '}';
+}
+
+} // namespace box
 
 int main() {
 
@@ -42,6 +79,10 @@ int main() {
   demo(std::int64_t{INT64_MAX});
   demo(std::uint64_t{0});
   demo(std::uint64_t{UINT64_MAX});
+  std::cout << '\n';
+
+  demo(box::Box<std::int8_t>{});
+  demo(box::Box<box::Box<std::int8_t>>{});
 
   return 0;
 }
