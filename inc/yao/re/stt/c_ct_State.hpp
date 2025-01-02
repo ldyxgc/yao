@@ -4,6 +4,8 @@
 #include <compare>
 #include <concepts>
 
+#include "yao/prt/c_mf_print_value.hpp"
+#include "yao/prt/c_smf_print_type.hpp"
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
 
@@ -20,7 +22,8 @@ concept c_ct_State =
       static_cast<bool (State::*)() const>(&State::is_final);
       static_cast<bool (State::*)() const>(&State::is_dead);
     } && //
-    std::totally_ordered<State> && std::three_way_comparable<State>;
+    std::totally_ordered<State> && std::three_way_comparable<State> &&
+    prt::c_smf_print_type<State> && prt::c_mf_print_value<State>;
 
 } // namespace impl
 
