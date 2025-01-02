@@ -3,8 +3,6 @@
 
 #include "yao/prt/print_value.hpp"
 
-#include <format>
-
 #include "yao/prt/print_type.hpp"
 
 namespace yao::prt {
@@ -20,10 +18,14 @@ void print_value(std::ostream &os, T t) {
   os << ": ";
   if constexpr (std::same_as<T, bool>)
     os << (t ? "true" : "false");
-  else if constexpr (std::same_as<T, char>)
-    os << std::format("0x{:02X}", t);
-  else if constexpr (std::same_as<T, std::int8_t> ||
-                     std::same_as<T, std::uint8_t>)
+  else if constexpr (std::same_as<T, char>) {
+    auto hex = [](int val) -> char {
+      int low = val & 0x0F;
+      return char((low < 10 ? '0' : 'A' - 10) + low);
+    };
+    os << "0x" << hex(t >> 4) << hex(t);
+  } else if constexpr (std::same_as<T, std::int8_t> ||
+                       std::same_as<T, std::uint8_t>)
     os << int{t};
   else if constexpr (std::same_as<T, std::int16_t> ||
                      std::same_as<T, std::uint16_t> ||
