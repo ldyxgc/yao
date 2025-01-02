@@ -44,6 +44,12 @@ void print_type(std::ostream &os) {
     static_assert([]() { return false; }());
 }
 
+template <typename T, bool ns, bool tp>
+  requires c_smf_print_type<T>
+void print_type(std::ostream &os) {
+  T::template print_type<ns, tp>(os);
+}
+
 } // namespace yao::prt
 
 #endif

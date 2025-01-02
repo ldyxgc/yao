@@ -1,8 +1,30 @@
 #include <cstdint>
+#include <ostream>
 #include <sstream>
 
 #include "yao/def/check.hpp"
 #include "yao/prt/print_type.hpp"
+
+namespace box {
+
+template <typename T> struct Box {
+  template <bool ns, bool tp> static void print_type(std::ostream &os);
+};
+
+template <typename T>
+template <bool ns, bool tp>
+void Box<T>::print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "box::";
+  os << "Box";
+  if constexpr (tp) {
+    os << '<';
+    yao::prt::print_type<T, ns, tp>(os);
+    os << '>';
+  }
+}
+
+} // namespace box
 
 int main() {
 
@@ -24,6 +46,9 @@ int main() {
     YAO_CHECK(test(std::uint32_t{}, "uint32_t"));
     YAO_CHECK(test(std::int64_t{}, "int64_t"));
     YAO_CHECK(test(std::uint64_t{}, "uint64_t"));
+
+    YAO_CHECK(test(box::Box<std::int8_t>{}, "Box"));
+    YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{}, "Box"));
   }
 
   { // ns = true, tp = false
@@ -44,6 +69,9 @@ int main() {
     YAO_CHECK(test(std::uint32_t{}, "std::uint32_t"));
     YAO_CHECK(test(std::int64_t{}, "std::int64_t"));
     YAO_CHECK(test(std::uint64_t{}, "std::uint64_t"));
+
+    YAO_CHECK(test(box::Box<std::int8_t>{}, "box::Box"));
+    YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{}, "box::Box"));
   }
 
   { // ns = false, tp = true
@@ -64,6 +92,9 @@ int main() {
     YAO_CHECK(test(std::uint32_t{}, "uint32_t"));
     YAO_CHECK(test(std::int64_t{}, "int64_t"));
     YAO_CHECK(test(std::uint64_t{}, "uint64_t"));
+
+    YAO_CHECK(test(box::Box<std::int8_t>{}, "Box<int8_t>"));
+    YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{}, "Box<Box<int8_t>>"));
   }
 
   { // ns = true, tp = true
@@ -84,6 +115,10 @@ int main() {
     YAO_CHECK(test(std::uint32_t{}, "std::uint32_t"));
     YAO_CHECK(test(std::int64_t{}, "std::int64_t"));
     YAO_CHECK(test(std::uint64_t{}, "std::uint64_t"));
+
+    YAO_CHECK(test(box::Box<std::int8_t>{}, "box::Box<std::int8_t>"));
+    YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{},
+                   "box::Box<box::Box<std::int8_t>>"));
   }
 
   return 0;

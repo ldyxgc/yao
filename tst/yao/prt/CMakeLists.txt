@@ -1,3 +1,7 @@
+add_executable(tst__yao__prt__c_smf_print_type tst__yao__prt__c_smf_print_type.cpp)
+target_link_libraries(tst__yao__prt__c_smf_print_type yao)
+add_test(tst__yao__prt__c_smf_print_type tst__yao__prt__c_smf_print_type)
+
 add_executable(tst__yao__prt__print_type tst__yao__prt__print_type.cpp)
 target_link_libraries(tst__yao__prt__print_type yao)
 add_test(tst__yao__prt__print_type tst__yao__prt__print_type)
