@@ -36,7 +36,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   string(JOIN " " CMAKE_CXX_FLAGS
     -Weverything
 
-    -Wno-c++98-compat
+    -Wno-c++98-compat-pedantic
     -Wno-covered-switch-default
     -Wno-reserved-identifier
   )
