@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "yao/def/check.hpp"
 #include "yao/re/stt/SymbolState.hpp"
 
