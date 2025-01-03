@@ -8,6 +8,35 @@
 
 namespace yao::re::stt {
 
+namespace impl {
+
+template <typename T, bool ns, bool tp>
+  requires std::same_as<T, EpsilonStateBase::Label>
+void EpsilonStateBase::print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "yao::re::stt::impl::EpsilonStateBase::";
+  os << "Label";
+}
+
+template <bool ns, bool tp>
+void EpsilonStateBase::print_value(std::ostream &os, Label label) {
+  print_type<Label, ns, tp>(os);
+  os << ": ";
+  switch (label) {
+  case Label::FINAL:
+    os << "FINAL";
+    break;
+  case Label::DEAD:
+    os << "DEAD";
+    break;
+  default:
+    YAO_CLAIM(false);
+    break;
+  }
+}
+
+} // namespace impl
+
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 EpsilonState<_Symbol>::EpsilonState() : _label(Label::FINAL) {}
@@ -59,37 +88,8 @@ template <bool ns, bool tp>
 void EpsilonState<_Symbol>::print_value(std::ostream &os) const {
   print_type<ns, tp>(os);
   os << ": {_label:";
-  print_value<ns, tp>(os, _label);
+  EpsilonStateBase::print_value<ns, tp>(os, _label);
   os << '}';
-}
-
-template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-                                       template <typename T, bool ns, bool tp>
-             requires std::same_as<T, typename EpsilonState<_Symbol>::Label>
-void EpsilonState<_Symbol>::print_type(std::ostream &os) {
-  if constexpr (ns)
-    os << "yao::re::stt::EpsilonState::";
-  os << "Label";
-}
-
-template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-template <bool ns, bool tp>
-void EpsilonState<_Symbol>::print_value(std::ostream &os, Label label) {
-  print_type<Label, ns, tp>(os);
-  os << ": ";
-  switch (label) {
-  case Label::FINAL:
-    os << "FINAL";
-    break;
-  case Label::DEAD:
-    os << "DEAD";
-    break;
-  default:
-    YAO_CLAIM(false);
-    break;
-  }
 }
 
 } // namespace yao::re::stt
