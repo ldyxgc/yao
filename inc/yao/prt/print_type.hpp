@@ -6,6 +6,8 @@
 #include <ostream>
 
 #include "yao/prt/c_smf_print_type.hpp"
+#include "yao/req/c_t_std_map.hpp"
+#include "yao/req/c_t_std_set.hpp"
 
 namespace yao::prt {
 
@@ -25,6 +27,16 @@ void print_type(std::ostream &os);
 // ns: namespace, tp: template
 template <typename T, bool ns = false, bool tp = false>
   requires c_smf_print_type<T>
+void print_type(std::ostream &os);
+
+// ns: namespace, tp: template
+template <typename T, bool ns = false, bool tp = false>
+  requires req::c_t_std_set<T>
+void print_type(std::ostream &os);
+
+// ns: namespace, tp: template
+template <typename T, bool ns = false, bool tp = false>
+  requires req::c_t_std_map<T>
 void print_type(std::ostream &os);
 
 } // namespace yao::prt

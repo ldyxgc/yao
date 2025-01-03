@@ -50,6 +50,34 @@ void print_type(std::ostream &os) {
   T::template print_type<ns, tp>(os);
 }
 
+template <typename T, bool ns, bool tp>
+  requires req::c_t_std_set<T>
+void print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "std::";
+  os << "set";
+  if constexpr (tp) {
+    os << '<';
+    print_type<typename T::key_type, ns, tp>(os);
+    os << '>';
+  }
+}
+
+template <typename T, bool ns, bool tp>
+  requires req::c_t_std_map<T>
+void print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "std::";
+  os << "map";
+  if constexpr (tp) {
+    os << '<';
+    print_type<typename T::key_type, ns, tp>(os);
+    os << '|';
+    print_type<typename T::mapped_type, ns, tp>(os);
+    os << '>';
+  }
+}
+
 } // namespace yao::prt
 
 #endif
