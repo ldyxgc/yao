@@ -4,6 +4,7 @@
 #include <concepts>
 #include <ostream>
 
+#include "yao/def/attr.hpp"
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
@@ -12,7 +13,7 @@ namespace yao::re::stt {
 
 namespace impl {
 
-class EpsilonStateBase {
+class YAO_ATTR__EMPTY_BASES EpsilonStateBase {
 protected:
   EpsilonStateBase() = default;
 
