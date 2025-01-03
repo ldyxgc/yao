@@ -1,6 +1,8 @@
 #include <cstdint>
 #include <iostream>
+#include <map>
 #include <ostream>
+#include <set>
 
 #include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
@@ -83,6 +85,10 @@ int main() {
 
   demo(box::Box<std::int8_t>{});
   demo(box::Box<box::Box<std::int8_t>>{});
+  std::cout << '\n';
+
+  demo(std::set<std::int8_t>{-1, -2, -3});
+  demo(std::map<std::int8_t, std::uint8_t>{{-1, 1}, {-2, 2}, {-3, 3}});
 
   return 0;
 }

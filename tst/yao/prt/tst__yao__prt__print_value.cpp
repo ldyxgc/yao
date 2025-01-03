@@ -1,5 +1,7 @@
 #include <cstdint>
+#include <map>
 #include <ostream>
+#include <set>
 #include <sstream>
 
 #include "yao/def/check.hpp"
@@ -82,6 +84,19 @@ int main() {
     YAO_CHECK(test(box::Box<std::int8_t>{}, "Box: {_t:int8_t: 0}"));
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{},
                    "Box: {_t:Box: {_t:int8_t: 0}}"));
+
+    YAO_CHECK(test(std::set<std::int8_t>{-1, -2, -3}, "set: {"
+                                                      "0:int8_t: -3,"
+                                                      "1:int8_t: -2,"
+                                                      "2:int8_t: -1"
+                                                      "}"));
+    YAO_CHECK(
+        test(std::map<std::int8_t, std::uint8_t>{{-1, 1}, {-2, 2}, {-3, 3}},
+             "map: {"
+             "0: {int8_t: -3,uint8_t: 3},"
+             "1: {int8_t: -2,uint8_t: 2},"
+             "2: {int8_t: -1,uint8_t: 1}"
+             "}"));
   }
 
   { // ns = true, tp = false
@@ -106,6 +121,19 @@ int main() {
     YAO_CHECK(test(box::Box<std::int8_t>{}, "box::Box: {_t:std::int8_t: 0}"));
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{},
                    "box::Box: {_t:box::Box: {_t:std::int8_t: 0}}"));
+
+    YAO_CHECK(test(std::set<std::int8_t>{-1, -2, -3}, "std::set: {"
+                                                      "0:std::int8_t: -3,"
+                                                      "1:std::int8_t: -2,"
+                                                      "2:std::int8_t: -1"
+                                                      "}"));
+    YAO_CHECK(
+        test(std::map<std::int8_t, std::uint8_t>{{-1, 1}, {-2, 2}, {-3, 3}},
+             "std::map: {"
+             "0: {std::int8_t: -3,std::uint8_t: 3},"
+             "1: {std::int8_t: -2,std::uint8_t: 2},"
+             "2: {std::int8_t: -1,std::uint8_t: 1}"
+             "}"));
   }
 
   { // ns = false, tp = true
@@ -130,6 +158,19 @@ int main() {
     YAO_CHECK(test(box::Box<std::int8_t>{}, "Box<int8_t>: {_t:int8_t: 0}"));
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{},
                    "Box<Box<int8_t>>: {_t:Box<int8_t>: {_t:int8_t: 0}}"));
+
+    YAO_CHECK(test(std::set<std::int8_t>{-1, -2, -3}, "set<int8_t>: {"
+                                                      "0:int8_t: -3,"
+                                                      "1:int8_t: -2,"
+                                                      "2:int8_t: -1"
+                                                      "}"));
+    YAO_CHECK(
+        test(std::map<std::int8_t, std::uint8_t>{{-1, 1}, {-2, 2}, {-3, 3}},
+             "map<int8_t|uint8_t>: {"
+             "0: {int8_t: -3,uint8_t: 3},"
+             "1: {int8_t: -2,uint8_t: 2},"
+             "2: {int8_t: -1,uint8_t: 1}"
+             "}"));
   }
 
   { // ns = true, tp = true
@@ -156,6 +197,19 @@ int main() {
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{},
                    "box::Box<box::Box<std::int8_t>>: "
                    "{_t:box::Box<std::int8_t>: {_t:std::int8_t: 0}}"));
+
+    YAO_CHECK(test(std::set<std::int8_t>{-1, -2, -3}, "std::set<std::int8_t>: {"
+                                                      "0:std::int8_t: -3,"
+                                                      "1:std::int8_t: -2,"
+                                                      "2:std::int8_t: -1"
+                                                      "}"));
+    YAO_CHECK(
+        test(std::map<std::int8_t, std::uint8_t>{{-1, 1}, {-2, 2}, {-3, 3}},
+             "std::map<std::int8_t|std::uint8_t>: {"
+             "0: {std::int8_t: -3,std::uint8_t: 3},"
+             "1: {std::int8_t: -2,std::uint8_t: 2},"
+             "2: {std::int8_t: -1,std::uint8_t: 1}"
+             "}"));
   }
 
   return 0;

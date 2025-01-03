@@ -44,6 +44,49 @@ void print_value(std::ostream &os, const T &obj) {
   obj.template print_value<ns, tp>(os);
 }
 
+template <bool ns, bool tp, typename T>
+  requires req::c_t_std_set<T>
+void print_value(std::ostream &os, const T &set) {
+  print_type<T, ns, tp>(os);
+  os << ": {";
+  {
+    auto ite = set.cbegin(), end = set.cend();
+    std::size_t idx = 0;
+    while (ite != end) {
+      if (idx)
+        os << ',';
+      os << idx << ':';
+      print_value<ns, tp>(os, *ite);
+      ite++;
+      idx++;
+    }
+  }
+  os << '}';
+}
+
+template <bool ns, bool tp, typename T>
+  requires req::c_t_std_map<T>
+void print_value(std::ostream &os, const T &map) {
+  print_type<T, ns, tp>(os);
+  os << ": {";
+  {
+    auto ite = map.cbegin(), end = map.cend();
+    std::size_t idx = 0;
+    while (ite != end) {
+      if (idx)
+        os << ',';
+      os << idx << ": {";
+      print_value<ns, tp>(os, ite->first);
+      os << ',';
+      print_value<ns, tp>(os, ite->second);
+      os << '}';
+      ite++;
+      idx++;
+    }
+  }
+  os << '}';
+}
+
 } // namespace yao::prt
 
 #endif
