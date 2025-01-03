@@ -1,6 +1,8 @@
 #include <cstdint>
 #include <iostream>
+#include <map>
 #include <ostream>
+#include <set>
 
 #include "yao/prt/print_type.hpp"
 
@@ -48,6 +50,10 @@ int main() {
 
   demo.operator()<box::Box<std::int8_t>>();
   demo.operator()<box::Box<box::Box<std::int8_t>>>();
+  std::cout << '\n';
+
+  demo.operator()<std::set<box::Box<char>>>();
+  demo.operator()<std::map<box::Box<char>, box::Box<bool>>>();
 
   return 0;
 }

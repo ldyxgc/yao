@@ -1,5 +1,7 @@
 #include <cstdint>
+#include <map>
 #include <ostream>
+#include <set>
 
 #include "yao/prt/c_f_print_type.hpp"
 
@@ -27,5 +29,8 @@ static_assert(c_f_print_type<std::uint64_t> == true);
 
 static_assert(c_f_print_type<Accept> == true);
 static_assert(c_f_print_type<Reject> == false);
+
+static_assert(c_f_print_type<std::set<char>> == true);
+static_assert(c_f_print_type<std::map<char, bool>> == true);
 
 int main() { return 0; }

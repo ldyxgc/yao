@@ -1,5 +1,7 @@
 #include <cstdint>
+#include <map>
 #include <ostream>
+#include <set>
 #include <sstream>
 
 #include "yao/def/check.hpp"
@@ -49,6 +51,9 @@ int main() {
 
     YAO_CHECK(test(box::Box<std::int8_t>{}, "Box"));
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{}, "Box"));
+
+    YAO_CHECK(test(std::set<box::Box<char>>{}, "set"));
+    YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{}, "map"));
   }
 
   { // ns = true, tp = false
@@ -72,6 +77,9 @@ int main() {
 
     YAO_CHECK(test(box::Box<std::int8_t>{}, "box::Box"));
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{}, "box::Box"));
+
+    YAO_CHECK(test(std::set<box::Box<char>>{}, "std::set"));
+    YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{}, "std::map"));
   }
 
   { // ns = false, tp = true
@@ -95,6 +103,10 @@ int main() {
 
     YAO_CHECK(test(box::Box<std::int8_t>{}, "Box<int8_t>"));
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{}, "Box<Box<int8_t>>"));
+
+    YAO_CHECK(test(std::set<box::Box<char>>{}, "set<Box<char>>"));
+    YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{},
+                   "map<Box<char>|Box<bool>>"));
   }
 
   { // ns = true, tp = true
@@ -119,6 +131,10 @@ int main() {
     YAO_CHECK(test(box::Box<std::int8_t>{}, "box::Box<std::int8_t>"));
     YAO_CHECK(test(box::Box<box::Box<std::int8_t>>{},
                    "box::Box<box::Box<std::int8_t>>"));
+
+    YAO_CHECK(test(std::set<box::Box<char>>{}, "std::set<box::Box<char>>"));
+    YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{},
+                   "std::map<box::Box<char>|box::Box<bool>>"));
   }
 
   return 0;
