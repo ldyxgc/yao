@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__SYMBOL_STATE__HPP__
 #define __YAO__RE__STT__SYMBOL_STATE__HPP__
 
+#include <concepts>
 #include <ostream>
 #include <type_traits>
 
@@ -10,9 +11,32 @@
 
 namespace yao::re::stt {
 
+namespace impl {
+
+class YAO_ATTR__EMPTY_BASES SymbolStateBase {
+protected:
+  SymbolStateBase() = default;
+
+  enum class Label {
+    START,
+    FINAL,
+    DEAD,
+  };
+  template <typename T, bool ns = false, bool tp = false>
+    requires std::same_as<T, SymbolStateBase::Label>
+  static void print_type(std::ostream &os);
+  template <bool ns = false, bool tp = false>
+  static void print_value(std::ostream &os, Label label);
+
+  friend auto operator<=>(SymbolStateBase lhs, SymbolStateBase rhs) = default;
+};
+
+} // namespace impl
+
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-class SymbolState : private StateBase<SymbolState<_Symbol>> {
+class SymbolState : private StateBase<SymbolState<_Symbol>>,
+                    private impl::SymbolStateBase {
 public:
   using Symbol = _Symbol;
 
@@ -32,16 +56,13 @@ public:
   void print_value(std::ostream &os) const;
 
 private:
-  enum class Label { START, FINAL, DEAD };
-
-private:
   Symbol _symbol; // const
   Label _label;
 };
 
-template <typename Symbol>
-  requires c_ct_Symbol<std::remove_cvref_t<Symbol>>
-SymbolState(Symbol &&symbol) -> SymbolState<std::remove_cvref_t<Symbol>>;
+template <typename Symbol, typename _Symbol = std::remove_cvref_t<Symbol>>
+  requires c_ct_Symbol<_Symbol>
+SymbolState(Symbol &&symbol) -> SymbolState<_Symbol>;
 
 } // namespace yao::re::stt
 
