@@ -6,3 +6,6 @@ target_link_libraries(yao__re__stt__KleeneState yao)
 
 add_executable(yao__re__stt__SymbolState yao__re__stt__SymbolState.cpp)
 target_link_libraries(yao__re__stt__SymbolState yao)
+
+add_executable(yao__re__stt__UnionState yao__re__stt__UnionState.cpp)
+target_link_libraries(yao__re__stt__UnionState yao)
