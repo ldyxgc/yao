@@ -10,9 +10,18 @@
 
 namespace yao::re::stt {
 
+namespace impl {
+
+// c: concept, r: require
 template <typename LhsState, typename RhsState>
-  requires req::c_r_no_cvref<LhsState> && req::c_r_no_cvref<RhsState> &&
-           c_r_State_with_same_Symbol<LhsState, RhsState>
+concept c_r_UnionState =
+    req::c_r_no_cvref<LhsState> && req::c_r_no_cvref<RhsState> &&
+    c_r_State_with_same_Symbol<LhsState, RhsState>;
+
+} // namespace impl
+
+template <typename LhsState, typename RhsState>
+  requires impl::c_r_UnionState<LhsState, RhsState>
 class UnionState : private StateBase<UnionState<LhsState, RhsState>> {
 public:
   using Symbol = typename LhsState::Symbol;
