@@ -4,10 +4,10 @@
 #include <cstdlib>
 #include <iostream>
 
-#define YAO_CHECK(expr)                                                        \
-  ((expr) ? void(0)                                                            \
-          : (std::cerr << __FILE__ << ':' << __LINE__ << ": Check `" << #expr  \
-                       << "` failed\n",                                        \
-             std::exit(EXIT_FAILURE)))
+#define YAO_CHECK(...)                                                         \
+  ((__VA_ARGS__) ? void(0)                                                     \
+                 : (std::cerr << __FILE__ << ':' << __LINE__ << ": Check `"    \
+                              << #__VA_ARGS__ << "` failed\n",                 \
+                    std::exit(EXIT_FAILURE)))
 
 #endif
