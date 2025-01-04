@@ -25,6 +25,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     -Warith-conversion # This affects warnings from -Wconversion
     -Wconversion
     -Wformat=2
+    -Wpadded
     -Wsign-conversion # Disabled by default with -Wconversion
     -Wswitch-default
     -Wswitch-enum
