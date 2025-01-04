@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/UnionState.hpp"
 
+#include <utility>
+
 #include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
 
@@ -10,10 +12,14 @@ namespace yao::re::stt {
 
 template <typename LhsState, typename RhsState>
   requires req::c_r_no_cvref<LhsState> && req::c_r_no_cvref<RhsState> &&
-               c_r_State_with_same_Symbol<LhsState, RhsState>
-UnionState<LhsState, RhsState>::UnionState(const LhsState &lhs_state,
-                                           const RhsState &rhs_state)
-    : _lhs_state{lhs_state}, _rhs_state{rhs_state} {}
+           c_r_State_with_same_Symbol<LhsState, RhsState>
+           template <typename _LhsState, typename _RhsState>
+             requires c_r_State_with_same_Symbol<std::remove_cvref_t<_LhsState>,
+                                                 std::remove_cvref_t<_RhsState>>
+UnionState<LhsState, RhsState>::UnionState(_LhsState &&lhs_state,
+                                           _RhsState &&rhs_state)
+    : _lhs_state{std::forward<_LhsState>(lhs_state)},
+      _rhs_state{std::forward<_RhsState>(rhs_state)} {}
 
 template <typename LhsState, typename RhsState>
   requires req::c_r_no_cvref<LhsState> && req::c_r_no_cvref<RhsState> &&

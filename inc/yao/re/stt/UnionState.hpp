@@ -2,6 +2,7 @@
 #define __YAO__RE__STT__UNION_STATE__HPP__
 
 #include <ostream>
+#include <type_traits>
 
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/c_r_State_with_same_Symbol.hpp"
@@ -17,7 +18,10 @@ public:
   using Symbol = typename LhsState::Symbol;
 
 public:
-  UnionState(const LhsState &lhs_state, const RhsState &rhs_state);
+  template <typename _LhsState, typename _RhsState>
+    requires c_r_State_with_same_Symbol<std::remove_cvref_t<_LhsState>,
+                                        std::remove_cvref_t<_RhsState>>
+  UnionState(_LhsState &&lhs_state, _RhsState &&rhs_state);
 
   void match(const Symbol &symbol);
   bool is_final() const;
@@ -35,10 +39,12 @@ private:
   RhsState _rhs_state;
 };
 
-template <typename LhsState, typename RhsState>
-  requires c_r_State_with_same_Symbol<LhsState, RhsState>
-UnionState(const LhsState &lhs_state, const RhsState &rhs_state)
-    -> UnionState<LhsState, RhsState>;
+template <typename LhsState, typename RhsState,
+          typename _LhsState = std::remove_cvref_t<LhsState>,
+          typename _RhsState = std::remove_cvref_t<RhsState>>
+  requires c_r_State_with_same_Symbol<_LhsState, _RhsState>
+UnionState(LhsState &&lhs_state, RhsState &&rhs_state)
+    -> UnionState<_LhsState, _RhsState>;
 
 } // namespace yao::re::stt
 
