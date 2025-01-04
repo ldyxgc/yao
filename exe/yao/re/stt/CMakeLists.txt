@@ -1,5 +1,8 @@
 add_executable(yao__re__stt__EpsilonState yao__re__stt__EpsilonState.cpp)
 target_link_libraries(yao__re__stt__EpsilonState yao)
 
+add_executable(yao__re__stt__KleeneState yao__re__stt__KleeneState.cpp)
+target_link_libraries(yao__re__stt__KleeneState yao)
+
 add_executable(yao__re__stt__SymbolState yao__re__stt__SymbolState.cpp)
 target_link_libraries(yao__re__stt__SymbolState yao)
