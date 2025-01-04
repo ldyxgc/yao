@@ -88,7 +88,11 @@ int main() {
   std::cout << '\n';
 
   demo(std::set<std::int8_t>{-1, -2, -3});
-  demo(std::map<std::int8_t, std::uint8_t>{{-1, 1}, {-2, 2}, {-3, 3}});
+  demo(std::map<std::int8_t, std::uint8_t>{
+      {std::int8_t{-1}, std::uint8_t{1}},
+      {std::int8_t{-2}, std::uint8_t{2}},
+      {std::int8_t{-3}, std::uint8_t{3}},
+  });
 
   return 0;
 }
