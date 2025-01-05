@@ -1,11 +1,5 @@
-add_executable(tst__yao__req__c_r_no_cvref tst__yao__req__c_r_no_cvref.cpp)
-target_link_libraries(tst__yao__req__c_r_no_cvref yao)
-add_test(tst__yao__req__c_r_no_cvref tst__yao__req__c_r_no_cvref)
+yao__tst(tst__yao__req__c_r_no_cvref)
 
-add_executable(tst__yao__req__c_t_std_map tst__yao__req__c_t_std_map.cpp)
-target_link_libraries(tst__yao__req__c_t_std_map yao)
-add_test(tst__yao__req__c_t_std_map tst__yao__req__c_t_std_map)
+yao__tst(tst__yao__req__c_t_std_map)
 
-add_executable(tst__yao__req__c_t_std_set tst__yao__req__c_t_std_set.cpp)
-target_link_libraries(tst__yao__req__c_t_std_set yao)
-add_test(tst__yao__req__c_t_std_set tst__yao__req__c_t_std_set)
+yao__tst(tst__yao__req__c_t_std_set)
