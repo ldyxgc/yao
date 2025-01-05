@@ -1,11 +1,7 @@
-add_executable(yao__re__stt__EpsilonState yao__re__stt__EpsilonState.cpp)
-target_link_libraries(yao__re__stt__EpsilonState yao)
+yao__exe(yao__re__stt__EpsilonState)
 
-add_executable(yao__re__stt__KleeneState yao__re__stt__KleeneState.cpp)
-target_link_libraries(yao__re__stt__KleeneState yao)
+yao__exe(yao__re__stt__KleeneState)
 
-add_executable(yao__re__stt__SymbolState yao__re__stt__SymbolState.cpp)
-target_link_libraries(yao__re__stt__SymbolState yao)
+yao__exe(yao__re__stt__SymbolState)
 
-add_executable(yao__re__stt__UnionState yao__re__stt__UnionState.cpp)
-target_link_libraries(yao__re__stt__UnionState yao)
+yao__exe(yao__re__stt__UnionState)
