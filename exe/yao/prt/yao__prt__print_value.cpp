@@ -42,6 +42,41 @@ void Box<T>::print_value(std::ostream &os) const {
 
 } // namespace box
 
+struct Int8 {
+  std::int8_t _i8;
+  Int8(std::int8_t i8 = {}) : _i8{i8} {}
+  operator std::int8_t() const { return _i8; }
+  template <bool ns, bool tp> static void print_type(std::ostream &os) {
+    os << "Int8";
+  }
+  template <bool ns, bool tp> void print_value(std::ostream &os) const {
+    print_type<ns, tp>(os);
+    os << ": {_i8:";
+    yao::prt::print_value<ns, tp>(os, _i8);
+    os << '}';
+  }
+};
+
+struct Uint8 {
+  std::uint8_t _u8;
+  Uint8(std::uint8_t u8 = {}) : _u8{u8} {}
+  operator std::uint8_t() const { return _u8; }
+  template <bool ns = false, bool tp = false>
+  static void print_type(std::ostream &os) {
+    os << "Uint8";
+  }
+  void print_value(std::ostream &os, bool ns, bool tp) const {
+    ns ? (tp ? print_type<true, true>(os) : print_type<true>(os))
+       : (tp ? print_type<false, true>(os) : print_type<>(os));
+    os << ": {_u8:";
+    ns ? (tp ? yao::prt::print_value<true, true>(os, _u8)
+             : yao::prt::print_value<true>(os, _u8))
+       : (tp ? yao::prt::print_value<false, true>(os, _u8)
+             : yao::prt::print_value<>(os, _u8));
+    os << '}';
+  }
+};
+
 int main() {
 
   auto demo = [](auto val) {
@@ -89,6 +124,24 @@ int main() {
 
   demo(std::set<std::int8_t>{-1, -2, -3});
   demo(std::map<std::int8_t, std::uint8_t>{
+      {std::int8_t{-1}, std::uint8_t{1}},
+      {std::int8_t{-2}, std::uint8_t{2}},
+      {std::int8_t{-3}, std::uint8_t{3}},
+  });
+  std::cout << '\n';
+
+  demo(Int8{INT8_MIN});
+  demo(Int8{INT8_MAX});
+  demo(Uint8{0});
+  demo(Uint8{UINT8_MAX});
+  std::cout << '\n';
+
+  demo(std::set<Int8>{
+      std::int8_t{-1},
+      std::int8_t{-2},
+      std::int8_t{-3},
+  });
+  demo(std::map<Int8, Uint8>{
       {std::int8_t{-1}, std::uint8_t{1}},
       {std::int8_t{-2}, std::uint8_t{2}},
       {std::int8_t{-3}, std::uint8_t{3}},
