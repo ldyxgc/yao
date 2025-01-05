@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.31.3)
 
+include(info.cmake)
+
 project(yao)
 
 set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE STRING
