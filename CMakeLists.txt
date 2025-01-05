@@ -63,6 +63,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
     /Wall
 
+    /wd4514 # Unreferenced inline function has been removed
     /wd5045 # Insert Spectre mitigation for memory load
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
