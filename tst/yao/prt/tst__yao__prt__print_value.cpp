@@ -43,6 +43,41 @@ void Box<T>::print_value(std::ostream &os) const {
 
 } // namespace box
 
+struct Int8 {
+  std::int8_t _i8;
+  Int8(std::int8_t i8 = {}) : _i8{i8} {}
+  operator std::int8_t() const { return _i8; }
+  template <bool ns, bool tp> static void print_type(std::ostream &os) {
+    os << "Int8";
+  }
+  template <bool ns, bool tp> void print_value(std::ostream &os) const {
+    print_type<ns, tp>(os);
+    os << ": {_i8:";
+    yao::prt::print_value<ns, tp>(os, _i8);
+    os << '}';
+  }
+};
+
+struct Uint8 {
+  std::uint8_t _u8;
+  Uint8(std::uint8_t u8 = {}) : _u8{u8} {}
+  operator std::uint8_t() const { return _u8; }
+  template <bool ns = false, bool tp = false>
+  static void print_type(std::ostream &os) {
+    os << "Uint8";
+  }
+  void print_value(std::ostream &os, bool ns, bool tp) const {
+    ns ? (tp ? print_type<true, true>(os) : print_type<true>(os))
+       : (tp ? print_type<false, true>(os) : print_type<>(os));
+    os << ": {_u8:";
+    ns ? (tp ? yao::prt::print_value<true, true>(os, _u8)
+             : yao::prt::print_value<true>(os, _u8))
+       : (tp ? yao::prt::print_value<false, true>(os, _u8)
+             : yao::prt::print_value<>(os, _u8));
+    os << '}';
+  }
+};
+
 int main() {
 
   { // ns = false, tp = false
@@ -101,6 +136,33 @@ int main() {
         "1: {int8_t: -2,uint8_t: 2},"
         "2: {int8_t: -1,uint8_t: 1}"
         "}"));
+
+    YAO_CHECK(test(Int8{INT8_MIN}, "Int8: {_i8:int8_t: -128}"));
+    YAO_CHECK(test(Int8{INT8_MAX}, "Int8: {_i8:int8_t: 127}"));
+    YAO_CHECK(test(Uint8{0}, "Uint8: {_u8:uint8_t: 0}"));
+    YAO_CHECK(test(Uint8{UINT8_MAX}, "Uint8: {_u8:uint8_t: 255}"));
+    YAO_CHECK(test(
+        std::set<Uint8>{
+            std::uint8_t{3},
+            std::uint8_t{2},
+            std::uint8_t{1},
+        },
+        "set: {"
+        "0:Uint8: {_u8:uint8_t: 1},"
+        "1:Uint8: {_u8:uint8_t: 2},"
+        "2:Uint8: {_u8:uint8_t: 3}"
+        "}"));
+    YAO_CHECK(test(
+        std::map<Uint8, Int8>{
+            {std::uint8_t{3}, std::int8_t{-3}},
+            {std::uint8_t{2}, std::int8_t{-2}},
+            {std::uint8_t{1}, std::int8_t{-1}},
+        },
+        "map: {"
+        "0: {Uint8: {_u8:uint8_t: 1},Int8: {_i8:int8_t: -1}},"
+        "1: {Uint8: {_u8:uint8_t: 2},Int8: {_i8:int8_t: -2}},"
+        "2: {Uint8: {_u8:uint8_t: 3},Int8: {_i8:int8_t: -3}}"
+        "}"));
   }
 
   { // ns = true, tp = false
@@ -142,6 +204,31 @@ int main() {
         "1: {std::int8_t: -2,std::uint8_t: 2},"
         "2: {std::int8_t: -1,std::uint8_t: 1}"
         "}"));
+
+    YAO_CHECK(test(Int8{}, "Int8: {_i8:std::int8_t: 0}"));
+    YAO_CHECK(test(Uint8{}, "Uint8: {_u8:std::uint8_t: 0}"));
+    YAO_CHECK(test(
+        std::set<Uint8>{
+            std::uint8_t{3},
+            std::uint8_t{2},
+            std::uint8_t{1},
+        },
+        "std::set: {"
+        "0:Uint8: {_u8:std::uint8_t: 1},"
+        "1:Uint8: {_u8:std::uint8_t: 2},"
+        "2:Uint8: {_u8:std::uint8_t: 3}"
+        "}"));
+    YAO_CHECK(test(
+        std::map<Uint8, Int8>{
+            {std::uint8_t{3}, std::int8_t{-3}},
+            {std::uint8_t{2}, std::int8_t{-2}},
+            {std::uint8_t{1}, std::int8_t{-1}},
+        },
+        "std::map: {"
+        "0: {Uint8: {_u8:std::uint8_t: 1},Int8: {_i8:std::int8_t: -1}},"
+        "1: {Uint8: {_u8:std::uint8_t: 2},Int8: {_i8:std::int8_t: -2}},"
+        "2: {Uint8: {_u8:std::uint8_t: 3},Int8: {_i8:std::int8_t: -3}}"
+        "}"));
   }
 
   { // ns = false, tp = true
@@ -182,6 +269,31 @@ int main() {
         "0: {int8_t: -3,uint8_t: 3},"
         "1: {int8_t: -2,uint8_t: 2},"
         "2: {int8_t: -1,uint8_t: 1}"
+        "}"));
+
+    YAO_CHECK(test(Int8{}, "Int8: {_i8:int8_t: 0}"));
+    YAO_CHECK(test(Uint8{}, "Uint8: {_u8:uint8_t: 0}"));
+    YAO_CHECK(test(
+        std::set<Uint8>{
+            std::uint8_t{3},
+            std::uint8_t{2},
+            std::uint8_t{1},
+        },
+        "set<Uint8>: {"
+        "0:Uint8: {_u8:uint8_t: 1},"
+        "1:Uint8: {_u8:uint8_t: 2},"
+        "2:Uint8: {_u8:uint8_t: 3}"
+        "}"));
+    YAO_CHECK(test(
+        std::map<Uint8, Int8>{
+            {std::uint8_t{3}, std::int8_t{-3}},
+            {std::uint8_t{2}, std::int8_t{-2}},
+            {std::uint8_t{1}, std::int8_t{-1}},
+        },
+        "map<Uint8|Int8>: {"
+        "0: {Uint8: {_u8:uint8_t: 1},Int8: {_i8:int8_t: -1}},"
+        "1: {Uint8: {_u8:uint8_t: 2},Int8: {_i8:int8_t: -2}},"
+        "2: {Uint8: {_u8:uint8_t: 3},Int8: {_i8:int8_t: -3}}"
         "}"));
   }
 
@@ -225,6 +337,31 @@ int main() {
         "0: {std::int8_t: -3,std::uint8_t: 3},"
         "1: {std::int8_t: -2,std::uint8_t: 2},"
         "2: {std::int8_t: -1,std::uint8_t: 1}"
+        "}"));
+
+    YAO_CHECK(test(Int8{}, "Int8: {_i8:std::int8_t: 0}"));
+    YAO_CHECK(test(Uint8{}, "Uint8: {_u8:std::uint8_t: 0}"));
+    YAO_CHECK(test(
+        std::set<Uint8>{
+            std::uint8_t{3},
+            std::uint8_t{2},
+            std::uint8_t{1},
+        },
+        "std::set<Uint8>: {"
+        "0:Uint8: {_u8:std::uint8_t: 1},"
+        "1:Uint8: {_u8:std::uint8_t: 2},"
+        "2:Uint8: {_u8:std::uint8_t: 3}"
+        "}"));
+    YAO_CHECK(test(
+        std::map<Uint8, Int8>{
+            {std::uint8_t{3}, std::int8_t{-3}},
+            {std::uint8_t{2}, std::int8_t{-2}},
+            {std::uint8_t{1}, std::int8_t{-1}},
+        },
+        "std::map<Uint8|Int8>: {"
+        "0: {Uint8: {_u8:std::uint8_t: 1},Int8: {_i8:std::int8_t: -1}},"
+        "1: {Uint8: {_u8:std::uint8_t: 2},Int8: {_i8:std::int8_t: -2}},"
+        "2: {Uint8: {_u8:std::uint8_t: 3},Int8: {_i8:std::int8_t: -3}}"
         "}"));
   }
 

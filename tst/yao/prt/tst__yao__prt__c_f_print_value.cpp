@@ -5,8 +5,11 @@
 
 #include "yao/prt/c_f_print_value.hpp"
 
-struct Accept {
+struct Accept1 {
   template <bool ns, bool tp> void print_value(std::ostream &os) const;
+};
+struct Accept2 {
+  void print_value(std::ostream &os, bool ns, bool tp) const;
 };
 struct Reject {};
 
@@ -27,7 +30,8 @@ static_assert(c_f_print_value<std::uint32_t> == true);
 static_assert(c_f_print_value<std::int64_t> == true);
 static_assert(c_f_print_value<std::uint64_t> == true);
 
-static_assert(c_f_print_value<Accept> == true);
+static_assert(c_f_print_value<Accept1> == true);
+static_assert(c_f_print_value<Accept2> == true);
 static_assert(c_f_print_value<Reject> == false);
 
 static_assert(c_f_print_value<std::set<std::int8_t>> == true);

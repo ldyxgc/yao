@@ -41,7 +41,12 @@ void print_value(std::ostream &os, T t) {
 template <bool ns, bool tp, typename T>
   requires c_mf_print_value<T>
 void print_value(std::ostream &os, const T &obj) {
-  obj.template print_value<ns, tp>(os);
+  if constexpr (impl::tmpl::c_mf_print_value<T>)
+    obj.template print_value<ns, tp>(os);
+  else if constexpr (impl::func::c_mf_print_value<T>)
+    obj.print_value(os, ns, tp);
+  else
+    static_assert([]() { return false; }());
 }
 
 template <bool ns, bool tp, typename T>
