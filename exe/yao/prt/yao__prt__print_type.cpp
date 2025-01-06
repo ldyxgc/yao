@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 
@@ -54,6 +55,10 @@ int main() {
 
   demo.operator()<std::set<box::Box<char>>>();
   demo.operator()<std::map<box::Box<char>, box::Box<bool>>>();
+  std::cout << '\n';
+
+  demo.operator()<std::unique_ptr<box::Box<bool>>>();
+  demo.operator()<std::shared_ptr<box::Box<char>>>();
 
   return 0;
 }

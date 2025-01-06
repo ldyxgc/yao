@@ -78,6 +78,32 @@ void print_type(std::ostream &os) {
   }
 }
 
+template <typename T, bool ns, bool tp>
+  requires req::c_t_std_unique_ptr<T>
+void print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "std::";
+  os << "unique_ptr";
+  if constexpr (tp) {
+    os << '<';
+    print_type<typename T::element_type, ns, tp>(os);
+    os << '>';
+  }
+}
+
+template <typename T, bool ns, bool tp>
+  requires req::c_t_std_shared_ptr<T>
+void print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "std::";
+  os << "shared_ptr";
+  if constexpr (tp) {
+    os << '<';
+    print_type<typename T::element_type, ns, tp>(os);
+    os << '>';
+  }
+}
+
 } // namespace yao::prt
 
 #endif

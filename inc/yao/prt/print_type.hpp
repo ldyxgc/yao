@@ -8,6 +8,8 @@
 #include "yao/prt/c_smf_print_type.hpp"
 #include "yao/req/c_t_std_map.hpp"
 #include "yao/req/c_t_std_set.hpp"
+#include "yao/req/c_t_std_shared_ptr.hpp"
+#include "yao/req/c_t_std_unique_ptr.hpp"
 
 namespace yao::prt {
 
@@ -37,6 +39,16 @@ void print_type(std::ostream &os);
 // ns: namespace, tp: template
 template <typename T, bool ns = false, bool tp = false>
   requires req::c_t_std_map<T>
+void print_type(std::ostream &os);
+
+// ns: namespace, tp: template
+template <typename T, bool ns = false, bool tp = false>
+  requires req::c_t_std_unique_ptr<T>
+void print_type(std::ostream &os);
+
+// ns: namespace, tp: template
+template <typename T, bool ns = false, bool tp = false>
+  requires req::c_t_std_shared_ptr<T>
 void print_type(std::ostream &os);
 
 } // namespace yao::prt
