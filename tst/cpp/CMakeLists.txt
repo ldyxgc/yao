@@ -1,3 +1,5 @@
 yao__tst(tst__cpp__forwarding_reference_function_template_argument_type)
 
+yao__tst(tst__cpp__non_surjective_map_from_stdint_to_basic_integral_type)
+
 yao__tst(tst__cpp__type_traits_concepts_copy_move_constructor_assignment)
