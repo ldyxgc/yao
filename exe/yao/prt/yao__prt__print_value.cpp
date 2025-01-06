@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 
@@ -146,6 +147,12 @@ int main() {
       {std::int8_t{-2}, std::uint8_t{2}},
       {std::int8_t{-3}, std::uint8_t{3}},
   });
+  std::cout << '\n';
+
+  demo(std::unique_ptr<Int8>{});
+  demo(std::make_unique<Int8>());
+  demo(std::shared_ptr<Uint8>{});
+  demo(std::make_shared<Uint8>());
 
   return 0;
 }

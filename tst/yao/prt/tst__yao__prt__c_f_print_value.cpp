@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 
@@ -36,5 +37,8 @@ static_assert(c_f_print_value<Reject> == false);
 
 static_assert(c_f_print_value<std::set<std::int8_t>> == true);
 static_assert(c_f_print_value<std::map<std::int8_t, std::uint8_t>> == true);
+
+static_assert(c_f_print_value<std::unique_ptr<bool>> == true);
+static_assert(c_f_print_value<std::shared_ptr<char>> == true);
 
 int main() { return 0; }

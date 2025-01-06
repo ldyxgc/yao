@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 #include <sstream>
@@ -163,6 +164,13 @@ int main() {
         "1: {Uint8: {_u8:uint8_t: 2},Int8: {_i8:int8_t: -2}},"
         "2: {Uint8: {_u8:uint8_t: 3},Int8: {_i8:int8_t: -3}}"
         "}"));
+
+    YAO_CHECK(test(std::unique_ptr<Int8>{}, "unique_ptr: {}"));
+    YAO_CHECK(
+        test(std::make_unique<Int8>(), "unique_ptr: {Int8: {_i8:int8_t: 0}}"));
+    YAO_CHECK(test(std::shared_ptr<Uint8>{}, "shared_ptr: {}"));
+    YAO_CHECK(test(std::make_shared<Uint8>(),
+                   "shared_ptr: {Uint8: {_u8:uint8_t: 0}}"));
   }
 
   { // ns = true, tp = false
@@ -229,6 +237,13 @@ int main() {
         "1: {Uint8: {_u8:std::uint8_t: 2},Int8: {_i8:std::int8_t: -2}},"
         "2: {Uint8: {_u8:std::uint8_t: 3},Int8: {_i8:std::int8_t: -3}}"
         "}"));
+
+    YAO_CHECK(test(std::unique_ptr<Int8>{}, "std::unique_ptr: {}"));
+    YAO_CHECK(test(std::make_unique<Int8>(),
+                   "std::unique_ptr: {Int8: {_i8:std::int8_t: 0}}"));
+    YAO_CHECK(test(std::shared_ptr<Uint8>{}, "std::shared_ptr: {}"));
+    YAO_CHECK(test(std::make_shared<Uint8>(),
+                   "std::shared_ptr: {Uint8: {_u8:std::uint8_t: 0}}"));
   }
 
   { // ns = false, tp = true
@@ -295,6 +310,13 @@ int main() {
         "1: {Uint8: {_u8:uint8_t: 2},Int8: {_i8:int8_t: -2}},"
         "2: {Uint8: {_u8:uint8_t: 3},Int8: {_i8:int8_t: -3}}"
         "}"));
+
+    YAO_CHECK(test(std::unique_ptr<Int8>{}, "unique_ptr<Int8>: {}"));
+    YAO_CHECK(test(std::make_unique<Int8>(),
+                   "unique_ptr<Int8>: {Int8: {_i8:int8_t: 0}}"));
+    YAO_CHECK(test(std::shared_ptr<Uint8>{}, "shared_ptr<Uint8>: {}"));
+    YAO_CHECK(test(std::make_shared<Uint8>(),
+                   "shared_ptr<Uint8>: {Uint8: {_u8:uint8_t: 0}}"));
   }
 
   { // ns = true, tp = true
@@ -363,6 +385,13 @@ int main() {
         "1: {Uint8: {_u8:std::uint8_t: 2},Int8: {_i8:std::int8_t: -2}},"
         "2: {Uint8: {_u8:std::uint8_t: 3},Int8: {_i8:std::int8_t: -3}}"
         "}"));
+
+    YAO_CHECK(test(std::unique_ptr<Int8>{}, "std::unique_ptr<Int8>: {}"));
+    YAO_CHECK(test(std::make_unique<Int8>(),
+                   "std::unique_ptr<Int8>: {Int8: {_i8:std::int8_t: 0}}"));
+    YAO_CHECK(test(std::shared_ptr<Uint8>{}, "std::shared_ptr<Uint8>: {}"));
+    YAO_CHECK(test(std::make_shared<Uint8>(),
+                   "std::shared_ptr<Uint8>: {Uint8: {_u8:std::uint8_t: 0}}"));
   }
 
   return 0;
