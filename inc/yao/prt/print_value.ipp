@@ -92,6 +92,26 @@ void print_value(std::ostream &os, const T &map) {
   os << '}';
 }
 
+template <bool ns, bool tp, typename T>
+  requires req::c_t_std_unique_ptr<T>
+void print_value(std::ostream &os, const T &uptr) {
+  print_type<T, ns, tp>(os);
+  os << ": {";
+  if (uptr)
+    print_value<ns, tp>(os, *uptr);
+  os << '}';
+}
+
+template <bool ns, bool tp, typename T>
+  requires req::c_t_std_shared_ptr<T>
+void print_value(std::ostream &os, const T &sptr) {
+  print_type<T, ns, tp>(os);
+  os << ": {";
+  if (sptr)
+    print_value<ns, tp>(os, *sptr);
+  os << '}';
+}
+
 } // namespace yao::prt
 
 #endif
