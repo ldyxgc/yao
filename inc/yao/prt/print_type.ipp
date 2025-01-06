@@ -3,6 +3,8 @@
 
 #include "yao/prt/print_type.hpp"
 
+#include <type_traits>
+
 namespace yao::prt {
 
 template <typename T, bool ns, bool tp>
@@ -17,29 +19,24 @@ void print_type(std::ostream &os) {
 }
 
 template <typename T, bool ns, bool tp>
-  requires std::same_as<T, std::int8_t> || std::same_as<T, std::uint8_t> ||
-           std::same_as<T, std::int16_t> || std::same_as<T, std::uint16_t> ||
-           std::same_as<T, std::int32_t> || std::same_as<T, std::uint32_t> ||
-           std::same_as<T, std::int64_t> || std::same_as<T, std::uint64_t>
+  requires std::same_as<T, signed char> || std::same_as<T, unsigned char> ||
+           std::same_as<T, short> || std::same_as<T, unsigned short> ||
+           std::same_as<T, int> || std::same_as<T, unsigned> ||
+           std::same_as<T, long> || std::same_as<T, unsigned long> ||
+           std::same_as<T, long long> || std::same_as<T, unsigned long long>
 void print_type(std::ostream &os) {
   if constexpr (ns)
     os << "std::";
-  if constexpr (std::same_as<T, std::int8_t>)
+  if constexpr (std::is_unsigned_v<T>)
+    os << 'u';
+  if constexpr (sizeof(T) == sizeof(std::int8_t))
     os << "int8_t";
-  else if constexpr (std::same_as<T, std::uint8_t>)
-    os << "uint8_t";
-  else if constexpr (std::same_as<T, std::int16_t>)
+  else if constexpr (sizeof(T) == sizeof(std::int16_t))
     os << "int16_t";
-  else if constexpr (std::same_as<T, std::uint16_t>)
-    os << "uint16_t";
-  else if constexpr (std::same_as<T, std::int32_t>)
+  else if constexpr (sizeof(T) == sizeof(std::int32_t))
     os << "int32_t";
-  else if constexpr (std::same_as<T, std::uint32_t>)
-    os << "uint32_t";
-  else if constexpr (std::same_as<T, std::int64_t>)
+  else if constexpr (sizeof(T) == sizeof(std::int64_t))
     os << "int64_t";
-  else if constexpr (std::same_as<T, std::uint64_t>)
-    os << "uint64_t";
   else
     static_assert([]() { return false; }());
 }
