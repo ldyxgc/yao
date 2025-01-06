@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 
@@ -32,5 +33,8 @@ static_assert(c_f_print_type<Reject> == false);
 
 static_assert(c_f_print_type<std::set<char>> == true);
 static_assert(c_f_print_type<std::map<char, bool>> == true);
+
+static_assert(c_f_print_type<std::unique_ptr<char>> == true);
+static_assert(c_f_print_type<std::shared_ptr<char>> == true);
 
 int main() { return 0; }

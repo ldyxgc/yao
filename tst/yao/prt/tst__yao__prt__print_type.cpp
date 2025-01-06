@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 #include <sstream>
@@ -54,6 +55,9 @@ int main() {
 
     YAO_CHECK(test(std::set<box::Box<char>>{}, "set"));
     YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{}, "map"));
+
+    YAO_CHECK(test(std::unique_ptr<box::Box<bool>>{}, "unique_ptr"));
+    YAO_CHECK(test(std::shared_ptr<box::Box<char>>{}, "shared_ptr"));
   }
 
   { // ns = true, tp = false
@@ -80,6 +84,9 @@ int main() {
 
     YAO_CHECK(test(std::set<box::Box<char>>{}, "std::set"));
     YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{}, "std::map"));
+
+    YAO_CHECK(test(std::unique_ptr<box::Box<bool>>{}, "std::unique_ptr"));
+    YAO_CHECK(test(std::shared_ptr<box::Box<char>>{}, "std::shared_ptr"));
   }
 
   { // ns = false, tp = true
@@ -107,6 +114,9 @@ int main() {
     YAO_CHECK(test(std::set<box::Box<char>>{}, "set<Box<char>>"));
     YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{},
                    "map<Box<char>|Box<bool>>"));
+
+    YAO_CHECK(test(std::unique_ptr<box::Box<bool>>{}, "unique_ptr<Box<bool>>"));
+    YAO_CHECK(test(std::shared_ptr<box::Box<char>>{}, "shared_ptr<Box<char>>"));
   }
 
   { // ns = true, tp = true
@@ -135,6 +145,11 @@ int main() {
     YAO_CHECK(test(std::set<box::Box<char>>{}, "std::set<box::Box<char>>"));
     YAO_CHECK(test(std::map<box::Box<char>, box::Box<bool>>{},
                    "std::map<box::Box<char>|box::Box<bool>>"));
+
+    YAO_CHECK(test(std::unique_ptr<box::Box<bool>>{},
+                   "std::unique_ptr<box::Box<bool>>"));
+    YAO_CHECK(test(std::shared_ptr<box::Box<char>>{},
+                   "std::shared_ptr<box::Box<char>>"));
   }
 
   return 0;
