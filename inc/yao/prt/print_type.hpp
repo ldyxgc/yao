@@ -20,10 +20,11 @@ void print_type(std::ostream &os);
 
 // ns: namespace, tp: template
 template <typename T, bool ns = false, bool tp = false>
-  requires std::same_as<T, std::int8_t> || std::same_as<T, std::uint8_t> ||
-           std::same_as<T, std::int16_t> || std::same_as<T, std::uint16_t> ||
-           std::same_as<T, std::int32_t> || std::same_as<T, std::uint32_t> ||
-           std::same_as<T, std::int64_t> || std::same_as<T, std::uint64_t>
+  requires std::same_as<T, signed char> || std::same_as<T, unsigned char> ||
+           std::same_as<T, short> || std::same_as<T, unsigned short> ||
+           std::same_as<T, int> || std::same_as<T, unsigned> ||
+           std::same_as<T, long> || std::same_as<T, unsigned long> ||
+           std::same_as<T, long long> || std::same_as<T, unsigned long long>
 void print_type(std::ostream &os);
 
 // ns: namespace, tp: template

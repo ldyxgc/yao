@@ -21,15 +21,23 @@ static_assert(c_f_print_value<char> == true);
 
 static_assert(c_f_print_value<std::int8_t> == true);
 static_assert(c_f_print_value<std::uint8_t> == true);
-
 static_assert(c_f_print_value<std::int16_t> == true);
 static_assert(c_f_print_value<std::uint16_t> == true);
-
 static_assert(c_f_print_value<std::int32_t> == true);
 static_assert(c_f_print_value<std::uint32_t> == true);
-
 static_assert(c_f_print_value<std::int64_t> == true);
 static_assert(c_f_print_value<std::uint64_t> == true);
+
+static_assert(c_f_print_value<signed char> == true);
+static_assert(c_f_print_value<unsigned char> == true);
+static_assert(c_f_print_value<short> == true);
+static_assert(c_f_print_value<unsigned short> == true);
+static_assert(c_f_print_value<int> == true);
+static_assert(c_f_print_value<unsigned> == true);
+static_assert(c_f_print_value<long> == true);
+static_assert(c_f_print_value<unsigned long> == true);
+static_assert(c_f_print_value<long long> == true);
+static_assert(c_f_print_value<unsigned long long> == true);
 
 static_assert(c_f_print_value<Accept1> == true);
 static_assert(c_f_print_value<Accept2> == true);

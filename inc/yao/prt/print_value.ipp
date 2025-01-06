@@ -9,10 +9,11 @@ namespace yao::prt {
 
 template <bool ns, bool tp, typename T>
   requires std::same_as<T, bool> || std::same_as<T, char> ||
-           std::same_as<T, std::int8_t> || std::same_as<T, std::uint8_t> ||
-           std::same_as<T, std::int16_t> || std::same_as<T, std::uint16_t> ||
-           std::same_as<T, std::int32_t> || std::same_as<T, std::uint32_t> ||
-           std::same_as<T, std::int64_t> || std::same_as<T, std::uint64_t>
+           std::same_as<T, signed char> || std::same_as<T, unsigned char> ||
+           std::same_as<T, short> || std::same_as<T, unsigned short> ||
+           std::same_as<T, int> || std::same_as<T, unsigned> ||
+           std::same_as<T, long> || std::same_as<T, unsigned long> ||
+           std::same_as<T, long long> || std::same_as<T, unsigned long long>
 void print_value(std::ostream &os, T t) {
   print_type<T, ns, tp>(os);
   os << ": ";
@@ -24,15 +25,15 @@ void print_value(std::ostream &os, T t) {
       return char((low < 10 ? '0' : 'A' - 10) + low);
     };
     os << "0x" << hex(t >> 4) << hex(t);
-  } else if constexpr (std::same_as<T, std::int8_t> ||
-                       std::same_as<T, std::uint8_t>)
+  } else if constexpr (std::same_as<T, signed char> ||
+                       std::same_as<T, unsigned char>)
     os << int{t};
-  else if constexpr (std::same_as<T, std::int16_t> ||
-                     std::same_as<T, std::uint16_t> ||
-                     std::same_as<T, std::int32_t> ||
-                     std::same_as<T, std::uint32_t> ||
-                     std::same_as<T, std::int64_t> ||
-                     std::same_as<T, std::uint64_t>)
+  else if constexpr (std::same_as<T, short> ||
+                     std::same_as<T, unsigned short> || std::same_as<T, int> ||
+                     std::same_as<T, unsigned> || std::same_as<T, long> ||
+                     std::same_as<T, unsigned long> ||
+                     std::same_as<T, long long> ||
+                     std::same_as<T, unsigned long long>)
     os << t;
   else
     static_assert([]() { return false; }());
