@@ -4,6 +4,7 @@
 #include "yao/re/stt/ConcreteVirtualState.hpp"
 
 #include <typeindex>
+#include <utility>
 
 #include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
@@ -12,21 +13,22 @@ namespace yao::re::stt {
 
 template <typename ConcreteState>
   requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
-ConcreteVirtualState<ConcreteState>::ConcreteVirtualState(const auto &...args)
-    : _concrete_state{args...} {}
+ConcreteVirtualState<ConcreteState>::ConcreteVirtualState(auto &&...args)
+    : _concrete_state{std::forward<decltype(args)>(args)...} {}
 
 template <typename ConcreteState>
   requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
 not_null<owner<ConcreteVirtualState<ConcreteState> *>>
-ConcreteVirtualState<ConcreteState>::make_rptr(const auto &...args) {
-  return new ConcreteVirtualState{args...};
+ConcreteVirtualState<ConcreteState>::make_rptr(auto &&...args) {
+  return new ConcreteVirtualState{std::forward<decltype(args)>(args)...};
 }
 
 template <typename ConcreteState>
   requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
 not_null<std::unique_ptr<ConcreteVirtualState<ConcreteState>>>
-ConcreteVirtualState<ConcreteState>::make_uptr(const auto &...args) {
-  return std::make_unique<ConcreteVirtualState>(args...);
+ConcreteVirtualState<ConcreteState>::make_uptr(auto &&...args) {
+  return std::make_unique<ConcreteVirtualState>(
+      std::forward<decltype(args)>(args)...);
 }
 
 template <typename ConcreteState>
