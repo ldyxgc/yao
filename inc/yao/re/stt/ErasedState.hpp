@@ -20,7 +20,11 @@ public:
 public:
   template <typename ConcreteState>
   ErasedState(const ConcreteState &concrete_state);
+
   ErasedState(const ErasedState &erased_state);
+  ErasedState(ErasedState &&erased_state) = default;
+  ErasedState &operator=(const ErasedState &erased_state);
+  ErasedState &operator=(ErasedState &&erased_state) = default;
 
   void match(const Symbol &symbol);
   bool is_final() const;

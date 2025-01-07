@@ -23,6 +23,14 @@ ErasedState<_Symbol>::ErasedState(const ErasedState &erased_state)
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+ErasedState<_Symbol> &
+ErasedState<_Symbol>::operator=(const ErasedState &erased_state) {
+  _virtual_state = erased_state._virtual_state->copy_uptr();
+  return *this;
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 void ErasedState<_Symbol>::match(const Symbol &symbol) {
   _virtual_state->match(symbol);
 }
