@@ -3,10 +3,12 @@
 
 #include <memory>
 #include <ostream>
+#include <type_traits>
 
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/VirtualState.hpp"
+#include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
 
 namespace yao::re::stt {
@@ -19,7 +21,9 @@ public:
 
 public:
   template <typename ConcreteState>
-  ErasedState(const ConcreteState &concrete_state);
+    requires c_r_different_State_with_same_Symbol<
+        std::remove_cvref_t<ConcreteState>, ErasedState<_Symbol>>
+  ErasedState(ConcreteState &&concrete_state);
 
   ErasedState(const ErasedState &erased_state);
   ErasedState(ErasedState &&erased_state) = default;

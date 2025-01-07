@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/ErasedState.hpp"
 
+#include <utility>
+
 #include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
 #include "yao/re/stt/ConcreteVirtualState.hpp"
@@ -11,10 +13,13 @@ namespace yao::re::stt {
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-template <typename ConcreteState>
-ErasedState<_Symbol>::ErasedState(const ConcreteState &concrete_state)
+                                       template <typename ConcreteState>
+             requires c_r_different_State_with_same_Symbol<
+                 std::remove_cvref_t<ConcreteState>, ErasedState<_Symbol>>
+ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state)
     : _virtual_state{
-          ConcreteVirtualState<ConcreteState>::make_uptr(concrete_state)} {}
+          ConcreteVirtualState<std::remove_cvref_t<ConcreteState>>::make_uptr(
+              std::forward<ConcreteState>(concrete_state))} {}
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
