@@ -1,7 +1,7 @@
-#ifndef __YAO__RE__STT__ERASED_STATE__IPP__
-#define __YAO__RE__STT__ERASED_STATE__IPP__
+#ifndef __YAO__RE__STT__IMPL__VFUN__ERASED_STATE__IPP__
+#define __YAO__RE__STT__IMPL__VFUN__ERASED_STATE__IPP__
 
-#include "yao/re/stt/ErasedState.hpp"
+#include "yao/re/stt/impl/vfun/ErasedState.hpp"
 
 #include <utility>
 
@@ -9,7 +9,7 @@
 #include "yao/prt/print_value.hpp"
 #include "yao/re/stt/ConcreteVirtualState.hpp"
 
-namespace yao::re::stt {
+namespace yao::re::stt::impl::vfun {
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
@@ -71,7 +71,7 @@ template <typename _Symbol>
 template <bool ns, bool tp>
 void ErasedState<_Symbol>::print_type(std::ostream &os) {
   if constexpr (ns)
-    os << "yao::re::stt::";
+    os << "yao::re::stt::impl::vfun::";
   os << "ErasedState";
   if constexpr (tp) {
     os << '<';
@@ -90,6 +90,6 @@ void ErasedState<_Symbol>::print_value(std::ostream &os) const {
   os << '}';
 }
 
-} // namespace yao::re::stt
+} // namespace yao::re::stt::impl::vfun
 
 #endif
