@@ -1,0 +1,80 @@
+#ifndef __YAO__RE__STT__ERASED_STATE__IPP__
+#define __YAO__RE__STT__ERASED_STATE__IPP__
+
+#include "yao/re/stt/ErasedState.hpp"
+
+#include "yao/prt/print_type.hpp"
+#include "yao/prt/print_value.hpp"
+#include "yao/re/stt/ConcreteVirtualState.hpp"
+
+namespace yao::re::stt {
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+template <typename ConcreteState>
+ErasedState<_Symbol>::ErasedState(const ConcreteState &concrete_state)
+    : _virtual_state{
+          ConcreteVirtualState<ConcreteState>::make_uptr(concrete_state)} {}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+ErasedState<_Symbol>::ErasedState(const ErasedState &erased_state)
+    : _virtual_state{erased_state._virtual_state->copy_uptr()} {}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+void ErasedState<_Symbol>::match(const Symbol &symbol) {
+  _virtual_state->match(symbol);
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+bool ErasedState<_Symbol>::is_final() const {
+  return _virtual_state->is_final();
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+bool ErasedState<_Symbol>::is_dead() const {
+  return _virtual_state->is_dead();
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+bool ErasedState<_Symbol>::operator==(const ErasedState &rhs) const {
+  return *_virtual_state == *rhs._virtual_state;
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+auto ErasedState<_Symbol>::operator<=>(const ErasedState &rhs) const {
+  return *_virtual_state <=> *rhs._virtual_state;
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+template <bool ns, bool tp>
+void ErasedState<_Symbol>::print_type(std::ostream &os) {
+  if constexpr (ns)
+    os << "yao::re::stt::";
+  os << "ErasedState";
+  if constexpr (tp) {
+    os << '<';
+    prt::print_type<Symbol, ns, tp>(os);
+    os << '>';
+  }
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+template <bool ns, bool tp>
+void ErasedState<_Symbol>::print_value(std::ostream &os) const {
+  print_type<ns, tp>(os);
+  os << ": {_virtual_state:";
+  prt::print_value<ns, tp>(os, _virtual_state);
+  os << '}';
+}
+
+} // namespace yao::re::stt
+
+#endif
