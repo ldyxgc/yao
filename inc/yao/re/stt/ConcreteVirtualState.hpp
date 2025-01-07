@@ -6,6 +6,7 @@
 #include <ostream>
 
 #include "yao/com.hpp"
+#include "yao/def/warn.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/VirtualState.hpp"
 #include "yao/re/stt/c_ct_State.hpp"
@@ -13,6 +14,9 @@
 #include "yao/req/c_r_no_cvref.hpp"
 
 namespace yao::re::stt {
+
+YAO_WARN_PUSH
+YAO_WARN_OFF__PADDING
 
 template <typename ConcreteState>
   requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
@@ -58,6 +62,8 @@ public:
 private:
   ConcreteState _concrete_state;
 };
+
+YAO_WARN_POP
 
 } // namespace yao::re::stt
 
