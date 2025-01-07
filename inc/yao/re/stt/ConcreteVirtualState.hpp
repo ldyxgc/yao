@@ -15,11 +15,20 @@
 
 namespace yao::re::stt {
 
+namespace impl {
+
+// c: concept, r: require
+template <typename ConcreteState>
+concept c_r_ConcreteVirtualState =
+    req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>;
+
+} // namespace impl
+
 YAO_WARN_PUSH
 YAO_WARN_OFF__PADDING
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 class ConcreteVirtualState
     : public VirtualState<typename ConcreteState::Symbol>,
       private StateBase<ConcreteVirtualState<ConcreteState>> {

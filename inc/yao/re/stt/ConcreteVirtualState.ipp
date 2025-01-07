@@ -12,19 +12,19 @@
 namespace yao::re::stt {
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 ConcreteVirtualState<ConcreteState>::ConcreteVirtualState(auto &&...args)
     : _concrete_state{std::forward<decltype(args)>(args)...} {}
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 not_null<owner<ConcreteVirtualState<ConcreteState> *>>
 ConcreteVirtualState<ConcreteState>::make_rptr(auto &&...args) {
   return new ConcreteVirtualState{std::forward<decltype(args)>(args)...};
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 not_null<std::unique_ptr<ConcreteVirtualState<ConcreteState>>>
 ConcreteVirtualState<ConcreteState>::make_uptr(auto &&...args) {
   return std::make_unique<ConcreteVirtualState>(
@@ -32,77 +32,75 @@ ConcreteVirtualState<ConcreteState>::make_uptr(auto &&...args) {
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 not_null<owner<ConcreteVirtualState<ConcreteState> *>>
 ConcreteVirtualState<ConcreteState>::copy_rptr() const {
   return new ConcreteVirtualState{*this};
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 not_null<std::unique_ptr<ConcreteVirtualState<ConcreteState>>>
 ConcreteVirtualState<ConcreteState>::copy_uptr() const {
   return std::make_unique<ConcreteVirtualState>(*this);
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 void ConcreteVirtualState<ConcreteState>::match(const Symbol &symbol) {
   _concrete_state.match(symbol);
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::is_final() const {
   return _concrete_state.is_final();
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::is_dead() const {
   return _concrete_state.is_dead();
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::operator==(
     const ConcreteVirtualState &rhs) const {
   return _concrete_state == rhs._concrete_state;
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 auto ConcreteVirtualState<ConcreteState>::operator<=>(
     const ConcreteVirtualState &rhs) const {
   return _concrete_state <=> rhs._concrete_state;
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> &&
-           c_ct_State<ConcreteState>
-           template <typename OtherConcreteState>
-             requires req::c_r_no_cvref<OtherConcreteState> &&
-                      c_r_different_State_with_same_Symbol<OtherConcreteState,
-                                                           ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+template <typename OtherConcreteState>
+  requires req::c_r_no_cvref<OtherConcreteState> &&
+           c_r_different_State_with_same_Symbol<OtherConcreteState,
+                                                ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::operator==(
     const ConcreteVirtualState<OtherConcreteState> &) const {
   return false;
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> &&
-           c_ct_State<ConcreteState>
-           template <typename OtherConcreteState>
-             requires req::c_r_no_cvref<OtherConcreteState> &&
-                      c_r_different_State_with_same_Symbol<OtherConcreteState,
-                                                           ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+template <typename OtherConcreteState>
+  requires req::c_r_no_cvref<OtherConcreteState> &&
+           c_r_different_State_with_same_Symbol<OtherConcreteState,
+                                                ConcreteState>
 auto ConcreteVirtualState<ConcreteState>::operator<=>(
     const ConcreteVirtualState<OtherConcreteState> &rhs) const {
   return std::type_index{typeid(*this)} <=> std::type_index{typeid(rhs)};
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::operator==(
     const VirtualState<Symbol> &rhs) const {
   auto that = dynamic_cast<const ConcreteVirtualState *>(&rhs);
@@ -112,7 +110,7 @@ bool ConcreteVirtualState<ConcreteState>::operator==(
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 std::strong_ordering ConcreteVirtualState<ConcreteState>::operator<=>(
     const VirtualState<Symbol> &rhs) const {
   auto that = dynamic_cast<const ConcreteVirtualState *>(&rhs);
@@ -122,7 +120,7 @@ std::strong_ordering ConcreteVirtualState<ConcreteState>::operator<=>(
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 template <bool ns, bool tp>
 void ConcreteVirtualState<ConcreteState>::print_type(std::ostream &os) {
   if constexpr (ns)
@@ -136,7 +134,7 @@ void ConcreteVirtualState<ConcreteState>::print_type(std::ostream &os) {
 }
 
 template <typename ConcreteState>
-  requires req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>
+  requires impl::c_r_ConcreteVirtualState<ConcreteState>
 void ConcreteVirtualState<ConcreteState>::print_value(std::ostream &os, bool ns,
                                                       bool tp) const {
   ns ? (tp ? print_type<true, true>(os) : print_type<true>(os))
