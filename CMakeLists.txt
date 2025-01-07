@@ -65,6 +65,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
     /wd4514 # Unreferenced inline function has been removed
     /wd5045 # Insert Spectre mitigation for memory load
+    /wd5245 # Unreferenced function with internal linkage has been removed
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}
