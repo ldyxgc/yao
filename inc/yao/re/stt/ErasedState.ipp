@@ -13,9 +13,11 @@ namespace yao::re::stt {
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-                                       template <typename ConcreteState>
-             requires c_r_different_State_with_same_Symbol<
-                 std::remove_cvref_t<ConcreteState>, ErasedState<_Symbol>>
+template <typename ConcreteState,
+          std::enable_if_t<
+              c_r_different_State_with_same_Symbol<
+                  std::remove_cvref_t<ConcreteState>, ErasedState<_Symbol>>,
+              int>>
 ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state)
     : _virtual_state{
           ConcreteVirtualState<std::remove_cvref_t<ConcreteState>>::make_uptr(
