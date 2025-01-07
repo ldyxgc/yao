@@ -27,10 +27,10 @@ public:
   using Symbol = typename ConcreteState::Symbol;
 
 public:
-  ConcreteVirtualState(const auto &...args);
-  static not_null<owner<ConcreteVirtualState *>> make_rptr(const auto &...args);
+  ConcreteVirtualState(auto &&...args);
+  static not_null<owner<ConcreteVirtualState *>> make_rptr(auto &&...args);
   static not_null<std::unique_ptr<ConcreteVirtualState>>
-  make_uptr(const auto &...args);
+  make_uptr(auto &&...args);
   not_null<owner<ConcreteVirtualState *>> copy_rptr() const override;
   not_null<std::unique_ptr<ConcreteVirtualState>> copy_uptr() const;
 
