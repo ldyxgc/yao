@@ -20,9 +20,11 @@ public:
   using Symbol = _Symbol;
 
 public:
-  template <typename ConcreteState>
-    requires c_r_different_State_with_same_Symbol<
-        std::remove_cvref_t<ConcreteState>, ErasedState<_Symbol>>
+  template <typename ConcreteState,
+            std::enable_if_t<
+                c_r_different_State_with_same_Symbol<
+                    std::remove_cvref_t<ConcreteState>, ErasedState<_Symbol>>,
+                int> = 0>
   ErasedState(ConcreteState &&concrete_state);
 
   ErasedState(const ErasedState &erased_state);
