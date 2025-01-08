@@ -3,68 +3,72 @@
 
 #include "yao/re/stt/impl/fobj/ErasedState.hpp"
 
+#include <utility>
+
 #include "yao/prt/print_type.hpp"
 
 namespace yao::re::stt::impl::fobj {
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-template <typename ConcreteState,
+template <typename ConcreteState, typename _ConcreteState,
           std::enable_if_t<c_r_different_State_with_same_Symbol<
-                               ConcreteState, ErasedState<_Symbol>>,
+                               _ConcreteState, ErasedState<_Symbol>>,
                            int>>
-ErasedState<_Symbol>::ErasedState(const ConcreteState &concrete_state)
-    : _abstract_state{new ConcreteState{concrete_state}},
-      _type_index{typeid(ConcreteState)},
+ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state)
+    : _abstract_state{new _ConcreteState{
+          std::forward<ConcreteState>(concrete_state)}},
+      _type_index{typeid(_ConcreteState)},
 
       _fobj__copy_rptr{[](not_null<void *> abstract_state) {
-        return new ConcreteState{*static_cast<ConcreteState *>(abstract_state)};
+        return new _ConcreteState{
+            *static_cast<_ConcreteState *>(abstract_state)};
       }},
 
       _fobj__match{[](not_null<void *> abstract_state, const Symbol &symbol) {
-        static_cast<ConcreteState *>(abstract_state)->match(symbol);
+        static_cast<_ConcreteState *>(abstract_state)->match(symbol);
       }},
       _fobj__is_final{[](not_null<void *> abstract_state) {
-        return static_cast<ConcreteState *>(abstract_state)->is_final();
+        return static_cast<_ConcreteState *>(abstract_state)->is_final();
       }},
       _fobj__is_dead{[](not_null<void *> abstract_state) {
-        return static_cast<ConcreteState *>(abstract_state)->is_dead();
+        return static_cast<_ConcreteState *>(abstract_state)->is_dead();
       }},
 
       _fobj__equal{[](not_null<void *> abstract_state,
                       not_null<void *> rhs_abstract_state) {
-        return (*static_cast<ConcreteState *>(abstract_state)) ==
-               (*static_cast<ConcreteState *>(rhs_abstract_state));
+        return (*static_cast<_ConcreteState *>(abstract_state)) ==
+               (*static_cast<_ConcreteState *>(rhs_abstract_state));
       }},
       _fobj__order{[](not_null<void *> abstract_state,
                       not_null<void *> rhs_abstract_state) {
-        return (*static_cast<ConcreteState *>(abstract_state)) <=>
-               (*static_cast<ConcreteState *>(rhs_abstract_state));
+        return (*static_cast<_ConcreteState *>(abstract_state)) <=>
+               (*static_cast<_ConcreteState *>(rhs_abstract_state));
       }},
 
       _fobj__print_value__false_false{
           [](not_null<void *> abstract_state, std::ostream &os) {
-            static_cast<ConcreteState *>(abstract_state)
+            static_cast<_ConcreteState *>(abstract_state)
                 ->template print_value<false, false>(os);
           }},
       _fobj__print_value__true_false{
           [](not_null<void *> abstract_state, std::ostream &os) {
-            static_cast<ConcreteState *>(abstract_state)
+            static_cast<_ConcreteState *>(abstract_state)
                 ->template print_value<true, false>(os);
           }},
       _fobj__print_value__false_true{
           [](not_null<void *> abstract_state, std::ostream &os) {
-            static_cast<ConcreteState *>(abstract_state)
+            static_cast<_ConcreteState *>(abstract_state)
                 ->template print_value<false, true>(os);
           }},
       _fobj__print_value__true_true{
           [](not_null<void *> abstract_state, std::ostream &os) {
-            static_cast<ConcreteState *>(abstract_state)
+            static_cast<_ConcreteState *>(abstract_state)
                 ->template print_value<true, true>(os);
           }},
 
       _fobj__delete{[](not_null<void *> abstract_state) {
-        delete static_cast<ConcreteState *>(abstract_state);
+        delete static_cast<_ConcreteState *>(abstract_state);
       }} {}
 
 template <typename _Symbol>
