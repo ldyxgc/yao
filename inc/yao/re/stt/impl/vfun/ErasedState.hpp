@@ -5,6 +5,7 @@
 #include <ostream>
 #include <type_traits>
 
+#include "yao/com.hpp"
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/VirtualState.hpp"
@@ -45,7 +46,7 @@ public:
   void print_value(std::ostream &os) const;
 
 private:
-  std::unique_ptr<VirtualState<Symbol>> _virtual_state;
+  not_null<std::unique_ptr<VirtualState<Symbol>>> _virtual_state;
 };
 
 } // namespace yao::re::stt::impl::vfun
