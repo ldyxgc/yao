@@ -95,12 +95,70 @@ ErasedState<_Symbol>::ErasedState(const ErasedState &erased_state)
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+ErasedState<_Symbol>::ErasedState(ErasedState &&erased_state)
+    : _abstract_state{erased_state._abstract_state},
+      _type_index{erased_state._type_index},
+
+      _fobj__copy_rptr{erased_state._fobj__copy_rptr},
+
+      _fobj__match{erased_state._fobj__match},
+      _fobj__is_final{erased_state._fobj__is_final},
+      _fobj__is_dead{erased_state._fobj__is_dead},
+
+      _fobj__equal{erased_state._fobj__equal},
+      _fobj__order{erased_state._fobj__order},
+
+      _fobj__print_value__false_false{
+          erased_state._fobj__print_value__false_false},
+      _fobj__print_value__true_false{
+          erased_state._fobj__print_value__true_false},
+      _fobj__print_value__false_true{
+          erased_state._fobj__print_value__false_true},
+      _fobj__print_value__true_true{erased_state._fobj__print_value__true_true},
+
+      _fobj__delete{erased_state._fobj__delete} {
+  erased_state._abstract_state = nullptr;
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 ErasedState<_Symbol> &ErasedState<_Symbol>::operator=(const ErasedState &rhs) {
   if (_abstract_state == rhs._abstract_state)
     return *this;
 
   _fobj__delete(_abstract_state);
   _abstract_state = rhs._fobj__copy_rptr(rhs._abstract_state);
+
+  _type_index = rhs._type_index;
+
+  _fobj__copy_rptr = rhs._fobj__copy_rptr;
+
+  _fobj__match = rhs._fobj__match;
+  _fobj__is_final = rhs._fobj__is_final;
+  _fobj__is_dead = rhs._fobj__is_dead;
+
+  _fobj__equal = rhs._fobj__equal;
+  _fobj__order = rhs._fobj__order;
+
+  _fobj__print_value__false_false = rhs._fobj__print_value__false_false;
+  _fobj__print_value__true_false = rhs._fobj__print_value__true_false;
+  _fobj__print_value__false_true = rhs._fobj__print_value__false_true;
+  _fobj__print_value__true_true = rhs._fobj__print_value__true_true;
+
+  _fobj__delete = rhs._fobj__delete;
+
+  return *this;
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+ErasedState<_Symbol> &ErasedState<_Symbol>::operator=(ErasedState &&rhs) {
+  if (_abstract_state == rhs._abstract_state)
+    return *this;
+
+  _fobj__delete(_abstract_state);
+  _abstract_state = rhs._abstract_state;
+  rhs._abstract_state = nullptr;
 
   _type_index = rhs._type_index;
 
@@ -187,7 +245,8 @@ void ErasedState<_Symbol>::print_value(std::ostream &os) const {
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 ErasedState<_Symbol>::~ErasedState() {
-  _fobj__delete(_abstract_state);
+  if (_abstract_state)
+    _fobj__delete(_abstract_state);
 }
 
 } // namespace yao::re::stt::impl::fobj

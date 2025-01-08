@@ -22,14 +22,16 @@ public:
   using Symbol = _Symbol;
 
 public:
-  ErasedState(const ErasedState &erased_state);
   template <typename ConcreteState,
             std::enable_if_t<c_r_different_State_with_same_Symbol<
                                  ConcreteState, ErasedState<_Symbol>>,
                              int> = 0>
   ErasedState(const ConcreteState &concrete_state);
 
-  ErasedState &operator=(const ErasedState &rhs);
+  ErasedState(const ErasedState &erased_state);
+  ErasedState(ErasedState &&erased_state);
+  ErasedState &operator=(const ErasedState &erased_state);
+  ErasedState &operator=(ErasedState &&erased_state);
 
   void match(const Symbol &symbol);
   bool is_final() const;
