@@ -1,0 +1,1 @@
+yao__tst(tst__yao__re__stt__impl__fobj__ErasedState)
