@@ -9,33 +9,34 @@ namespace yao::re::stt::impl::fptr {
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-template <typename ConcreteState,
+template <typename ConcreteState, typename _ConcreteState,
           std::enable_if_t<c_r_different_State_with_same_Symbol<
-                               ConcreteState, ErasedState<_Symbol>>,
+                               _ConcreteState, ErasedState<_Symbol>>,
                            int>>
-ErasedState<_Symbol>::ErasedState(const ConcreteState &concrete_state)
-    : _abstract_state{new ConcreteState{concrete_state}},
-      _type_index{typeid(ConcreteState)},
+ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state)
+    : _abstract_state{new _ConcreteState{
+          std::forward<ConcreteState>(concrete_state)}},
+      _type_index{typeid(_ConcreteState)},
 
-      _fptr__copy_rptr{_sfun__copy_rptr<ConcreteState>},
+      _fptr__copy_rptr{_sfun__copy_rptr<_ConcreteState>},
 
-      _fptr__match{_sfun__match<ConcreteState>},
-      _fptr__is_final{_sfun__is_final<ConcreteState>},
-      _fptr__is_dead{_sfun__is_dead<ConcreteState>},
+      _fptr__match{_sfun__match<_ConcreteState>},
+      _fptr__is_final{_sfun__is_final<_ConcreteState>},
+      _fptr__is_dead{_sfun__is_dead<_ConcreteState>},
 
-      _fptr__equal{_sfun__equal<ConcreteState>},
-      _fptr__order{_sfun__order<ConcreteState>},
+      _fptr__equal{_sfun__equal<_ConcreteState>},
+      _fptr__order{_sfun__order<_ConcreteState>},
 
       _fptr__print_value__false_false{
-          _sfun__print_value<ConcreteState, false, false>},
+          _sfun__print_value<_ConcreteState, false, false>},
       _fptr__print_value__true_false{
-          _sfun__print_value<ConcreteState, true, false>},
+          _sfun__print_value<_ConcreteState, true, false>},
       _fptr__print_value__false_true{
-          _sfun__print_value<ConcreteState, false, true>},
+          _sfun__print_value<_ConcreteState, false, true>},
       _fptr__print_value__true_true{
-          _sfun__print_value<ConcreteState, true, true>},
+          _sfun__print_value<_ConcreteState, true, true>},
 
-      _fptr__delete{_sfun__delete<ConcreteState>} {}
+      _fptr__delete{_sfun__delete<_ConcreteState>} {}
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
@@ -65,12 +66,70 @@ ErasedState<_Symbol>::ErasedState(const ErasedState &erased_state)
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+ErasedState<_Symbol>::ErasedState(ErasedState &&erased_state)
+    : _abstract_state{erased_state._abstract_state},
+      _type_index{erased_state._type_index},
+
+      _fptr__copy_rptr{erased_state._fptr__copy_rptr},
+
+      _fptr__match{erased_state._fptr__match},
+      _fptr__is_final{erased_state._fptr__is_final},
+      _fptr__is_dead{erased_state._fptr__is_dead},
+
+      _fptr__equal{erased_state._fptr__equal},
+      _fptr__order{erased_state._fptr__order},
+
+      _fptr__print_value__false_false{
+          erased_state._fptr__print_value__false_false},
+      _fptr__print_value__true_false{
+          erased_state._fptr__print_value__true_false},
+      _fptr__print_value__false_true{
+          erased_state._fptr__print_value__false_true},
+      _fptr__print_value__true_true{erased_state._fptr__print_value__true_true},
+
+      _fptr__delete{erased_state._fptr__delete} {
+  erased_state._abstract_state = nullptr;
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 ErasedState<_Symbol> &ErasedState<_Symbol>::operator=(const ErasedState &rhs) {
   if (_abstract_state == rhs._abstract_state)
     return *this;
 
   _fptr__delete(_abstract_state);
   _abstract_state = rhs._fptr__copy_rptr(rhs._abstract_state);
+
+  _type_index = rhs._type_index;
+
+  _fptr__copy_rptr = rhs._fptr__copy_rptr;
+
+  _fptr__match = rhs._fptr__match;
+  _fptr__is_final = rhs._fptr__is_final;
+  _fptr__is_dead = rhs._fptr__is_dead;
+
+  _fptr__equal = rhs._fptr__equal;
+  _fptr__order = rhs._fptr__order;
+
+  _fptr__print_value__false_false = rhs._fptr__print_value__false_false;
+  _fptr__print_value__true_false = rhs._fptr__print_value__true_false;
+  _fptr__print_value__false_true = rhs._fptr__print_value__false_true;
+  _fptr__print_value__true_true = rhs._fptr__print_value__true_true;
+
+  _fptr__delete = rhs._fptr__delete;
+
+  return *this;
+}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+ErasedState<_Symbol> &ErasedState<_Symbol>::operator=(ErasedState &&rhs) {
+  if (_abstract_state == rhs._abstract_state)
+    return *this;
+
+  _fptr__delete(_abstract_state);
+  _abstract_state = rhs._fptr__copy_rptr(rhs._abstract_state);
+  rhs._abstract_state = nullptr;
 
   _type_index = rhs._type_index;
 
