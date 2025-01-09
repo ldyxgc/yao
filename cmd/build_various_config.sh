@@ -6,6 +6,7 @@ set -e # Exit immediately if a command exits with a non-zero status.
 # Option
 ARR__YAO_CONFIG__RE_ERASED_STATE=(
   YAO_CONFIG__RE_ERASED_STATE__VIRTUAL_FUNCTION
+  YAO_CONFIG__RE_ERASED_STATE__FUNCTION_POINTER
   YAO_CONFIG__RE_ERASED_STATE__FUNCTION_OBJECT
 )
 
