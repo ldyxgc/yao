@@ -14,6 +14,17 @@ using impl::vfun::ErasedState;
 } // namespace yao::re::stt
 
 #elif YAO_CONFIG__RE_ERASED_STATE ==                                           \
+    YAO_CONFIG__RE_ERASED_STATE__FUNCTION_POINTER
+
+#include "yao/re/stt/impl/fptr/ErasedState.hpp"
+
+namespace yao::re::stt {
+
+using impl::fptr::ErasedState;
+
+} // namespace yao::re::stt
+
+#elif YAO_CONFIG__RE_ERASED_STATE ==                                           \
     YAO_CONFIG__RE_ERASED_STATE__FUNCTION_OBJECT
 
 #include "yao/re/stt/impl/fobj/ErasedState.hpp"

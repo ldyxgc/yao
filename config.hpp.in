@@ -20,10 +20,13 @@
 #endif
 
 #define YAO_CONFIG__RE_ERASED_STATE__VIRTUAL_FUNCTION 1
-#define YAO_CONFIG__RE_ERASED_STATE__FUNCTION_OBJECT 2
+#define YAO_CONFIG__RE_ERASED_STATE__FUNCTION_POINTER 2
+#define YAO_CONFIG__RE_ERASED_STATE__FUNCTION_OBJECT 3
 #define YAO_CONFIG__RE_ERASED_STATE @YAO_CONFIG__RE_ERASED_STATE@
 #if (YAO_CONFIG__RE_ERASED_STATE !=                                            \
      YAO_CONFIG__RE_ERASED_STATE__VIRTUAL_FUNCTION) &&                         \
+    (YAO_CONFIG__RE_ERASED_STATE !=                                            \
+     YAO_CONFIG__RE_ERASED_STATE__FUNCTION_POINTER) &&                         \
     (YAO_CONFIG__RE_ERASED_STATE !=                                            \
      YAO_CONFIG__RE_ERASED_STATE__FUNCTION_OBJECT)
 #error "YAO_CONFIG__RE_ERASED_STATE"
