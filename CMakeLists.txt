@@ -22,6 +22,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     -Wextra
     -Wpedantic
 
+    -Wpadded
     -Wswitch-default
     -Wswitch-enum
   )
