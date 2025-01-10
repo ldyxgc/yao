@@ -34,6 +34,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
     -Wno-c++98-compat-pedantic
     -Wno-covered-switch-default
+    -Wno-ctad-maybe-unsupported
     -Wno-reserved-identifier
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -45,6 +46,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
 
     -Wno-c++98-compat-pedantic
     -Wno-covered-switch-default
+    -Wno-ctad-maybe-unsupported
     -Wno-zero-as-null-pointer-constant
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
