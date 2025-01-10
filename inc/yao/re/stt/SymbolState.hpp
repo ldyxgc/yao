@@ -1,11 +1,15 @@
 #ifndef __YAO__RE__STT__SYMBOL_STATE__HPP__
 #define __YAO__RE__STT__SYMBOL_STATE__HPP__
 
+#include "yao/def/warn.hpp"
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
 
 namespace yao::re::stt {
+
+YAO_WARN_PUSH
+YAO_WARN_OFF__PADDING
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
@@ -30,6 +34,8 @@ private:
   Symbol _symbol; // const
   Label _label;
 };
+
+YAO_WARN_POP
 
 } // namespace yao::re::stt
 
