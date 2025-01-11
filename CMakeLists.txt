@@ -58,6 +58,8 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     /EHsc # Warning C4530 and C4577; Exception handling model
 
     /Wall
+
+    /wd5245 # Unreferenced function with internal linkage has been removed
   )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}
