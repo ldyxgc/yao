@@ -1,5 +1,7 @@
 yao__tst(tst__yao__re__stt__c_r_State_with_same_Symbol)
 
+yao__tst(tst__yao__re__stt__ConcatState)
+
 yao__tst(tst__yao__re__stt__EpsilonState)
 
 yao__tst(tst__yao__re__stt__KleeneState)
