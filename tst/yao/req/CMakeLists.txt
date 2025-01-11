@@ -1,1 +1,7 @@
 yao__tst(tst__yao__req__c_r_no_cvref)
+
+yao__tst(tst__yao__req__c_t_pointer)
+
+yao__tst(tst__yao__req__c_t_std_shared_ptr)
+
+yao__tst(tst__yao__req__c_t_std_unique_ptr)
