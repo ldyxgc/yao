@@ -18,11 +18,27 @@ int main() {
   using UnionErasedState = yao::re::stt::UnionState<ErasedState, ErasedState>;
 
   {
-    ErasedState erased_state_a{EpsilonState{}};
-    ErasedState erased_state_b{ErasedState{EpsilonState{}}};
-    ErasedState erased_state_c{ErasedState{ErasedState{EpsilonState{}}}};
-    YAO_CHECK(erased_state_a == erased_state_b);
-    YAO_CHECK(erased_state_a == erased_state_c);
+    ErasedState erased_state_a0{EpsilonState{}};
+    ErasedState erased_state_a1{EpsilonState{}, 0};
+    ErasedState erased_state_a2{ErasedState{EpsilonState{}}};
+    ErasedState erased_state_a3{ErasedState{ErasedState{EpsilonState{}}}};
+    YAO_CHECK(erased_state_a0 == erased_state_a1);
+    YAO_CHECK(erased_state_a0 == erased_state_a2);
+    YAO_CHECK(erased_state_a0 == erased_state_a3);
+
+    ErasedState erased_state_b0{erased_state_a0, 0};
+    ErasedState erased_state_b1{ErasedState{EpsilonState{}}, 0};
+    ErasedState erased_state_b2{ErasedState{ErasedState{EpsilonState{}}, 0}};
+    ErasedState erased_state_b3{ErasedState{ErasedState{EpsilonState{}}}, 0};
+    YAO_CHECK(erased_state_b0 != erased_state_a0);
+    YAO_CHECK(erased_state_b0 == erased_state_b1);
+    YAO_CHECK(erased_state_b0 == erased_state_b2);
+    YAO_CHECK(erased_state_b0 == erased_state_b3);
+
+    ErasedState erased_state_c0{erased_state_b0, 0};
+    ErasedState erased_state_c1{ErasedState{ErasedState{EpsilonState{}}, 0}, 0};
+    YAO_CHECK(erased_state_c0 != erased_state_b0);
+    YAO_CHECK(erased_state_c0 == erased_state_c1);
   }
 
   {

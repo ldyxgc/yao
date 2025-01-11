@@ -8,6 +8,7 @@
 #include "yao/re/c_ct_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/VirtualState.hpp"
+#include "yao/re/stt/c_ct_State.hpp"
 #include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
 
@@ -26,6 +27,9 @@ public:
                     std::remove_cvref_t<ConcreteState>, ErasedState<_Symbol>>,
                 int> = 0>
   ErasedState(ConcreteState &&concrete_state);
+  template <typename ConcreteState>
+    requires c_ct_State<std::remove_cvref_t<ConcreteState>>
+  ErasedState(ConcreteState &&concrete_state, int sub_state);
 
   ErasedState(const ErasedState &erased_state);
   ErasedState(ErasedState &&erased_state) = default;
