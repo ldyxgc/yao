@@ -23,6 +23,15 @@ ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state)
 
 template <typename _Symbol>
   requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+                                       template <typename ConcreteState>
+             requires c_ct_State<std::remove_cvref_t<ConcreteState>>
+ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state, int)
+    : _virtual_state{
+          ConcreteVirtualState<std::remove_cvref_t<ConcreteState>>::make_uptr(
+              std::forward<ConcreteState>(concrete_state))} {}
+
+template <typename _Symbol>
+  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
 ErasedState<_Symbol>::ErasedState(const ErasedState &erased_state)
     : _virtual_state{erased_state._virtual_state->copy_uptr()} {}
 
