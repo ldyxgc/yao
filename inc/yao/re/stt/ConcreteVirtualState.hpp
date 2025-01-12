@@ -33,6 +33,8 @@ class ConcreteVirtualState
       private StateBase<ConcreteVirtualState<ConcreteState>> {
 public:
   using Symbol = typename ConcreteState::Symbol;
+  using CmpLess =
+      typename VirtualState<typename ConcreteState::Symbol>::CmpLess;
 
 public:
   ConcreteVirtualState(auto &&...args);
@@ -61,6 +63,10 @@ public:
   bool operator==(const VirtualState<Symbol> &rhs) const override;
   std::strong_ordering
   operator<=>(const VirtualState<Symbol> &rhs) const override;
+
+  static bool cmp_less_assume_same_known_type(const VirtualState<Symbol> &lhs,
+                                              const VirtualState<Symbol> &rhs);
+  CmpLess get_cmp_less_assume_same_known_type() const override;
 
 private:
   ConcreteState _concrete_state;
