@@ -122,9 +122,9 @@ template <typename ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::cmp_less_assume_same_known_type(
     const VirtualState<Symbol> &lhs, const VirtualState<Symbol> &rhs) {
   auto lhs_concrete_virtual_state =
-      reinterpret_cast<const ConcreteVirtualState *>(&lhs);
+      static_cast<const ConcreteVirtualState *>(&lhs);
   auto rhs_concrete_virtual_state =
-      reinterpret_cast<const ConcreteVirtualState *>(&rhs);
+      static_cast<const ConcreteVirtualState *>(&rhs);
   return lhs_concrete_virtual_state->_concrete_state <
          rhs_concrete_virtual_state->_concrete_state;
 }
