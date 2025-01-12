@@ -7,21 +7,23 @@
 
 namespace yao::re::stt {
 
-template <typename LhsState, typename RhsState>
+template <typename LhsState, typename RhsState, typename RhsStateCmp>
   requires impl::c_r_ConcatState<LhsState, RhsState>
 template <typename _LhsState, typename _RhsState>
   requires c_r_State_with_same_Symbol<std::remove_cvref_t<_LhsState>,
                                       std::remove_cvref_t<_RhsState>>
-ConcatState<LhsState, RhsState>::ConcatState(_LhsState &&lhs_state,
-                                             _RhsState &&rhs_state)
+ConcatState<LhsState, RhsState, RhsStateCmp>::ConcatState(
+    _LhsState &&lhs_state, _RhsState &&rhs_state,
+    const RhsStateCmp &rhs_state_cmp)
     : _lhs_state{std::forward<_LhsState>(lhs_state)},
-      _raw_rhs_state{std::forward<_RhsState>(rhs_state)}, _rhs_state_set{},
+      _raw_rhs_state{std::forward<_RhsState>(rhs_state)},
+      _rhs_state_set{rhs_state_cmp},
       _is_final{_lhs_state.is_final() && _raw_rhs_state.is_final()} {}
 
-template <typename LhsState, typename RhsState>
+template <typename LhsState, typename RhsState, typename RhsStateCmp>
   requires impl::c_r_ConcatState<LhsState, RhsState>
-void ConcatState<LhsState, RhsState>::match(const Symbol &symbol) {
-  std::set<RhsState> new_rhs_state_set;
+void ConcatState<LhsState, RhsState, RhsStateCmp>::match(const Symbol &symbol) {
+  decltype(_rhs_state_set) new_rhs_state_set{_rhs_state_set.key_comp()};
   _is_final = false;
   if (_lhs_state.is_final()) {
     auto new_rhs_state = _raw_rhs_state;
@@ -45,15 +47,15 @@ void ConcatState<LhsState, RhsState>::match(const Symbol &symbol) {
   _rhs_state_set = std::move(new_rhs_state_set);
 }
 
-template <typename LhsState, typename RhsState>
+template <typename LhsState, typename RhsState, typename RhsStateCmp>
   requires impl::c_r_ConcatState<LhsState, RhsState>
-bool ConcatState<LhsState, RhsState>::is_final() const {
+bool ConcatState<LhsState, RhsState, RhsStateCmp>::is_final() const {
   return _is_final;
 }
 
-template <typename LhsState, typename RhsState>
+template <typename LhsState, typename RhsState, typename RhsStateCmp>
   requires impl::c_r_ConcatState<LhsState, RhsState>
-bool ConcatState<LhsState, RhsState>::is_dead() const {
+bool ConcatState<LhsState, RhsState, RhsStateCmp>::is_dead() const {
   return _lhs_state.is_dead() && _rhs_state_set.empty();
 }
 
