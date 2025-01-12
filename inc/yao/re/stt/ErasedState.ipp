@@ -73,6 +73,13 @@ auto ErasedState<_Symbol>::operator<=>(const ErasedState &rhs) const {
   return *_virtual_state <=> *rhs._virtual_state;
 }
 
+template <typename _Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
+typename ErasedState<_Symbol>::CmpLess
+ErasedState<_Symbol>::get_cmp_less_assume_same_known_type() const {
+  return {_virtual_state->get_cmp_less_assume_same_known_type()};
+}
+
 } // namespace yao::re::stt
 
 #endif
