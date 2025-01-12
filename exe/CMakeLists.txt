@@ -4,3 +4,7 @@ function(yao__exe NAME)
 endfunction()
 
 add_subdirectory(yao)
+
+yao__exe(custom_comparator)
+
+yao__exe(default_comparator)
