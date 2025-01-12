@@ -10,7 +10,7 @@
 namespace yao::re::stt {
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 template <typename ConcreteState,
           std::enable_if_t<
               c_r_different_State_with_same_Symbol<
@@ -22,21 +22,21 @@ ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state)
               std::forward<ConcreteState>(concrete_state))} {}
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
-                                       template <typename ConcreteState>
-             requires c_ct_State<std::remove_cvref_t<ConcreteState>>
+  requires impl::c_r_ErasedState<_Symbol>
+template <typename ConcreteState>
+  requires c_ct_State<std::remove_cvref_t<ConcreteState>>
 ErasedState<_Symbol>::ErasedState(ConcreteState &&concrete_state, int)
     : _virtual_state{
           ConcreteVirtualState<std::remove_cvref_t<ConcreteState>>::make_uptr(
               std::forward<ConcreteState>(concrete_state))} {}
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 ErasedState<_Symbol>::ErasedState(const ErasedState &erased_state)
     : _virtual_state{erased_state._virtual_state->copy_uptr()} {}
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 ErasedState<_Symbol> &
 ErasedState<_Symbol>::operator=(const ErasedState &erased_state) {
   _virtual_state = erased_state._virtual_state->copy_uptr();
@@ -44,31 +44,31 @@ ErasedState<_Symbol>::operator=(const ErasedState &erased_state) {
 }
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 void ErasedState<_Symbol>::match(const Symbol &symbol) {
   _virtual_state->match(symbol);
 }
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 bool ErasedState<_Symbol>::is_final() const {
   return _virtual_state->is_final();
 }
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 bool ErasedState<_Symbol>::is_dead() const {
   return _virtual_state->is_dead();
 }
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 bool ErasedState<_Symbol>::operator==(const ErasedState &rhs) const {
   return *_virtual_state == *rhs._virtual_state;
 }
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 auto ErasedState<_Symbol>::operator<=>(const ErasedState &rhs) const {
   return *_virtual_state <=> *rhs._virtual_state;
 }
