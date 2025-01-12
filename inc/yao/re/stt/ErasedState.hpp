@@ -14,8 +14,16 @@
 
 namespace yao::re::stt {
 
+namespace impl {
+
+// c: concept, r: require
+template <typename Symbol>
+concept c_r_ErasedState = req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>;
+
+} // namespace impl
+
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires impl::c_r_ErasedState<_Symbol>
 class ErasedState : private StateBase<ErasedState<_Symbol>> {
 public:
   using Symbol = _Symbol;
