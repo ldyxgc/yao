@@ -7,20 +7,24 @@
 
 namespace yao::re::stt {
 
-template <typename SubState>
+template <typename SubState, typename SubStateCmp>
   requires req::c_r_no_cvref<SubState> && c_ct_State<SubState>
-KleeneState<SubState>::KleeneState(const SubState &sub_state)
-    : _raw_sub_state{sub_state}, _sub_state_set{}, _is_final{true} {}
+KleeneState<SubState, SubStateCmp>::KleeneState(
+    const SubState &sub_state, const SubStateCmp &sub_state_cmp)
+    : _raw_sub_state{sub_state}, _sub_state_set{sub_state_cmp},
+      _is_final{true} {}
 
-template <typename SubState>
+template <typename SubState, typename SubStateCmp>
   requires req::c_r_no_cvref<SubState> && c_ct_State<SubState>
-KleeneState<SubState>::KleeneState(SubState &&sub_state)
-    : _raw_sub_state{std::move(sub_state)}, _sub_state_set{}, _is_final{true} {}
+KleeneState<SubState, SubStateCmp>::KleeneState(
+    SubState &&sub_state, const SubStateCmp &sub_state_cmp)
+    : _raw_sub_state{std::move(sub_state)}, _sub_state_set{sub_state_cmp},
+      _is_final{true} {}
 
-template <typename SubState>
+template <typename SubState, typename SubStateCmp>
   requires req::c_r_no_cvref<SubState> && c_ct_State<SubState>
-void KleeneState<SubState>::match(const Symbol &symbol) {
-  std::set<SubState> new_sub_state_set;
+void KleeneState<SubState, SubStateCmp>::match(const Symbol &symbol) {
+  decltype(_sub_state_set) new_sub_state_set{_sub_state_set.key_comp()};
   if (_is_final) {
     auto new_sub_state = _raw_sub_state;
     new_sub_state.match(symbol);
@@ -40,15 +44,15 @@ void KleeneState<SubState>::match(const Symbol &symbol) {
   _sub_state_set = std::move(new_sub_state_set);
 }
 
-template <typename SubState>
+template <typename SubState, typename SubStateCmp>
   requires req::c_r_no_cvref<SubState> && c_ct_State<SubState>
-bool KleeneState<SubState>::is_final() const {
+bool KleeneState<SubState, SubStateCmp>::is_final() const {
   return _is_final;
 }
 
-template <typename SubState>
+template <typename SubState, typename SubStateCmp>
   requires req::c_r_no_cvref<SubState> && c_ct_State<SubState>
-bool KleeneState<SubState>::is_dead() const {
+bool KleeneState<SubState, SubStateCmp>::is_dead() const {
   return _is_final == false && _sub_state_set.empty();
 }
 
