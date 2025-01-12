@@ -24,7 +24,8 @@ concept c_r_ConcatState =
 YAO_WARN_PUSH
 YAO_WARN_OFF__PADDING
 
-template <typename LhsState, typename RhsState>
+template <typename LhsState, typename RhsState,
+          typename RhsStateCmp = std::less<RhsState>>
   requires impl::c_r_ConcatState<LhsState, RhsState>
 class ConcatState : private StateBase<ConcatState<LhsState, RhsState>> {
 public:
@@ -34,7 +35,8 @@ public:
   template <typename _LhsState, typename _RhsState>
     requires c_r_State_with_same_Symbol<std::remove_cvref_t<_LhsState>,
                                         std::remove_cvref_t<_RhsState>>
-  ConcatState(_LhsState &&lhs_state, _RhsState &&rhs_state);
+  ConcatState(_LhsState &&lhs_state, _RhsState &&rhs_state,
+              const RhsStateCmp &rhs_state_cmp = RhsStateCmp{});
 
   void match(const Symbol &symbol);
   bool is_final() const;
@@ -45,7 +47,7 @@ public:
 private:
   LhsState _lhs_state;
   RhsState _raw_rhs_state; // const
-  std::set<RhsState> _rhs_state_set;
+  std::set<RhsState, RhsStateCmp> _rhs_state_set;
   bool _is_final;
 };
 
