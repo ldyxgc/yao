@@ -6,7 +6,7 @@
 namespace yao::re::stt {
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 not_null<std::unique_ptr<VirtualState<_Symbol>>>
 VirtualState<_Symbol>::copy_uptr() const {
   return std::unique_ptr<VirtualState>{copy_rptr()};
