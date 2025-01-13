@@ -86,6 +86,13 @@ VirtualState<_Symbol> *ErasedState<_Symbol>::get() const {
   return _virtual_state.get();
 }
 
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
+typename ErasedState<_Symbol>::CmpLess2
+ErasedState<_Symbol>::get_cmp_less2_assume_same_known_type() const {
+  return {_virtual_state->get_cmp_less2_assume_same_known_type()};
+}
+
 } // namespace yao::re::stt
 
 #endif
