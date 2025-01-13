@@ -119,7 +119,7 @@ std::strong_ordering ConcreteVirtualState<ConcreteState>::operator<=>(
 
 template <typename ConcreteState>
   requires c_r_no_cvref_State<ConcreteState>
-bool ConcreteVirtualState<ConcreteState>::cmp_less_assume_same_known_type(
+bool ConcreteVirtualState<ConcreteState>::cmp_less1_assume_same_known_type(
     const VirtualState<Symbol> &lhs, const VirtualState<Symbol> &rhs) {
   auto lhs_concrete_virtual_state =
       static_cast<const ConcreteVirtualState *>(&lhs);
@@ -131,10 +131,10 @@ bool ConcreteVirtualState<ConcreteState>::cmp_less_assume_same_known_type(
 
 template <typename ConcreteState>
   requires c_r_no_cvref_State<ConcreteState>
-typename ConcreteVirtualState<ConcreteState>::CmpLess
-ConcreteVirtualState<ConcreteState>::get_cmp_less_assume_same_known_type()
+typename ConcreteVirtualState<ConcreteState>::CmpLess1
+ConcreteVirtualState<ConcreteState>::get_cmp_less1_assume_same_known_type()
     const {
-  return cmp_less_assume_same_known_type;
+  return cmp_less1_assume_same_known_type;
 }
 
 } // namespace yao::re::stt

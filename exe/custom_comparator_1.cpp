@@ -17,9 +17,9 @@ int main() {
   using EpsilonState = yao::re::stt::EpsilonState<int>;
   using SymbolState = yao::re::stt::SymbolState<int>;
   using KleeneErasedState =
-      yao::re::stt::KleeneState<ErasedState, ErasedState::CmpLess>;
-  using ConcatErasedState =
-      yao::re::stt::ConcatState<ErasedState, ErasedState, ErasedState::CmpLess>;
+      yao::re::stt::KleeneState<ErasedState, ErasedState::CmpLess1>;
+  using ConcatErasedState = yao::re::stt::ConcatState<ErasedState, ErasedState,
+                                                      ErasedState::CmpLess1>;
 
   ErasedState re = EpsilonState{};
   for (int i = 0; i <= NUM_MAX; i++) {
@@ -27,9 +27,9 @@ int main() {
     re = ConcatErasedState{
         re, KleeneErasedState{
                 erased_symbol_state,
-                erased_symbol_state.get_cmp_less_assume_same_known_type()}};
+                erased_symbol_state.get_cmp_less1_assume_same_known_type()}};
   }
-  re = ConcatErasedState{re, re, re.get_cmp_less_assume_same_known_type()};
+  re = ConcatErasedState{re, re, re.get_cmp_less1_assume_same_known_type()};
 
   auto clk_bgn = std::chrono::high_resolution_clock::now();
   {

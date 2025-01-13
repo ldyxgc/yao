@@ -19,8 +19,8 @@ class ErasedState : private StateBase<ErasedState<_Symbol>> {
 public:
   using Symbol = _Symbol;
 
-  struct CmpLess {
-    typename VirtualState<Symbol>::CmpLess sub_cmp_less;
+  struct CmpLess1 {
+    typename VirtualState<Symbol>::CmpLess1 sub_cmp_less;
     bool operator()(const ErasedState &lhs, const ErasedState &rhs) const {
       return sub_cmp_less(*lhs._virtual_state, *rhs._virtual_state);
     }
@@ -49,7 +49,7 @@ public:
   bool operator==(const ErasedState &rhs) const;
   auto operator<=>(const ErasedState &rhs) const;
 
-  CmpLess get_cmp_less_assume_same_known_type() const;
+  CmpLess1 get_cmp_less1_assume_same_known_type() const;
 
 private:
   not_null<std::unique_ptr<VirtualState<Symbol>>> _virtual_state;

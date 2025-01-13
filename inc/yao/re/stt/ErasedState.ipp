@@ -75,9 +75,9 @@ auto ErasedState<_Symbol>::operator<=>(const ErasedState &rhs) const {
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
-typename ErasedState<_Symbol>::CmpLess
-ErasedState<_Symbol>::get_cmp_less_assume_same_known_type() const {
-  return {_virtual_state->get_cmp_less_assume_same_known_type()};
+typename ErasedState<_Symbol>::CmpLess1
+ErasedState<_Symbol>::get_cmp_less1_assume_same_known_type() const {
+  return {_virtual_state->get_cmp_less1_assume_same_known_type()};
 }
 
 } // namespace yao::re::stt
