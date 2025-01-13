@@ -12,10 +12,16 @@ namespace yao::re::stt {
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
+class ErasedState;
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 class VirtualState : private StateBase<VirtualState<_Symbol>> {
 public:
   using Symbol = _Symbol;
   using CmpLess1 = bool (*)(const VirtualState &, const VirtualState &);
+  using CmpLess2 = bool (*)(const ErasedState<Symbol> &,
+                            const ErasedState<Symbol> &);
 
 protected:
   VirtualState() = default;
@@ -36,6 +42,7 @@ public:
   virtual std::strong_ordering operator<=>(const VirtualState &rhs) const = 0;
 
   virtual CmpLess1 get_cmp_less1_assume_same_known_type() const = 0;
+  virtual CmpLess2 get_cmp_less2_assume_same_known_type() const = 0;
 
   virtual ~VirtualState() = default;
 };
