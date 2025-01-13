@@ -6,6 +6,8 @@
 #include <typeindex>
 #include <utility>
 
+#include "yao/re/stt/ErasedState.hpp"
+
 namespace yao::re::stt {
 
 template <typename ConcreteState>
@@ -135,6 +137,26 @@ typename ConcreteVirtualState<ConcreteState>::CmpLess1
 ConcreteVirtualState<ConcreteState>::get_cmp_less1_assume_same_known_type()
     const {
   return cmp_less1_assume_same_known_type;
+}
+
+template <typename ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
+bool ConcreteVirtualState<ConcreteState>::cmp_less2_assume_same_known_type(
+    const ErasedState<Symbol> &lhs, const ErasedState<Symbol> &rhs) {
+  auto lhs_concrete_virtual_state =
+      static_cast<const ConcreteVirtualState *>(lhs.get());
+  auto rhs_concrete_virtual_state =
+      static_cast<const ConcreteVirtualState *>(rhs.get());
+  return lhs_concrete_virtual_state->_concrete_state <
+         rhs_concrete_virtual_state->_concrete_state;
+}
+
+template <typename ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
+typename ConcreteVirtualState<ConcreteState>::CmpLess2
+ConcreteVirtualState<ConcreteState>::get_cmp_less2_assume_same_known_type()
+    const {
+  return cmp_less2_assume_same_known_type;
 }
 
 } // namespace yao::re::stt

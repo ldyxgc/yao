@@ -26,6 +26,8 @@ public:
   using Symbol = typename ConcreteState::Symbol;
   using CmpLess1 =
       typename VirtualState<typename ConcreteState::Symbol>::CmpLess1;
+  using CmpLess2 =
+      typename VirtualState<typename ConcreteState::Symbol>::CmpLess2;
 
 public:
   ConcreteVirtualState(auto &&...args);
@@ -58,6 +60,10 @@ public:
   static bool cmp_less1_assume_same_known_type(const VirtualState<Symbol> &lhs,
                                                const VirtualState<Symbol> &rhs);
   CmpLess1 get_cmp_less1_assume_same_known_type() const override;
+
+  static bool cmp_less2_assume_same_known_type(const ErasedState<Symbol> &lhs,
+                                               const ErasedState<Symbol> &rhs);
+  CmpLess2 get_cmp_less2_assume_same_known_type() const override;
 
 private:
   ConcreteState _concrete_state;
