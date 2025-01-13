@@ -15,7 +15,7 @@ template <typename _Symbol>
 class VirtualState : private StateBase<VirtualState<_Symbol>> {
 public:
   using Symbol = _Symbol;
-  using CmpLess = bool (*)(const VirtualState &, const VirtualState &);
+  using CmpLess1 = bool (*)(const VirtualState &, const VirtualState &);
 
 protected:
   VirtualState() = default;
@@ -35,7 +35,7 @@ public:
   virtual bool operator==(const VirtualState &rhs) const = 0;
   virtual std::strong_ordering operator<=>(const VirtualState &rhs) const = 0;
 
-  virtual CmpLess get_cmp_less_assume_same_known_type() const = 0;
+  virtual CmpLess1 get_cmp_less1_assume_same_known_type() const = 0;
 
   virtual ~VirtualState() = default;
 };
