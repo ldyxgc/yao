@@ -6,8 +6,7 @@
 
 #include "yao/def/warn.hpp"
 #include "yao/re/stt/StateBase.hpp"
-#include "yao/re/stt/c_ct_State.hpp"
-#include "yao/req/c_r_no_cvref.hpp"
+#include "yao/re/stt/c_r_no_cvref_State.hpp"
 
 namespace yao::re::stt {
 
@@ -15,7 +14,7 @@ YAO_WARN_PUSH
 YAO_WARN_OFF__PADDING
 
 template <typename SubState, typename SubStateCmp = std::less<SubState>>
-  requires req::c_r_no_cvref<SubState> && c_ct_State<SubState>
+  requires c_r_no_cvref_State<SubState>
 class KleeneState : private StateBase<KleeneState<SubState>> {
 public:
   using Symbol = typename SubState::Symbol;

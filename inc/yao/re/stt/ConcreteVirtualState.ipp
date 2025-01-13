@@ -9,19 +9,19 @@
 namespace yao::re::stt {
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 ConcreteVirtualState<ConcreteState>::ConcreteVirtualState(auto &&...args)
     : _concrete_state{std::forward<decltype(args)>(args)...} {}
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 not_null<owner<ConcreteVirtualState<ConcreteState> *>>
 ConcreteVirtualState<ConcreteState>::make_rptr(auto &&...args) {
   return new ConcreteVirtualState{std::forward<decltype(args)>(args)...};
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 not_null<std::unique_ptr<ConcreteVirtualState<ConcreteState>>>
 ConcreteVirtualState<ConcreteState>::make_uptr(auto &&...args) {
   return std::make_unique<ConcreteVirtualState>(
@@ -29,53 +29,53 @@ ConcreteVirtualState<ConcreteState>::make_uptr(auto &&...args) {
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 not_null<owner<ConcreteVirtualState<ConcreteState> *>>
 ConcreteVirtualState<ConcreteState>::copy_rptr() const {
   return new ConcreteVirtualState{*this};
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 not_null<std::unique_ptr<ConcreteVirtualState<ConcreteState>>>
 ConcreteVirtualState<ConcreteState>::copy_uptr() const {
   return std::make_unique<ConcreteVirtualState>(*this);
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 void ConcreteVirtualState<ConcreteState>::match(const Symbol &symbol) {
   _concrete_state.match(symbol);
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::is_final() const {
   return _concrete_state.is_final();
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::is_dead() const {
   return _concrete_state.is_dead();
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::operator==(
     const ConcreteVirtualState &rhs) const {
   return _concrete_state == rhs._concrete_state;
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 auto ConcreteVirtualState<ConcreteState>::operator<=>(
     const ConcreteVirtualState &rhs) const {
   return _concrete_state <=> rhs._concrete_state;
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 template <typename OtherConcreteState>
   requires req::c_r_no_cvref<OtherConcreteState> &&
            c_r_different_State_with_same_Symbol<OtherConcreteState,
@@ -86,7 +86,7 @@ bool ConcreteVirtualState<ConcreteState>::operator==(
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 template <typename OtherConcreteState>
   requires req::c_r_no_cvref<OtherConcreteState> &&
            c_r_different_State_with_same_Symbol<OtherConcreteState,
@@ -98,7 +98,7 @@ auto ConcreteVirtualState<ConcreteState>::operator<=>(
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::operator==(
     const VirtualState<Symbol> &rhs) const {
   auto that = dynamic_cast<const ConcreteVirtualState *>(&rhs);
@@ -108,7 +108,7 @@ bool ConcreteVirtualState<ConcreteState>::operator==(
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 std::strong_ordering ConcreteVirtualState<ConcreteState>::operator<=>(
     const VirtualState<Symbol> &rhs) const {
   auto that = dynamic_cast<const ConcreteVirtualState *>(&rhs);
@@ -118,7 +118,7 @@ std::strong_ordering ConcreteVirtualState<ConcreteState>::operator<=>(
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::cmp_less_assume_same_known_type(
     const VirtualState<Symbol> &lhs, const VirtualState<Symbol> &rhs) {
   auto lhs_concrete_virtual_state =
@@ -130,7 +130,7 @@ bool ConcreteVirtualState<ConcreteState>::cmp_less_assume_same_known_type(
 }
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 typename ConcreteVirtualState<ConcreteState>::CmpLess
 ConcreteVirtualState<ConcreteState>::get_cmp_less_assume_same_known_type()
     const {
