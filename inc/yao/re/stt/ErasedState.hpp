@@ -5,25 +5,16 @@
 #include <type_traits>
 
 #include "yao/com.hpp"
-#include "yao/re/c_ct_Symbol.hpp"
+#include "yao/re/c_r_no_cvref_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/VirtualState.hpp"
 #include "yao/re/stt/c_ct_State.hpp"
 #include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
-#include "yao/req/c_r_no_cvref.hpp"
 
 namespace yao::re::stt {
 
-namespace impl {
-
-// c: concept, r: require
-template <typename Symbol>
-concept c_r_ErasedState = req::c_r_no_cvref<Symbol> && c_ct_Symbol<Symbol>;
-
-} // namespace impl
-
 template <typename _Symbol>
-  requires impl::c_r_ErasedState<_Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 class ErasedState : private StateBase<ErasedState<_Symbol>> {
 public:
   using Symbol = _Symbol;

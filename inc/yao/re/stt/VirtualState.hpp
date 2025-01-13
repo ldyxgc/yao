@@ -5,14 +5,13 @@
 #include <memory>
 
 #include "yao/com.hpp"
-#include "yao/re/c_ct_Symbol.hpp"
+#include "yao/re/c_r_no_cvref_Symbol.hpp"
 #include "yao/re/stt/StateBase.hpp"
-#include "yao/req/c_r_no_cvref.hpp"
 
 namespace yao::re::stt {
 
 template <typename _Symbol>
-  requires req::c_r_no_cvref<_Symbol> && c_ct_Symbol<_Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 class VirtualState : private StateBase<VirtualState<_Symbol>> {
 public:
   using Symbol = _Symbol;
