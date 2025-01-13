@@ -8,26 +8,17 @@
 #include "yao/def/warn.hpp"
 #include "yao/re/stt/StateBase.hpp"
 #include "yao/re/stt/VirtualState.hpp"
-#include "yao/re/stt/c_ct_State.hpp"
 #include "yao/re/stt/c_r_different_State_with_same_Symbol.hpp"
+#include "yao/re/stt/c_r_no_cvref_State.hpp"
 #include "yao/req/c_r_no_cvref.hpp"
 
 namespace yao::re::stt {
-
-namespace impl {
-
-// c: concept, r: require
-template <typename ConcreteState>
-concept c_r_ConcreteVirtualState =
-    req::c_r_no_cvref<ConcreteState> && c_ct_State<ConcreteState>;
-
-} // namespace impl
 
 YAO_WARN_PUSH
 YAO_WARN_OFF__PADDING
 
 template <typename ConcreteState>
-  requires impl::c_r_ConcreteVirtualState<ConcreteState>
+  requires c_r_no_cvref_State<ConcreteState>
 class ConcreteVirtualState
     : public VirtualState<typename ConcreteState::Symbol>,
       private StateBase<ConcreteVirtualState<ConcreteState>> {
