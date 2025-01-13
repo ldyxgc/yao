@@ -51,6 +51,8 @@ public:
 
   CmpLess1 get_cmp_less1_assume_same_known_type() const;
 
+  VirtualState<Symbol> *get() const;
+
 private:
   not_null<std::unique_ptr<VirtualState<Symbol>>> _virtual_state;
 };
