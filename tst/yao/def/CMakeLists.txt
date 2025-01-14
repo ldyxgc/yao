@@ -2,3 +2,10 @@ yao__tst(tst__yao__def__check____YAO_CHECK____false)
 set_tests_properties(tst__yao__def__check____YAO_CHECK____false PROPERTIES WILL_FAIL TRUE)
 
 yao__tst(tst__yao__def__check____YAO_CHECK____true)
+
+yao__tst(tst__yao__def__claim____YAO_CLAIM____false)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set_tests_properties(tst__yao__def__claim____YAO_CLAIM____false PROPERTIES WILL_FAIL TRUE)
+endif()
+
+yao__tst(tst__yao__def__claim____YAO_CLAIM____true)
