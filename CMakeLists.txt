@@ -22,19 +22,36 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
   endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  string(JOIN " " CMAKE_CXX_FLAGS -Weverything)
+  string(JOIN " " CMAKE_CXX_FLAGS
+    -Weverything
+
+    -Wno-c++98-compat-pedantic
+    -Wno-reserved-macro-identifier
+  )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
   endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  string(JOIN " " CMAKE_CXX_FLAGS -Weverything)
+  string(JOIN " " CMAKE_CXX_FLAGS
+    -Weverything
+
+    -Wno-c++98-compat-pedantic
+  )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Werror)
   endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  string(JOIN " " CMAKE_CXX_FLAGS /Wall)
+  string(JOIN " " CMAKE_CXX_FLAGS
+    /EHsc # Warning C4530 and C4577; Exception handling model
+
+    /Wall
+  )
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} /WX)
+    string(JOIN " " CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}
+      /WX # Treats all compiler warnings as errors
+
+      /wd4710 # Function marked inline is not inlined by compiler
+    )
   endif()
 else()
   message(FATAL_ERROR
