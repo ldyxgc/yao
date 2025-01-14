@@ -3,4 +3,6 @@ function(yao__exe NAME)
   target_link_libraries(${NAME} yao)
 endfunction()
 
+add_subdirectory(cpp)
+
 add_subdirectory(yao)
