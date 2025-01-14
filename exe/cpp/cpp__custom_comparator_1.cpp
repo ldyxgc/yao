@@ -9,6 +9,14 @@
 #include "yao/def/warn.hpp"
 YAO_WARN_OFF__PADDING
 
+#if YAO_CONFIG__COMPILER == YAO_CONFIG__COMPILER__CLANG
+#pragma clang diagnostic ignored "-Wweak-vtables"
+#elif YAO_CONFIG__COMPILER == YAO_CONFIG__COMPILER__MSVC
+#pragma warning(disable : 4514)
+#pragma warning(disable : 4625)
+#pragma warning(disable : 4626)
+#endif
+
 class Num {
   int _n;
 
