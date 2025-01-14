@@ -1,0 +1,4 @@
+yao__tst(tst__yao__def__check____YAO_CHECK____false)
+set_tests_properties(tst__yao__def__check____YAO_CHECK____false PROPERTIES WILL_FAIL TRUE)
+
+yao__tst(tst__yao__def__check____YAO_CHECK____true)
