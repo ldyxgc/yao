@@ -1,4 +1,6 @@
+#include <map>
 #include <ostream>
+#include <set>
 #include <sstream>
 
 #include "yao/com/integral.hpp"
@@ -42,9 +44,7 @@ void Box<T>::print_value(std::ostream &os, const PrintValueArgs &args,
                          uint indent_level) const {
   print_type(os, args.print_type_args);
   os << ":\n";
-
   ++indent_level;
-
   yao::prt::print_indent(os, indent_level);
   os << "_t:";
   yao::prt::print_value(os, _t, args, indent_level);
@@ -100,6 +100,50 @@ int main() {
                  "Box<Box<int>>:\n"
                  "  _t:Box<int>:\n"
                  "    _t:int: 0"));
+
+  YAO_CHECK(test(std::set<int>{-1, -2, -3}, "set:\n"
+                                            "  - int: -3\n"
+                                            "  - int: -2\n"
+                                            "  - int: -1"));
+  YAO_CHECK(test(std::set<int>{-1, -2, -3},
+                 {.print_type_args = {.scope = true}},
+                 "std::set:\n"
+                 "  - int: -3\n"
+                 "  - int: -2\n"
+                 "  - int: -1"));
+  YAO_CHECK(test(std::set<int>{-1, -2, -3},
+                 {.print_type_args = {.tmpl_args = true}},
+                 "set<int>:\n"
+                 "  - int: -3\n"
+                 "  - int: -2\n"
+                 "  - int: -1"));
+
+  YAO_CHECK(test(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
+                 "map:\n"
+                 "  - int: -3\n"
+                 "    uint: 3\n"
+                 "  - int: -2\n"
+                 "    uint: 2\n"
+                 "  - int: -1\n"
+                 "    uint: 1"));
+  YAO_CHECK(test(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
+                 {.print_type_args = {.scope = true}},
+                 "std::map:\n"
+                 "  - int: -3\n"
+                 "    uint: 3\n"
+                 "  - int: -2\n"
+                 "    uint: 2\n"
+                 "  - int: -1\n"
+                 "    uint: 1"));
+  YAO_CHECK(test(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
+                 {.print_type_args = {.tmpl_args = true}},
+                 "map<int,uint>:\n"
+                 "  - int: -3\n"
+                 "    uint: 3\n"
+                 "  - int: -2\n"
+                 "    uint: 2\n"
+                 "  - int: -1\n"
+                 "    uint: 1"));
 
   return 0;
 }

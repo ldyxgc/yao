@@ -3,6 +3,7 @@
 
 #include "yao/prt/print_value.hpp"
 
+#include "yao/prt/print_indent.hpp"
 #include "yao/prt/print_type.hpp"
 
 namespace yao::prt {
@@ -41,6 +42,41 @@ template <typename T>
 void print_value(std::ostream &os, const T &obj, const PrintValueArgs &args,
                  uint indent_level) {
   obj.print_value(os, args, indent_level);
+}
+
+template <typename T>
+  requires req::c_t_std_set<T>
+void print_value(std::ostream &os, const T &set, const PrintValueArgs &args,
+                 uint indent_level) {
+  print_type<T>(os, args.print_type_args);
+  os << ':';
+  ++indent_level;
+  for (auto ite = set.cbegin(), end = set.cend(); ite != end; ite++) {
+    os << '\n';
+    print_indent(os, indent_level);
+    os << "- ";
+    print_value(os, *ite, args, indent_level + 1);
+  }
+}
+
+template <typename T>
+  requires req::c_t_std_map<T>
+void print_value(std::ostream &os, const T &map, const PrintValueArgs &args,
+                 uint indent_level) {
+  print_type<T>(os, args.print_type_args);
+  os << ':';
+  ++indent_level;
+  for (auto ite = map.cbegin(), end = map.cend(); ite != end; ite++) {
+    os << '\n';
+    print_indent(os, indent_level);
+    os << "- ";
+    ++indent_level;
+    print_value(os, ite->first, args, indent_level);
+    os << '\n';
+    print_indent(os, indent_level);
+    print_value(os, ite->second, args, indent_level);
+    --indent_level;
+  }
 }
 
 } // namespace yao::prt
