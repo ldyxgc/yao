@@ -51,6 +51,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
       /WX # Treats all compiler warnings as errors
 
       /wd4710 # Function marked inline is not inlined by compiler
+      /wd4711 # Function not marked inline is inlined by compiler
     )
   endif()
 else()
