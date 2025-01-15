@@ -3,7 +3,10 @@
 
 namespace yao::prt {
 
-struct PrintTypeArgs {};
+struct PrintTypeArgs {
+  bool scope = false;     // namespace, struct, class
+  bool tmpl_args = false; // template arguments
+};
 
 } // namespace yao::prt
 
