@@ -5,6 +5,7 @@
 #include "yao/def/check.hpp"
 #include "yao/prt/PrintTypeArgs.hpp"
 #include "yao/prt/PrintValueArgs.hpp"
+#include "yao/prt/print_indent.hpp"
 #include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
 
@@ -18,7 +19,8 @@ template <typename T> struct Box {
   T _t;
   Box(const T &t = {});
   static void print_type(std::ostream &os, const PrintTypeArgs &args = {});
-  void print_value(std::ostream &os, const PrintValueArgs &args = {}) const;
+  void print_value(std::ostream &os, const PrintValueArgs &args = {},
+                   uint indent_level = 0) const;
 };
 
 template <typename T> Box<T>::Box(const T &t) : _t{t} {}
@@ -36,11 +38,16 @@ void Box<T>::print_type(std::ostream &os, const PrintTypeArgs &args) {
 }
 
 template <typename T>
-void Box<T>::print_value(std::ostream &os, const PrintValueArgs &args) const {
+void Box<T>::print_value(std::ostream &os, const PrintValueArgs &args,
+                         uint indent_level) const {
   print_type(os, args.print_type_args);
-  os << ": {_t:";
-  yao::prt::print_value(os, _t, args);
-  os << '}';
+  os << ":\n";
+
+  ++indent_level;
+
+  yao::prt::print_indent(os, indent_level);
+  os << "_t:";
+  yao::prt::print_value(os, _t, args, indent_level);
 }
 
 } // namespace box
@@ -71,19 +78,28 @@ int main() {
   YAO_CHECK(test(llong{8}, "llong: 8"));
   YAO_CHECK(test(ullong{9}, "ullong: 9"));
 
-  YAO_CHECK(test(box::Box<int>{}, "Box: {_t:int: 0}"));
+  YAO_CHECK(test(box::Box<int>{}, "Box:\n"
+                                  "  _t:int: 0"));
   YAO_CHECK(test(box::Box<int>{}, {.print_type_args = {.scope = true}},
-                 "box::Box: {_t:int: 0}"));
+                 "box::Box:\n"
+                 "  _t:int: 0"));
   YAO_CHECK(test(box::Box<int>{}, {.print_type_args = {.tmpl_args = true}},
-                 "Box<int>: {_t:int: 0}"));
+                 "Box<int>:\n"
+                 "  _t:int: 0"));
 
-  YAO_CHECK(test(box::Box<box::Box<int>>{}, "Box: {_t:Box: {_t:int: 0}}"));
+  YAO_CHECK(test(box::Box<box::Box<int>>{}, "Box:\n"
+                                            "  _t:Box:\n"
+                                            "    _t:int: 0"));
   YAO_CHECK(test(box::Box<box::Box<int>>{},
                  {.print_type_args = {.scope = true}},
-                 "box::Box: {_t:box::Box: {_t:int: 0}}"));
+                 "box::Box:\n"
+                 "  _t:box::Box:\n"
+                 "    _t:int: 0"));
   YAO_CHECK(test(box::Box<box::Box<int>>{},
                  {.print_type_args = {.tmpl_args = true}},
-                 "Box<Box<int>>: {_t:Box<int>: {_t:int: 0}}"));
+                 "Box<Box<int>>:\n"
+                 "  _t:Box<int>:\n"
+                 "    _t:int: 0"));
 
   return 0;
 }
