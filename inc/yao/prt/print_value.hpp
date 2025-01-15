@@ -7,6 +7,8 @@
 #include "yao/com.hpp"
 #include "yao/prt/PrintValueArgs.hpp"
 #include "yao/prt/c_mf_print_value.hpp"
+#include "yao/req/c_t_std_map.hpp"
+#include "yao/req/c_t_std_set.hpp"
 
 namespace yao::prt {
 
@@ -23,6 +25,16 @@ void print_value(std::ostream &os, T t, const PrintValueArgs &args = {},
 template <typename T>
   requires c_mf_print_value<T>
 void print_value(std::ostream &os, const T &obj,
+                 const PrintValueArgs &args = {}, uint indent_level = 0);
+
+template <typename T>
+  requires req::c_t_std_set<T>
+void print_value(std::ostream &os, const T &set,
+                 const PrintValueArgs &args = {}, uint indent_level = 0);
+
+template <typename T>
+  requires req::c_t_std_map<T>
+void print_value(std::ostream &os, const T &map,
                  const PrintValueArgs &args = {}, uint indent_level = 0);
 
 } // namespace yao::prt

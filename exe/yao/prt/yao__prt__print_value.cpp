@@ -1,5 +1,7 @@
 #include <iostream>
+#include <map>
 #include <ostream>
+#include <set>
 
 #include "yao/com/integral.hpp"
 #include "yao/prt/PrintTypeArgs.hpp"
@@ -41,9 +43,7 @@ void Box<T>::print_value(std::ostream &os, const PrintValueArgs &args,
                          uint indent_level) const {
   print_type(os, args.print_type_args);
   os << ":\n";
-
   ++indent_level;
-
   yao::prt::print_indent(os, indent_level);
   os << "_t:";
   yao::prt::print_value(os, _t, args, indent_level);
@@ -80,6 +80,10 @@ int main() {
 
   demo(box::Box<int>{});
   demo(box::Box<box::Box<int>>{});
+  std::cout << '\n';
+
+  demo(std::set<int>{-1, -2, -3});
+  demo(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}});
 
   return 0;
 }
