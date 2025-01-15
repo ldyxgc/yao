@@ -53,6 +53,34 @@ void print_type(std::ostream &os, const PrintTypeArgs &args) {
   T::print_type(os, args);
 }
 
+template <typename T>
+  requires req::c_t_std_set<T>
+void print_type(std::ostream &os, const PrintTypeArgs &args) {
+  if (args.scope)
+    os << "std::";
+  os << "set";
+  if (args.tmpl_args) {
+    os << '<';
+    print_type<typename T::key_type>(os, args);
+    os << '>';
+  }
+}
+
+template <typename T>
+  requires req::c_t_std_map<T>
+void print_type(std::ostream &os, const PrintTypeArgs &args) {
+  if (args.scope)
+    os << "std::";
+  os << "map";
+  if (args.tmpl_args) {
+    os << '<';
+    print_type<typename T::key_type>(os, args);
+    os << ',';
+    print_type<typename T::mapped_type>(os, args);
+    os << '>';
+  }
+}
+
 } // namespace yao::prt
 
 #endif

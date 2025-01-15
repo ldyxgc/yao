@@ -7,6 +7,8 @@
 #include "yao/com.hpp"
 #include "yao/prt/PrintTypeArgs.hpp"
 #include "yao/prt/c_smf_print_type.hpp"
+#include "yao/req/c_t_std_map.hpp"
+#include "yao/req/c_t_std_set.hpp"
 
 namespace yao::prt {
 
@@ -24,6 +26,14 @@ void print_type(std::ostream &os, const PrintTypeArgs &args = {});
 
 template <typename T>
   requires c_smf_print_type<T>
+void print_type(std::ostream &os, const PrintTypeArgs &args = {});
+
+template <typename T>
+  requires req::c_t_std_set<T>
+void print_type(std::ostream &os, const PrintTypeArgs &args = {});
+
+template <typename T>
+  requires req::c_t_std_map<T>
 void print_type(std::ostream &os, const PrintTypeArgs &args = {});
 
 } // namespace yao::prt
