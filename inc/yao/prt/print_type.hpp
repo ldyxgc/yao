@@ -6,6 +6,7 @@
 
 #include "yao/com.hpp"
 #include "yao/prt/PrintTypeArgs.hpp"
+#include "yao/prt/c_smf_print_type.hpp"
 
 namespace yao::prt {
 
@@ -19,6 +20,10 @@ template <typename T>
            std::same_as<T, int> || std::same_as<T, uint> ||
            std::same_as<T, long> || std::same_as<T, ulong> ||
            std::same_as<T, llong> || std::same_as<T, ullong>
+void print_type(std::ostream &os, const PrintTypeArgs &args = {});
+
+template <typename T>
+  requires c_smf_print_type<T>
 void print_type(std::ostream &os, const PrintTypeArgs &args = {});
 
 } // namespace yao::prt
