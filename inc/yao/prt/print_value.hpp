@@ -6,6 +6,7 @@
 
 #include "yao/com.hpp"
 #include "yao/prt/PrintValueArgs.hpp"
+#include "yao/prt/c_mf_print_value.hpp"
 
 namespace yao::prt {
 
@@ -17,6 +18,11 @@ template <typename T>
            std::same_as<T, long> || std::same_as<T, ulong> ||
            std::same_as<T, llong> || std::same_as<T, ullong>
 void print_value(std::ostream &os, T t, const PrintValueArgs &args = {});
+
+template <typename T>
+  requires c_mf_print_value<T>
+void print_value(std::ostream &os, const T &obj,
+                 const PrintValueArgs &args = {});
 
 } // namespace yao::prt
 
