@@ -1,4 +1,6 @@
+#include <map>
 #include <ostream>
+#include <set>
 #include <sstream>
 
 #include "yao/com/integral.hpp"
@@ -61,6 +63,17 @@ int main() {
   YAO_CHECK(test<box::Box<box::Box<int>>>({.scope = true}, "box::Box"));
   YAO_CHECK(
       test<box::Box<box::Box<int>>>({.tmpl_args = true}, "Box<Box<int>>"));
+
+  YAO_CHECK(test<std::set<box::Box<char>>>("set"));
+  YAO_CHECK(test<std::set<box::Box<char>>>({.scope = true}, "std::set"));
+  YAO_CHECK(
+      test<std::set<box::Box<char>>>({.tmpl_args = true}, "set<Box<char>>"));
+
+  YAO_CHECK(test<std::map<box::Box<char>, box::Box<bool>>>("map"));
+  YAO_CHECK(test<std::map<box::Box<char>, box::Box<bool>>>({.scope = true},
+                                                           "std::map"));
+  YAO_CHECK(test<std::map<box::Box<char>, box::Box<bool>>>(
+      {.tmpl_args = true}, "map<Box<char>,Box<bool>>"));
 
   return 0;
 }

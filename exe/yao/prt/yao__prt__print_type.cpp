@@ -1,5 +1,7 @@
 #include <iostream>
+#include <map>
 #include <ostream>
+#include <set>
 
 #include "yao/com/integral.hpp"
 #include "yao/prt/PrintTypeArgs.hpp"
@@ -54,6 +56,10 @@ int main() {
 
   demo<box::Box<int>>();
   demo<box::Box<box::Box<int>>>();
+  std::cout << '\n';
+
+  demo<std::set<box::Box<char>>>();
+  demo<std::map<box::Box<char>, box::Box<bool>>>();
 
   return 0;
 }
