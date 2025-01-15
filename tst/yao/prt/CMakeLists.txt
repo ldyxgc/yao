@@ -1,1 +1,3 @@
 yao__tst(tst__yao__prt__print_type)
+
+yao__tst(tst__yao__prt__print_value)
