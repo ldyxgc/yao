@@ -17,12 +17,13 @@ template <typename T>
            std::same_as<T, int> || std::same_as<T, uint> ||
            std::same_as<T, long> || std::same_as<T, ulong> ||
            std::same_as<T, llong> || std::same_as<T, ullong>
-void print_value(std::ostream &os, T t, const PrintValueArgs &args = {});
+void print_value(std::ostream &os, T t, const PrintValueArgs &args = {},
+                 uint indent_level = 0);
 
 template <typename T>
   requires c_mf_print_value<T>
 void print_value(std::ostream &os, const T &obj,
-                 const PrintValueArgs &args = {});
+                 const PrintValueArgs &args = {}, uint indent_level = 0);
 
 } // namespace yao::prt
 

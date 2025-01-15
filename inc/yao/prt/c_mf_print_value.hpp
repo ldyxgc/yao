@@ -3,6 +3,7 @@
 
 #include <ostream>
 
+#include "yao/com.hpp"
 #include "yao/prt/PrintValueArgs.hpp"
 
 namespace yao::prt {
@@ -11,10 +12,11 @@ namespace yao::prt {
 template <typename T>
 concept c_mf_print_value = requires {
   // struct T {
-  //   void print_value(std::ostream &os, const PrintValueArgs &args) const;
+  //   void print_value(std::ostream &os, const PrintValueArgs &args,
+  //                    uint indent_level) const;
   // };
-  static_cast<void (T::*)(std::ostream &os, const PrintValueArgs &args) const>(
-      &T::print_value);
+  static_cast<void (T::*)(std::ostream &os, const PrintValueArgs &args,
+                          uint indent_level) const>(&T::print_value);
 };
 
 } // namespace yao::prt
