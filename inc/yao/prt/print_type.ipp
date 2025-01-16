@@ -81,6 +81,32 @@ void print_type(std::ostream &os, const PrintTypeArgs &args) {
   }
 }
 
+template <typename T>
+  requires req::c_t_std_unique_ptr<T>
+void print_type(std::ostream &os, const PrintTypeArgs &args) {
+  if (args.scope)
+    os << "std::";
+  os << "unique_ptr";
+  if (args.tmpl_args) {
+    os << '<';
+    print_type<typename T::element_type>(os, args);
+    os << '>';
+  }
+}
+
+template <typename T>
+  requires req::c_t_std_shared_ptr<T>
+void print_type(std::ostream &os, const PrintTypeArgs &args) {
+  if (args.scope)
+    os << "std::";
+  os << "shared_ptr";
+  if (args.tmpl_args) {
+    os << '<';
+    print_type<typename T::element_type>(os, args);
+    os << '>';
+  }
+}
+
 } // namespace yao::prt
 
 #endif

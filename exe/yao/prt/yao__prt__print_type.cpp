@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 
@@ -60,6 +61,10 @@ int main() {
 
   demo<std::set<box::Box<char>>>();
   demo<std::map<box::Box<char>, box::Box<bool>>>();
+  std::cout << '\n';
+
+  demo<std::unique_ptr<box::Box<bool>>>();
+  demo<std::shared_ptr<box::Box<char>>>();
 
   return 0;
 }

@@ -1,4 +1,5 @@
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 #include <sstream>
@@ -74,6 +75,18 @@ int main() {
                                                            "std::map"));
   YAO_CHECK(test<std::map<box::Box<char>, box::Box<bool>>>(
       {.tmpl_args = true}, "map<Box<char>,Box<bool>>"));
+
+  YAO_CHECK(test<std::unique_ptr<box::Box<bool>>>("unique_ptr"));
+  YAO_CHECK(test<std::unique_ptr<box::Box<bool>>>({.scope = true},
+                                                  "std::unique_ptr"));
+  YAO_CHECK(test<std::unique_ptr<box::Box<bool>>>({.tmpl_args = true},
+                                                  "unique_ptr<Box<bool>>"));
+
+  YAO_CHECK(test<std::shared_ptr<box::Box<char>>>("shared_ptr"));
+  YAO_CHECK(test<std::shared_ptr<box::Box<char>>>({.scope = true},
+                                                  "std::shared_ptr"));
+  YAO_CHECK(test<std::shared_ptr<box::Box<char>>>({.tmpl_args = true},
+                                                  "shared_ptr<Box<char>>"));
 
   return 0;
 }
