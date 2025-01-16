@@ -15,8 +15,8 @@ template <typename T>
            std::same_as<T, int> || std::same_as<T, uint> ||
            std::same_as<T, long> || std::same_as<T, ulong> ||
            std::same_as<T, llong> || std::same_as<T, ullong>
-void print_value(std::ostream &os, T t, const PrintValueArgs &, uint) {
-  print_type<T>(os);
+void print_value(std::ostream &os, T t, const PrintValueArgs &args, uint) {
+  print_type<T>(os, args.print_type_args);
   os << ": ";
   if constexpr (std::same_as<T, bool>)
     os << (t ? "true" : "false");

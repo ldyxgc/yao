@@ -20,12 +20,15 @@ namespace box {
 template <typename T> struct Box {
   T _t;
   Box(const T &t = {});
+  operator T() const;
   static void print_type(std::ostream &os, const PrintTypeArgs &args = {});
   void print_value(std::ostream &os, const PrintValueArgs &args = {},
                    uint indent_level = 0) const;
 };
 
 template <typename T> Box<T>::Box(const T &t) : _t{t} {}
+
+template <typename T> Box<T>::operator T() const { return _t; }
 
 template <typename T>
 void Box<T>::print_type(std::ostream &os, const PrintTypeArgs &args) {
@@ -83,8 +86,8 @@ int main() {
   demo(box::Box<box::Box<int>>{});
   std::cout << '\n';
 
-  demo(std::set<int>{-1, -2, -3});
-  demo(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}});
+  demo(std::set<box::Box<int>>{-1, -2, -3});
+  demo(std::map<box::Box<int>, box::Box<uint>>{{-1, 1u}, {-2, 2u}, {-3, 3u}});
   std::cout << '\n';
 
   demo(std::unique_ptr<box::Box<int>>{});

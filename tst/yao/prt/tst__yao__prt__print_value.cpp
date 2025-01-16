@@ -21,12 +21,15 @@ namespace box {
 template <typename T> struct Box {
   T _t;
   Box(const T &t = {});
+  operator T() const;
   static void print_type(std::ostream &os, const PrintTypeArgs &args = {});
   void print_value(std::ostream &os, const PrintValueArgs &args = {},
                    uint indent_level = 0) const;
 };
 
 template <typename T> Box<T>::Box(const T &t) : _t{t} {}
+
+template <typename T> Box<T>::operator T() const { return _t; }
 
 template <typename T>
 void Box<T>::print_type(std::ostream &os, const PrintTypeArgs &args) {
@@ -104,49 +107,79 @@ int main() {
                  "  _t:Box<int>:\n"
                  "    _t:int: 0"));
 
-  YAO_CHECK(test(std::set<int>{-1, -2, -3}, "set:\n"
-                                            "  - int: -3\n"
-                                            "  - int: -2\n"
-                                            "  - int: -1"));
-  YAO_CHECK(test(std::set<int>{-1, -2, -3},
+  YAO_CHECK(test(std::set<box::Box<int>>{-1, -2, -3}, "set:\n"
+                                                      "  - Box:\n"
+                                                      "      _t:int: -3\n"
+                                                      "  - Box:\n"
+                                                      "      _t:int: -2\n"
+                                                      "  - Box:\n"
+                                                      "      _t:int: -1"));
+  YAO_CHECK(test(std::set<box::Box<int>>{-1, -2, -3},
                  {.print_type_args = {.scope = true}},
                  "std::set:\n"
-                 "  - int: -3\n"
-                 "  - int: -2\n"
-                 "  - int: -1"));
-  YAO_CHECK(test(std::set<int>{-1, -2, -3},
+                 "  - box::Box:\n"
+                 "      _t:int: -3\n"
+                 "  - box::Box:\n"
+                 "      _t:int: -2\n"
+                 "  - box::Box:\n"
+                 "      _t:int: -1"));
+  YAO_CHECK(test(std::set<box::Box<int>>{-1, -2, -3},
                  {.print_type_args = {.tmpl_args = true}},
-                 "set<int>:\n"
-                 "  - int: -3\n"
-                 "  - int: -2\n"
-                 "  - int: -1"));
+                 "set<Box<int>>:\n"
+                 "  - Box<int>:\n"
+                 "      _t:int: -3\n"
+                 "  - Box<int>:\n"
+                 "      _t:int: -2\n"
+                 "  - Box<int>:\n"
+                 "      _t:int: -1"));
 
-  YAO_CHECK(test(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
-                 "map:\n"
-                 "  - int: -3\n"
-                 "    uint: 3\n"
-                 "  - int: -2\n"
-                 "    uint: 2\n"
-                 "  - int: -1\n"
-                 "    uint: 1"));
-  YAO_CHECK(test(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
-                 {.print_type_args = {.scope = true}},
-                 "std::map:\n"
-                 "  - int: -3\n"
-                 "    uint: 3\n"
-                 "  - int: -2\n"
-                 "    uint: 2\n"
-                 "  - int: -1\n"
-                 "    uint: 1"));
-  YAO_CHECK(test(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
-                 {.print_type_args = {.tmpl_args = true}},
-                 "map<int,uint>:\n"
-                 "  - int: -3\n"
-                 "    uint: 3\n"
-                 "  - int: -2\n"
-                 "    uint: 2\n"
-                 "  - int: -1\n"
-                 "    uint: 1"));
+  YAO_CHECK(test(
+      std::map<box::Box<int>, box::Box<uint>>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
+      "map:\n"
+      "  - Box:\n"
+      "      _t:int: -3\n"
+      "    Box:\n"
+      "      _t:uint: 3\n"
+      "  - Box:\n"
+      "      _t:int: -2\n"
+      "    Box:\n"
+      "      _t:uint: 2\n"
+      "  - Box:\n"
+      "      _t:int: -1\n"
+      "    Box:\n"
+      "      _t:uint: 1"));
+  YAO_CHECK(test(
+      std::map<box::Box<int>, box::Box<uint>>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
+      {.print_type_args = {.scope = true}},
+      "std::map:\n"
+      "  - box::Box:\n"
+      "      _t:int: -3\n"
+      "    box::Box:\n"
+      "      _t:uint: 3\n"
+      "  - box::Box:\n"
+      "      _t:int: -2\n"
+      "    box::Box:\n"
+      "      _t:uint: 2\n"
+      "  - box::Box:\n"
+      "      _t:int: -1\n"
+      "    box::Box:\n"
+      "      _t:uint: 1"));
+  YAO_CHECK(test(
+      std::map<box::Box<int>, box::Box<uint>>{{-1, 1u}, {-2, 2u}, {-3, 3u}},
+      {.print_type_args = {.tmpl_args = true}},
+      "map<Box<int>,Box<uint>>:\n"
+      "  - Box<int>:\n"
+      "      _t:int: -3\n"
+      "    Box<uint>:\n"
+      "      _t:uint: 3\n"
+      "  - Box<int>:\n"
+      "      _t:int: -2\n"
+      "    Box<uint>:\n"
+      "      _t:uint: 2\n"
+      "  - Box<int>:\n"
+      "      _t:int: -1\n"
+      "    Box<uint>:\n"
+      "      _t:uint: 1"));
 
   YAO_CHECK(test(std::unique_ptr<box::Box<int>>{}, "unique_ptr:"));
   YAO_CHECK(test(std::unique_ptr<box::Box<int>>{},
