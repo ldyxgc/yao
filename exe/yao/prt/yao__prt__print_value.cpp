@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 
@@ -84,6 +85,12 @@ int main() {
 
   demo(std::set<int>{-1, -2, -3});
   demo(std::map<int, uint>{{-1, 1u}, {-2, 2u}, {-3, 3u}});
+  std::cout << '\n';
+
+  demo(std::unique_ptr<box::Box<int>>{});
+  demo(std::make_unique<box::Box<int>>());
+  demo(std::shared_ptr<box::Box<uint>>{});
+  demo(std::make_shared<box::Box<uint>>());
 
   return 0;
 }
