@@ -1,3 +1,7 @@
+yao__tst(tst__yao__prt__c_f_print_type)
+
+yao__tst(tst__yao__prt__c_f_print_value)
+
 yao__tst(tst__yao__prt__c_mf_print_value)
 
 yao__tst(tst__yao__prt__c_smf_print_type)
