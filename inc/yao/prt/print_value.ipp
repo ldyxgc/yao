@@ -79,6 +79,34 @@ void print_value(std::ostream &os, const T &map, const PrintValueArgs &args,
   }
 }
 
+template <typename T>
+  requires req::c_t_std_unique_ptr<T>
+void print_value(std::ostream &os, const T &uptr, const PrintValueArgs &args,
+                 uint indent_level) {
+  print_type<T>(os, args.print_type_args);
+  os << ':';
+  if (uptr) {
+    os << '\n';
+    ++indent_level;
+    print_indent(os, indent_level);
+    print_value(os, *uptr, args, indent_level);
+  }
+}
+
+template <typename T>
+  requires req::c_t_std_shared_ptr<T>
+void print_value(std::ostream &os, const T &sptr, const PrintValueArgs &args,
+                 uint indent_level) {
+  print_type<T>(os, args.print_type_args);
+  os << ':';
+  if (sptr) {
+    os << '\n';
+    ++indent_level;
+    print_indent(os, indent_level);
+    print_value(os, *sptr, args, indent_level);
+  }
+}
+
 } // namespace yao::prt
 
 #endif

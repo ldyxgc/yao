@@ -1,4 +1,5 @@
 #include <map>
+#include <memory>
 #include <ostream>
 #include <set>
 #include <sstream>
@@ -58,7 +59,9 @@ bool test(auto val, const PrintValueArgs &args, auto out) {
   return oss.str() == out;
 }
 
-bool test(auto val, auto out) { return test(val, {}, out); }
+bool test(auto val, auto out) {
+  return test(std::forward<decltype(val)>(val), {}, out);
+}
 
 int main() {
 
@@ -144,6 +147,48 @@ int main() {
                  "    uint: 2\n"
                  "  - int: -1\n"
                  "    uint: 1"));
+
+  YAO_CHECK(test(std::unique_ptr<box::Box<int>>{}, "unique_ptr:"));
+  YAO_CHECK(test(std::unique_ptr<box::Box<int>>{},
+                 {.print_type_args = {.scope = true}}, "std::unique_ptr:"));
+  YAO_CHECK(test(std::unique_ptr<box::Box<int>>{},
+                 {.print_type_args = {.tmpl_args = true}},
+                 "unique_ptr<Box<int>>:"));
+
+  YAO_CHECK(test(std::make_unique<box::Box<int>>(), "unique_ptr:\n"
+                                                    "  Box:\n"
+                                                    "    _t:int: 0"));
+  YAO_CHECK(test(std::make_unique<box::Box<int>>(),
+                 {.print_type_args = {.scope = true}},
+                 "std::unique_ptr:\n"
+                 "  box::Box:\n"
+                 "    _t:int: 0"));
+  YAO_CHECK(test(std::make_unique<box::Box<int>>(),
+                 {.print_type_args = {.tmpl_args = true}},
+                 "unique_ptr<Box<int>>:\n"
+                 "  Box<int>:\n"
+                 "    _t:int: 0"));
+
+  YAO_CHECK(test(std::shared_ptr<box::Box<uint>>{}, "shared_ptr:"));
+  YAO_CHECK(test(std::shared_ptr<box::Box<uint>>{},
+                 {.print_type_args = {.scope = true}}, "std::shared_ptr:"));
+  YAO_CHECK(test(std::shared_ptr<box::Box<uint>>{},
+                 {.print_type_args = {.tmpl_args = true}},
+                 "shared_ptr<Box<uint>>:"));
+
+  YAO_CHECK(test(std::make_shared<box::Box<uint>>(), "shared_ptr:\n"
+                                                     "  Box:\n"
+                                                     "    _t:uint: 0"));
+  YAO_CHECK(test(std::make_shared<box::Box<uint>>(),
+                 {.print_type_args = {.scope = true}},
+                 "std::shared_ptr:\n"
+                 "  box::Box:\n"
+                 "    _t:uint: 0"));
+  YAO_CHECK(test(std::make_shared<box::Box<uint>>(),
+                 {.print_type_args = {.tmpl_args = true}},
+                 "shared_ptr<Box<uint>>:\n"
+                 "  Box<uint>:\n"
+                 "    _t:uint: 0"));
 
   return 0;
 }
