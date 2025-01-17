@@ -94,7 +94,7 @@ void EpsilonState<_Symbol>::print_value(std::ostream &os,
   ++indent_level;
   prt::print_indent(os, indent_level);
   os << "_label:";
-  EpsilonStateBase::print_value(os, _label, args, indent_level + 1);
+  EpsilonStateBase::print_value(os, _label, args, indent_level);
 }
 
 } // namespace yao::re::stt
