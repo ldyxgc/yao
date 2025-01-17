@@ -50,9 +50,8 @@ public:
   using Symbol = _Symbol;
 
 public:
-  template <typename __Symbol>
-    requires c_ct_Symbol<std::remove_cvref_t<__Symbol>>
-  SymbolState(__Symbol &&symbol);
+  SymbolState(const Symbol &symbol);
+  SymbolState(Symbol &&symbol);
 
   void match(const Symbol &symbol);
   bool is_final() const;
@@ -70,10 +69,6 @@ private:
 };
 
 YAO_WARN_POP
-
-template <typename Symbol, typename _Symbol = std::remove_cvref_t<Symbol>>
-  requires c_ct_Symbol<_Symbol>
-SymbolState(Symbol &&symbol) -> SymbolState<_Symbol>;
 
 } // namespace yao::re::stt
 
