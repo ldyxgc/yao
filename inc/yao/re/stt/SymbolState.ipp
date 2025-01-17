@@ -47,10 +47,13 @@ void SymbolStateBase::print_value(std::ostream &os, Label label,
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
-template <typename __Symbol>
-  requires c_ct_Symbol<std::remove_cvref_t<__Symbol>>
-SymbolState<_Symbol>::SymbolState(__Symbol &&symbol)
-    : _symbol{std::forward<__Symbol>(symbol)}, _label{Label::START} {}
+SymbolState<_Symbol>::SymbolState(const Symbol &symbol)
+    : _symbol{symbol}, _label{Label::START} {}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
+SymbolState<_Symbol>::SymbolState(Symbol &&symbol)
+    : _symbol{std::move(symbol)}, _label{Label::START} {}
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
