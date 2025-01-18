@@ -18,6 +18,7 @@ template <typename LhsState, typename RhsState>
 class UnionState : private StateBase<UnionState<LhsState, RhsState>> {
 public:
   using Symbol = typename LhsState::Symbol;
+  using CmpLessInState = bool (*)(const UnionState &, const UnionState &);
 
 public:
   template <typename _LhsState, typename _RhsState>
@@ -28,6 +29,9 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const UnionState &rhs) const = default;
+
+  static bool cmp_less_in_state(const UnionState &lhs, const UnionState &rhs);
+  CmpLessInState get_cmp_less_in_state() const;
 
   static void print_type(std::ostream &os, const prt::PrintTypeArgs &args = {});
   void print_value(std::ostream &os, const prt::PrintValueArgs &args = {},

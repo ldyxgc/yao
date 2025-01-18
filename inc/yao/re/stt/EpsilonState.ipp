@@ -72,6 +72,20 @@ bool EpsilonState<_Symbol>::is_dead() const {
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
+bool EpsilonState<_Symbol>::cmp_less_in_state(const EpsilonState &lhs,
+                                              const EpsilonState &rhs) {
+  return lhs < rhs;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
+typename EpsilonState<_Symbol>::CmpLessInState
+EpsilonState<_Symbol>::get_cmp_less_in_state() const {
+  return cmp_less_in_state;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 void EpsilonState<_Symbol>::print_type(std::ostream &os,
                                        const prt::PrintTypeArgs &args) {
   if (args.scope)

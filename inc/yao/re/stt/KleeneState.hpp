@@ -21,6 +21,7 @@ template <typename SubState>
 class KleeneState : private StateBase<KleeneState<SubState>> {
 public:
   using Symbol = typename SubState::Symbol;
+  using CmpLessInState = bool (*)(const KleeneState &, const KleeneState &);
 
 public:
   KleeneState(const SubState &sub_state);
@@ -31,6 +32,9 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const KleeneState &rhs) const = default;
+
+  static bool cmp_less_in_state(const KleeneState &lhs, const KleeneState &rhs);
+  CmpLessInState get_cmp_less_in_state() const;
 
   static void print_type(std::ostream &os, const prt::PrintTypeArgs &args = {});
   void print_value(std::ostream &os, const prt::PrintValueArgs &args = {},

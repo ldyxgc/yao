@@ -62,6 +62,13 @@ auto UniqueState<_Symbol>::operator<=>(const UniqueState &rhs) const {
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
+typename UniqueState<_Symbol>::CmpLessInState
+UniqueState<_Symbol>::get_cmp_less_in_state() const {
+  return CmpLessInState{_virtual_state->get_cmp_less_in_state()};
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 void UniqueState<_Symbol>::print_type(std::ostream &os,
                                       const prt::PrintTypeArgs &args) {
   if (args.scope)

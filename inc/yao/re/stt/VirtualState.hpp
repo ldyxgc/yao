@@ -18,6 +18,7 @@ template <typename _Symbol>
 class VirtualState : private StateBase<VirtualState<_Symbol>> {
 public:
   using Symbol = _Symbol;
+  using CmpLessInState = bool (*)(const VirtualState &, const VirtualState &);
 
 protected:
   VirtualState() = default;
@@ -36,6 +37,8 @@ public:
 
   virtual bool operator==(const VirtualState &rhs) const = 0;
   virtual std::strong_ordering operator<=>(const VirtualState &rhs) const = 0;
+
+  virtual CmpLessInState get_cmp_less_in_state() const = 0;
 
   static void print_type(std::ostream &os, const prt::PrintTypeArgs &args = {});
   virtual void print_value(std::ostream &os,

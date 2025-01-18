@@ -61,6 +61,20 @@ bool ConcatState<LhsState, RhsState>::is_dead() const {
 
 template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+bool ConcatState<LhsState, RhsState>::cmp_less_in_state(
+    const ConcatState &lhs, const ConcatState &rhs) {
+  return lhs < rhs;
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+typename ConcatState<LhsState, RhsState>::CmpLessInState
+ConcatState<LhsState, RhsState>::get_cmp_less_in_state() const {
+  return cmp_less_in_state;
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
 void ConcatState<LhsState, RhsState>::print_type(
     std::ostream &os, const prt::PrintTypeArgs &args) {
   if (args.scope)

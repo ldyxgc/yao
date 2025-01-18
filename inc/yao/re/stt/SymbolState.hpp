@@ -48,6 +48,7 @@ class SymbolState : private StateBase<SymbolState<_Symbol>>,
                     private impl::SymbolStateBase {
 public:
   using Symbol = _Symbol;
+  using CmpLessInState = bool (*)(const SymbolState &, const SymbolState &);
 
 public:
   SymbolState(const Symbol &symbol);
@@ -58,6 +59,9 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const SymbolState &rhs) const = default;
+
+  static bool cmp_less_in_state(const SymbolState &lhs, const SymbolState &rhs);
+  CmpLessInState get_cmp_less_in_state() const;
 
   static void print_type(std::ostream &os, const prt::PrintTypeArgs &args = {});
   void print_value(std::ostream &os, const prt::PrintValueArgs &args = {},

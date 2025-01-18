@@ -18,6 +18,10 @@ concept c_ct_State =
       static_cast<void (State::*)(const Symbol &symbol)>(&State::match);
       static_cast<bool (State::*)() const>(&State::is_final);
       static_cast<bool (State::*)() const>(&State::is_dead);
+
+      typename State::CmpLessInState;
+      static_cast<typename State::CmpLessInState (State::*)() const>(
+          &State::get_cmp_less_in_state);
     } && //
     std::totally_ordered<State> && std::three_way_comparable<State>;
 

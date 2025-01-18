@@ -41,6 +41,7 @@ class EpsilonState : private StateBase<EpsilonState<_Symbol>>,
                      private impl::EpsilonStateBase {
 public:
   using Symbol = _Symbol;
+  using CmpLessInState = bool (*)(const EpsilonState &, const EpsilonState &);
 
 public:
   EpsilonState();
@@ -50,6 +51,10 @@ public:
   bool is_dead() const;
 
   friend auto operator<=>(EpsilonState lhs, EpsilonState rhs) = default;
+
+  static bool cmp_less_in_state(const EpsilonState &lhs,
+                                const EpsilonState &rhs);
+  CmpLessInState get_cmp_less_in_state() const;
 
   static void print_type(std::ostream &os, const prt::PrintTypeArgs &args = {});
   void print_value(std::ostream &os, const prt::PrintValueArgs &args = {},

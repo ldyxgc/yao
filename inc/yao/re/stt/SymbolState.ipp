@@ -87,6 +87,20 @@ bool SymbolState<_Symbol>::is_dead() const {
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
+bool SymbolState<_Symbol>::cmp_less_in_state(const SymbolState &lhs,
+                                             const SymbolState &rhs) {
+  return lhs < rhs;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
+typename SymbolState<_Symbol>::CmpLessInState
+SymbolState<_Symbol>::get_cmp_less_in_state() const {
+  return cmp_less_in_state;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 void SymbolState<_Symbol>::print_type(std::ostream &os,
                                       const prt::PrintTypeArgs &args) {
   if (args.scope)

@@ -58,6 +58,20 @@ bool KleeneState<SubState>::is_dead() const {
 
 template <typename SubState>
   requires c_r_no_cvref_State<SubState>
+bool KleeneState<SubState>::cmp_less_in_state(const KleeneState &lhs,
+                                              const KleeneState &rhs) {
+  return lhs < rhs;
+}
+
+template <typename SubState>
+  requires c_r_no_cvref_State<SubState>
+typename KleeneState<SubState>::CmpLessInState
+KleeneState<SubState>::get_cmp_less_in_state() const {
+  return cmp_less_in_state;
+}
+
+template <typename SubState>
+  requires c_r_no_cvref_State<SubState>
 void KleeneState<SubState>::print_type(std::ostream &os,
                                        const prt::PrintTypeArgs &args) {
   if (args.scope)

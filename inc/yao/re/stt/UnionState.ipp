@@ -40,6 +40,20 @@ bool UnionState<LhsState, RhsState>::is_dead() const {
 
 template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+bool UnionState<LhsState, RhsState>::cmp_less_in_state(const UnionState &lhs,
+                                                       const UnionState &rhs) {
+  return lhs < rhs;
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+typename UnionState<LhsState, RhsState>::CmpLessInState
+UnionState<LhsState, RhsState>::get_cmp_less_in_state() const {
+  return cmp_less_in_state;
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
 void UnionState<LhsState, RhsState>::print_type(
     std::ostream &os, const prt::PrintTypeArgs &args) {
   if (args.scope)
