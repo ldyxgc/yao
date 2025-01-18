@@ -77,5 +77,44 @@ int main() {
     match_print_n(*re_option_0_kleene_1_state, 0);
   }
 
+  {
+    std::unique_ptr<VirtualState> re_option_0_kleene_1_state = nullptr;
+    {
+      std::unique_ptr<VirtualState> re_option_0_state = nullptr;
+      {
+        std::unique_ptr<VirtualState> re_epsilon_state =
+            EpsilonVirtualState::make_uptr();
+        std::unique_ptr<VirtualState> re_0_state =
+            SymbolVirtualState::make_uptr(0);
+        re_option_0_state = UnionVirtualState::make_uptr(
+            std::move(re_epsilon_state), std::move(re_0_state));
+      }
+      std::unique_ptr<VirtualState> re_kleene_1_state = nullptr;
+      {
+        std::unique_ptr<VirtualState> symbol_1_state =
+            SymbolVirtualState::make_uptr(1);
+        re_kleene_1_state =
+            KleeneVirtualState::make_uptr(std::move(symbol_1_state));
+      }
+      re_option_0_kleene_1_state = ConcatVirtualState::make_uptr(
+          std::move(re_option_0_state), std::move(re_kleene_1_state));
+    }
+
+    print_value_n(re_option_0_kleene_1_state);
+    print_value_n(re_option_0_kleene_1_state,
+                  {.print_type_args = {.scope = true}});
+    print_value_n(re_option_0_kleene_1_state,
+                  {.print_type_args = {.tmpl_args = true}});
+    print_value_n(re_option_0_kleene_1_state,
+                  {.print_type_args = {.scope = true, .tmpl_args = true}});
+    cout << '\n';
+
+    print_state_n(*re_option_0_kleene_1_state);
+    match_print_n(*re_option_0_kleene_1_state, 0);
+    match_print_n(*re_option_0_kleene_1_state, 1);
+    match_print_n(*re_option_0_kleene_1_state, 1);
+    match_print_n(*re_option_0_kleene_1_state, 0);
+  }
+
   return 0;
 }

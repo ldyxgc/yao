@@ -167,5 +167,190 @@ int main() {
     }
   }
 
+  {
+    std::unique_ptr<VirtualState> re_option_0_kleene_1_state = nullptr;
+    {
+      std::unique_ptr<VirtualState> re_option_0_state = nullptr;
+      {
+        std::unique_ptr<VirtualState> re_epsilon_state =
+            EpsilonVirtualState::make_uptr();
+        std::unique_ptr<VirtualState> re_0_state =
+            SymbolVirtualState::make_uptr(0);
+        re_option_0_state = UnionVirtualState::make_uptr(
+            std::move(re_epsilon_state), std::move(re_0_state));
+      }
+      std::unique_ptr<VirtualState> re_kleene_1_state = nullptr;
+      {
+        std::unique_ptr<VirtualState> symbol_1_state =
+            SymbolVirtualState::make_uptr(1);
+        re_kleene_1_state =
+            KleeneVirtualState::make_uptr(std::move(symbol_1_state));
+      }
+      re_option_0_kleene_1_state = ConcatVirtualState::make_uptr(
+          std::move(re_option_0_state), std::move(re_kleene_1_state));
+    }
+    YAO_CHECK(re_option_0_kleene_1_state->is_final() == true);
+    YAO_CHECK(re_option_0_kleene_1_state->is_dead() == false);
+
+    {
+      std::unique_ptr<VirtualState> re_state =
+          re_option_0_kleene_1_state->copy_uptr();
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(2);
+      YAO_CHECK(re_state->is_final() == false);
+      YAO_CHECK(re_state->is_dead() == true);
+    }
+
+    {
+      std::unique_ptr<VirtualState> re_state =
+          re_option_0_kleene_1_state->copy_uptr();
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == false);
+      YAO_CHECK(re_state->is_dead() == true);
+    }
+
+    {
+      std::unique_ptr<VirtualState> re_state =
+          re_option_0_kleene_1_state->copy_uptr();
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == false);
+      YAO_CHECK(re_state->is_dead() == true);
+    }
+
+    {
+      std::unique_ptr<VirtualState> re_state =
+          re_option_0_kleene_1_state->copy_uptr();
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == false);
+      YAO_CHECK(re_state->is_dead() == true);
+    }
+
+    {
+      std::unique_ptr<VirtualState> re_state =
+          re_option_0_kleene_1_state->copy_uptr();
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == false);
+      YAO_CHECK(re_state->is_dead() == true);
+    }
+
+    {
+      std::unique_ptr<VirtualState> re_state =
+          re_option_0_kleene_1_state->copy_uptr();
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == false);
+      YAO_CHECK(re_state->is_dead() == true);
+    }
+
+    {
+      std::unique_ptr<VirtualState> re_state =
+          re_option_0_kleene_1_state->copy_uptr();
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(1);
+      YAO_CHECK(re_state->is_final() == true);
+      YAO_CHECK(re_state->is_dead() == false);
+
+      re_state->match(0);
+      YAO_CHECK(re_state->is_final() == false);
+      YAO_CHECK(re_state->is_dead() == true);
+    }
+  }
+
+  {
+    std::unique_ptr<VirtualState> re_option_0_kleene_1_state_1 =
+        ConcatVirtualState::make_uptr(
+            UniqueState(UnionVirtualState::make_uptr(
+                UniqueState(EpsilonVirtualState::make_uptr()),
+                UniqueState(SymbolVirtualState::make_uptr(0)))),
+            UniqueState(KleeneVirtualState::make_uptr(
+                UniqueState(SymbolVirtualState::make_uptr(1)))));
+
+    std::unique_ptr<VirtualState> re_option_0_kleene_1_state_2 = nullptr;
+    {
+      std::unique_ptr<VirtualState> re_option_0_state = nullptr;
+      {
+        std::unique_ptr<VirtualState> re_epsilon_state =
+            EpsilonVirtualState::make_uptr();
+        std::unique_ptr<VirtualState> re_0_state =
+            SymbolVirtualState::make_uptr(0);
+        re_option_0_state = UnionVirtualState::make_uptr(
+            std::move(re_epsilon_state), std::move(re_0_state));
+      }
+      std::unique_ptr<VirtualState> re_kleene_1_state = nullptr;
+      {
+        std::unique_ptr<VirtualState> symbol_1_state =
+            SymbolVirtualState::make_uptr(1);
+        re_kleene_1_state =
+            KleeneVirtualState::make_uptr(std::move(symbol_1_state));
+      }
+      re_option_0_kleene_1_state_2 = ConcatVirtualState::make_uptr(
+          std::move(re_option_0_state), std::move(re_kleene_1_state));
+    }
+
+    YAO_CHECK(*re_option_0_kleene_1_state_1 == *re_option_0_kleene_1_state_2);
+  }
+
   return 0;
 }
