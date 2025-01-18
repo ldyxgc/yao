@@ -42,7 +42,7 @@ public:
 
 private:
   SubState _raw_sub_state; // const
-  std::set<SubState> _sub_state_set;
+  std::set<SubState, typename SubState::CmpLessInState> _sub_state_set;
   bool _is_final;
 };
 

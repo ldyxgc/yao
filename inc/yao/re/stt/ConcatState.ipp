@@ -17,13 +17,14 @@ template <typename _LhsState, typename _RhsState>
 ConcatState<LhsState, RhsState>::ConcatState(_LhsState &&lhs_state,
                                              _RhsState &&rhs_state)
     : _lhs_state{std::forward<_LhsState>(lhs_state)},
-      _raw_rhs_state{std::forward<_RhsState>(rhs_state)}, _rhs_state_set{},
+      _raw_rhs_state{std::forward<_RhsState>(rhs_state)},
+      _rhs_state_set{_raw_rhs_state.get_cmp_less_in_state()},
       _is_final{_lhs_state.is_final() && _raw_rhs_state.is_final()} {}
 
 template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
 void ConcatState<LhsState, RhsState>::match(const Symbol &symbol) {
-  std::set<RhsState> new_rhs_state_set;
+  decltype(_rhs_state_set) new_rhs_state_set{_rhs_state_set.key_comp()};
   _is_final = false;
   if (_lhs_state.is_final()) {
     auto new_rhs_state = _raw_rhs_state;

@@ -45,7 +45,7 @@ public:
 private:
   LhsState _lhs_state;
   RhsState _raw_rhs_state; // const
-  std::set<RhsState> _rhs_state_set;
+  std::set<RhsState, typename RhsState::CmpLessInState> _rhs_state_set;
   bool _is_final;
 };
 

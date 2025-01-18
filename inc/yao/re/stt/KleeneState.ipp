@@ -14,17 +14,19 @@ namespace yao::re::stt {
 template <typename SubState>
   requires c_r_no_cvref_State<SubState>
 KleeneState<SubState>::KleeneState(const SubState &sub_state)
-    : _raw_sub_state{sub_state}, _sub_state_set{}, _is_final{true} {}
+    : _raw_sub_state{sub_state},
+      _sub_state_set{_raw_sub_state.get_cmp_less_in_state()}, _is_final{true} {}
 
 template <typename SubState>
   requires c_r_no_cvref_State<SubState>
 KleeneState<SubState>::KleeneState(SubState &&sub_state)
-    : _raw_sub_state{std::move(sub_state)}, _sub_state_set{}, _is_final{true} {}
+    : _raw_sub_state{std::move(sub_state)},
+      _sub_state_set{_raw_sub_state.get_cmp_less_in_state()}, _is_final{true} {}
 
 template <typename SubState>
   requires c_r_no_cvref_State<SubState>
 void KleeneState<SubState>::match(const Symbol &symbol) {
-  std::set<SubState> new_sub_state_set;
+  decltype(_sub_state_set) new_sub_state_set{_sub_state_set.key_comp()};
   if (_is_final) {
     auto new_sub_state = _raw_sub_state;
     new_sub_state.match(symbol);
