@@ -21,7 +21,6 @@ public:
 
 public:
   template <typename _LhsState, typename _RhsState>
-    requires c_r_rm_cvref_State_with_same_Symbol<_LhsState, _RhsState>
   UnionState(_LhsState &&lhs_state, _RhsState &&rhs_state);
 
   void match(const Symbol &symbol);

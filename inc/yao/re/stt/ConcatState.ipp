@@ -14,7 +14,6 @@ namespace yao::re::stt {
 template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
 template <typename _LhsState, typename _RhsState>
-  requires c_r_rm_cvref_State_with_same_Symbol<_LhsState, _RhsState>
 ConcatState<LhsState, RhsState>::ConcatState(_LhsState &&lhs_state,
                                              _RhsState &&rhs_state)
     : _lhs_state{std::forward<_LhsState>(lhs_state)},
