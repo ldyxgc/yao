@@ -57,7 +57,7 @@ template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
 bool UnionState<LhsState, RhsState>::cmp_less_in_state(const UnionState &lhs,
                                                        const UnionState &rhs) {
-  return lhs < rhs;
+  return cmp_order_in_state(lhs, rhs) == std::strong_ordering::less;
 }
 
 template <typename LhsState, typename RhsState>

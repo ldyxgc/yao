@@ -141,12 +141,7 @@ template <typename ConcreteState>
   requires c_r_no_cvref_State<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::cmp_less_in_state(
     const VirtualState<Symbol> &lhs, const VirtualState<Symbol> &rhs) {
-  auto lhs_concrete_virtual_state =
-      static_cast<const ConcreteVirtualState *>(&lhs);
-  auto rhs_concrete_virtual_state =
-      static_cast<const ConcreteVirtualState *>(&rhs);
-  return lhs_concrete_virtual_state->_concrete_state <
-         rhs_concrete_virtual_state->_concrete_state;
+  return cmp_order_in_state(lhs, rhs) == std::strong_ordering::less;
 }
 
 template <typename ConcreteState>

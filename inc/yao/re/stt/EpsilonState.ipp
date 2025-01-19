@@ -89,7 +89,7 @@ template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
 bool EpsilonState<_Symbol>::cmp_less_in_state(const EpsilonState &lhs,
                                               const EpsilonState &rhs) {
-  return lhs < rhs;
+  return cmp_order_in_state(lhs, rhs) == std::strong_ordering::less;
 }
 
 template <typename _Symbol>

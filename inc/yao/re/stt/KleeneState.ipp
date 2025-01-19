@@ -77,7 +77,7 @@ template <typename SubState>
   requires c_r_no_cvref_State<SubState>
 bool KleeneState<SubState>::cmp_less_in_state(const KleeneState &lhs,
                                               const KleeneState &rhs) {
-  return lhs < rhs;
+  return cmp_order_in_state(lhs, rhs) == std::strong_ordering::less;
 }
 
 template <typename SubState>
