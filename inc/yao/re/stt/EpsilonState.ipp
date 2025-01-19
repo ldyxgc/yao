@@ -72,6 +72,21 @@ bool EpsilonState<_Symbol>::is_dead() const {
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
+std::strong_ordering
+EpsilonState<_Symbol>::cmp_order_in_state(const EpsilonState &lhs,
+                                          const EpsilonState &rhs) {
+  return lhs <=> rhs;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
+typename EpsilonState<_Symbol>::CmpOrderInState
+EpsilonState<_Symbol>::get_cmp_order_in_state() const {
+  return cmp_order_in_state;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 bool EpsilonState<_Symbol>::cmp_less_in_state(const EpsilonState &lhs,
                                               const EpsilonState &rhs) {
   return lhs < rhs;

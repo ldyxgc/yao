@@ -19,6 +19,10 @@ concept c_ct_State =
       static_cast<bool (State::*)() const>(&State::is_final);
       static_cast<bool (State::*)() const>(&State::is_dead);
 
+      typename State::CmpOrderInState;
+      static_cast<typename State::CmpOrderInState (State::*)() const>(
+          &State::get_cmp_order_in_state);
+
       typename State::CmpLessInState;
       static_cast<typename State::CmpLessInState (State::*)() const>(
           &State::get_cmp_less_in_state);

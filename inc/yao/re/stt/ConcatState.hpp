@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__CONCAT_STATE__HPP__
 #define __YAO__RE__STT__CONCAT_STATE__HPP__
 
+#include <compare>
 #include <ostream>
 #include <set>
 #include <type_traits>
@@ -23,6 +24,8 @@ template <typename LhsState, typename RhsState>
 class ConcatState : private StateBase<ConcatState<LhsState, RhsState>> {
 public:
   using Symbol = typename LhsState::Symbol;
+  using CmpOrderInState = std::strong_ordering (*)(const ConcatState &,
+                                                   const ConcatState &);
   using CmpLessInState = bool (*)(const ConcatState &, const ConcatState &);
 
 public:
@@ -34,6 +37,10 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const ConcatState &rhs) const = default;
+
+  static std::strong_ordering cmp_order_in_state(const ConcatState &lhs,
+                                                 const ConcatState &rhs);
+  CmpOrderInState get_cmp_order_in_state() const;
 
   static bool cmp_less_in_state(const ConcatState &lhs, const ConcatState &rhs);
   CmpLessInState get_cmp_less_in_state() const;

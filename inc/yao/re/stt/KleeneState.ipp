@@ -60,6 +60,21 @@ bool KleeneState<SubState>::is_dead() const {
 
 template <typename SubState>
   requires c_r_no_cvref_State<SubState>
+std::strong_ordering
+KleeneState<SubState>::cmp_order_in_state(const KleeneState &lhs,
+                                          const KleeneState &rhs) {
+  return lhs <=> rhs;
+}
+
+template <typename SubState>
+  requires c_r_no_cvref_State<SubState>
+typename KleeneState<SubState>::CmpOrderInState
+KleeneState<SubState>::get_cmp_order_in_state() const {
+  return cmp_order_in_state;
+}
+
+template <typename SubState>
+  requires c_r_no_cvref_State<SubState>
 bool KleeneState<SubState>::cmp_less_in_state(const KleeneState &lhs,
                                               const KleeneState &rhs) {
   return lhs < rhs;

@@ -87,6 +87,21 @@ bool SymbolState<_Symbol>::is_dead() const {
 
 template <typename _Symbol>
   requires c_r_no_cvref_Symbol<_Symbol>
+std::strong_ordering
+SymbolState<_Symbol>::cmp_order_in_state(const SymbolState &lhs,
+                                         const SymbolState &rhs) {
+  return lhs <=> rhs;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
+typename SymbolState<_Symbol>::CmpOrderInState
+SymbolState<_Symbol>::get_cmp_order_in_state() const {
+  return cmp_order_in_state;
+}
+
+template <typename _Symbol>
+  requires c_r_no_cvref_Symbol<_Symbol>
 bool SymbolState<_Symbol>::cmp_less_in_state(const SymbolState &lhs,
                                              const SymbolState &rhs) {
   return lhs < rhs;

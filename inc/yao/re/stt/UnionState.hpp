@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__UNION_STATE__HPP__
 #define __YAO__RE__STT__UNION_STATE__HPP__
 
+#include <compare>
 #include <ostream>
 #include <type_traits>
 
@@ -18,6 +19,8 @@ template <typename LhsState, typename RhsState>
 class UnionState : private StateBase<UnionState<LhsState, RhsState>> {
 public:
   using Symbol = typename LhsState::Symbol;
+  using CmpOrderInState = std::strong_ordering (*)(const UnionState &,
+                                                   const UnionState &);
   using CmpLessInState = bool (*)(const UnionState &, const UnionState &);
 
 public:
@@ -29,6 +32,10 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const UnionState &rhs) const = default;
+
+  static std::strong_ordering cmp_order_in_state(const UnionState &lhs,
+                                                 const UnionState &rhs);
+  CmpOrderInState get_cmp_order_in_state() const;
 
   static bool cmp_less_in_state(const UnionState &lhs, const UnionState &rhs);
   CmpLessInState get_cmp_less_in_state() const;

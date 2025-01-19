@@ -26,6 +26,7 @@ class ConcreteVirtualState
       private StateBase<ConcreteVirtualState<ConcreteState>> {
 public:
   using Symbol = typename ConcreteState::Symbol;
+  using CmpOrderInState = typename VirtualState<Symbol>::CmpOrderInState;
   using CmpLessInState = typename VirtualState<Symbol>::CmpLessInState;
 
 public:
@@ -53,6 +54,11 @@ public:
   bool operator==(const VirtualState<Symbol> &rhs) const override;
   std::strong_ordering
   operator<=>(const VirtualState<Symbol> &rhs) const override;
+
+  static std::strong_ordering
+  cmp_order_in_state(const VirtualState<Symbol> &lhs,
+                     const VirtualState<Symbol> &rhs);
+  CmpOrderInState get_cmp_order_in_state() const override;
 
   static bool cmp_less_in_state(const VirtualState<Symbol> &lhs,
                                 const VirtualState<Symbol> &rhs);

@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__KLEENE_STATE__HPP__
 #define __YAO__RE__STT__KLEENE_STATE__HPP__
 
+#include <compare>
 #include <ostream>
 #include <set>
 
@@ -21,6 +22,8 @@ template <typename SubState>
 class KleeneState : private StateBase<KleeneState<SubState>> {
 public:
   using Symbol = typename SubState::Symbol;
+  using CmpOrderInState = std::strong_ordering (*)(const KleeneState &,
+                                                   const KleeneState &);
   using CmpLessInState = bool (*)(const KleeneState &, const KleeneState &);
 
 public:
@@ -32,6 +35,10 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const KleeneState &rhs) const = default;
+
+  static std::strong_ordering cmp_order_in_state(const KleeneState &lhs,
+                                                 const KleeneState &rhs);
+  CmpOrderInState get_cmp_order_in_state() const;
 
   static bool cmp_less_in_state(const KleeneState &lhs, const KleeneState &rhs);
   CmpLessInState get_cmp_less_in_state() const;

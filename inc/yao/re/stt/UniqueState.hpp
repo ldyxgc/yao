@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__UNIQUE_STATE__HPP__
 #define __YAO__RE__STT__UNIQUE_STATE__HPP__
 
+#include <compare>
 #include <memory>
 #include <ostream>
 
@@ -18,6 +19,13 @@ template <typename _Symbol>
 class UniqueState : private StateBase<UniqueState<_Symbol>> {
 public:
   using Symbol = _Symbol;
+  struct CmpOrderInState {
+    typename VirtualState<Symbol>::CmpOrderInState cmp_order_in_state;
+    std::strong_ordering operator()(const UniqueState &lhs,
+                                    const UniqueState &rhs) const {
+      return cmp_order_in_state(*lhs._virtual_state, *rhs._virtual_state);
+    }
+  };
   struct CmpLessInState {
     typename VirtualState<Symbol>::CmpLessInState cmp_less_in_state;
     bool operator()(const UniqueState &lhs, const UniqueState &rhs) const {
@@ -40,6 +48,7 @@ public:
   bool operator==(const UniqueState &rhs) const;
   auto operator<=>(const UniqueState &rhs) const;
 
+  CmpOrderInState get_cmp_order_in_state() const;
   CmpLessInState get_cmp_less_in_state() const;
 
   static void print_type(std::ostream &os, const prt::PrintTypeArgs &args = {});

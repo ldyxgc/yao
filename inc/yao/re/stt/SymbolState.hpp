@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__SYMBOL_STATE__HPP__
 #define __YAO__RE__STT__SYMBOL_STATE__HPP__
 
+#include <compare>
 #include <concepts>
 #include <ostream>
 #include <type_traits>
@@ -48,6 +49,8 @@ class SymbolState : private StateBase<SymbolState<_Symbol>>,
                     private impl::SymbolStateBase {
 public:
   using Symbol = _Symbol;
+  using CmpOrderInState = std::strong_ordering (*)(const SymbolState &,
+                                                   const SymbolState &);
   using CmpLessInState = bool (*)(const SymbolState &, const SymbolState &);
 
 public:
@@ -59,6 +62,10 @@ public:
   bool is_dead() const;
 
   auto operator<=>(const SymbolState &rhs) const = default;
+
+  static std::strong_ordering cmp_order_in_state(const SymbolState &lhs,
+                                                 const SymbolState &rhs);
+  CmpOrderInState get_cmp_order_in_state() const;
 
   static bool cmp_less_in_state(const SymbolState &lhs, const SymbolState &rhs);
   CmpLessInState get_cmp_less_in_state() const;

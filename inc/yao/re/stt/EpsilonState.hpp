@@ -1,6 +1,7 @@
 #ifndef __YAO__RE__STT__EPSILON_STATE__HPP__
 #define __YAO__RE__STT__EPSILON_STATE__HPP__
 
+#include <compare>
 #include <concepts>
 #include <ostream>
 
@@ -41,6 +42,8 @@ class EpsilonState : private StateBase<EpsilonState<_Symbol>>,
                      private impl::EpsilonStateBase {
 public:
   using Symbol = _Symbol;
+  using CmpOrderInState = std::strong_ordering (*)(const EpsilonState &,
+                                                   const EpsilonState &);
   using CmpLessInState = bool (*)(const EpsilonState &, const EpsilonState &);
 
 public:
@@ -51,6 +54,10 @@ public:
   bool is_dead() const;
 
   friend auto operator<=>(EpsilonState lhs, EpsilonState rhs) = default;
+
+  static std::strong_ordering cmp_order_in_state(const EpsilonState &lhs,
+                                                 const EpsilonState &rhs);
+  CmpOrderInState get_cmp_order_in_state() const;
 
   static bool cmp_less_in_state(const EpsilonState &lhs,
                                 const EpsilonState &rhs);
