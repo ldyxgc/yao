@@ -43,7 +43,13 @@ template <typename LhsState, typename RhsState>
 std::strong_ordering
 UnionState<LhsState, RhsState>::cmp_order_in_state(const UnionState &lhs,
                                                    const UnionState &rhs) {
-  return lhs <=> rhs;
+  if (auto res = lhs._lhs_state.get_cmp_order_in_state()(lhs._lhs_state,
+                                                         rhs._lhs_state);
+      res != std::strong_ordering::equal)
+    return res;
+
+  return lhs._rhs_state.get_cmp_order_in_state()(lhs._rhs_state,
+                                                 rhs._rhs_state);
 }
 
 template <typename LhsState, typename RhsState>

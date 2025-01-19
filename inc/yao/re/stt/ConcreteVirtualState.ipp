@@ -126,8 +126,9 @@ std::strong_ordering ConcreteVirtualState<ConcreteState>::cmp_order_in_state(
       static_cast<const ConcreteVirtualState *>(&lhs);
   auto rhs_concrete_virtual_state =
       static_cast<const ConcreteVirtualState *>(&rhs);
-  return lhs_concrete_virtual_state->_concrete_state <=>
-         rhs_concrete_virtual_state->_concrete_state;
+  return lhs_concrete_virtual_state->_concrete_state.get_cmp_order_in_state()(
+      lhs_concrete_virtual_state->_concrete_state,
+      rhs_concrete_virtual_state->_concrete_state);
 }
 
 template <typename ConcreteState>

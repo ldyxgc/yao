@@ -5,6 +5,7 @@
 
 #include <utility>
 
+#include "yao/def/claim.hpp"
 #include "yao/prt/print_indent.hpp"
 #include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
@@ -63,7 +64,20 @@ template <typename SubState>
 std::strong_ordering
 KleeneState<SubState>::cmp_order_in_state(const KleeneState &lhs,
                                           const KleeneState &rhs) {
-  return lhs <=> rhs;
+  // YAO_CLAIM(lhs._raw_sub_state.get_cmp_order_in_state()(lhs._raw_sub_state,
+  //                                                       rhs._raw_sub_state)
+  //                                                       ==
+  //           std::strong_ordering::equal);
+  // if (auto res = lhs._raw_sub_state.get_cmp_order_in_state()(
+  //         lhs._raw_sub_state, rhs._raw_sub_state);
+  //     res != std::strong_ordering::equal)
+  //   return res;
+
+  if (auto res = lhs._sub_state_set <=> rhs._sub_state_set;
+      res != std::strong_ordering::equal)
+    return res;
+
+  return lhs._is_final <=> rhs._is_final;
 }
 
 template <typename SubState>

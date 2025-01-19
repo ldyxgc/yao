@@ -5,6 +5,7 @@
 
 #include <utility>
 
+#include "yao/def/claim.hpp"
 #include "yao/prt/print_indent.hpp"
 #include "yao/prt/print_type.hpp"
 #include "yao/prt/print_value.hpp"
@@ -65,7 +66,25 @@ template <typename LhsState, typename RhsState>
 std::strong_ordering
 ConcatState<LhsState, RhsState>::cmp_order_in_state(const ConcatState &lhs,
                                                     const ConcatState &rhs) {
-  return lhs <=> rhs;
+  if (auto res = lhs._lhs_state.get_cmp_order_in_state()(lhs._lhs_state,
+                                                         rhs._lhs_state);
+      res != std::strong_ordering::equal)
+    return res;
+
+  // YAO_CLAIM(lhs._raw_rhs_state.get_cmp_order_in_state()(lhs._raw_rhs_state,
+  //                                                       rhs._raw_rhs_state)
+  //                                                       ==
+  //           std::strong_ordering::equal);
+  // if (auto res = lhs._raw_rhs_state.get_cmp_order_in_state()(
+  //         lhs._raw_rhs_state, rhs._raw_rhs_state);
+  //     res != std::strong_ordering::equal)
+  //   return res;
+
+  if (auto res = lhs._rhs_state_set <=> rhs._rhs_state_set;
+      res != std::strong_ordering::equal)
+    return res;
+
+  return lhs._is_final <=> rhs._is_final;
 }
 
 template <typename LhsState, typename RhsState>
