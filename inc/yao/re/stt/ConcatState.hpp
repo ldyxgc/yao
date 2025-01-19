@@ -36,7 +36,8 @@ public:
   bool is_final() const;
   bool is_dead() const;
 
-  auto operator<=>(const ConcatState &rhs) const = default;
+  bool operator==(const ConcatState &rhs) const;
+  std::strong_ordering operator<=>(const ConcatState &rhs) const;
 
   static std::strong_ordering cmp_order_in_state(const ConcatState &lhs,
                                                  const ConcatState &rhs);
@@ -51,7 +52,8 @@ public:
 
 private:
   LhsState _lhs_state;
-  RhsState _raw_rhs_state; // const
+  typename LhsState::CmpOrderInState _lhs_state_cmp_order_in_state; // cache
+  RhsState _raw_rhs_state;                                          // const
   std::set<RhsState, typename RhsState::CmpLessInState> _rhs_state_set;
   bool _is_final;
 };

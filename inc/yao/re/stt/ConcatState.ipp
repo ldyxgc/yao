@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/ConcatState.hpp"
 
+#include <array>
+#include <tuple>
 #include <utility>
 
 #include "yao/def/claim.hpp"
@@ -18,6 +20,7 @@ template <typename _LhsState, typename _RhsState>
 ConcatState<LhsState, RhsState>::ConcatState(_LhsState &&lhs_state,
                                              _RhsState &&rhs_state)
     : _lhs_state{std::forward<_LhsState>(lhs_state)},
+      _lhs_state_cmp_order_in_state{_lhs_state.get_cmp_order_in_state()},
       _raw_rhs_state{std::forward<_RhsState>(rhs_state)},
       _rhs_state_set{_raw_rhs_state.get_cmp_less_in_state()},
       _is_final{_lhs_state.is_final() && _raw_rhs_state.is_final()} {}
@@ -63,11 +66,43 @@ bool ConcatState<LhsState, RhsState>::is_dead() const {
 
 template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+bool ConcatState<LhsState, RhsState>::operator==(
+    const ConcatState<LhsState, RhsState> &rhs) const {
+  return std::tie(_lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &_lhs_state_cmp_order_in_state),
+                  _raw_rhs_state, _rhs_state_set, _is_final) ==
+         std::tie(rhs._lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &rhs._lhs_state_cmp_order_in_state),
+                  rhs._raw_rhs_state, rhs._rhs_state_set, rhs._is_final);
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+std::strong_ordering ConcatState<LhsState, RhsState>::operator<=>(
+    const ConcatState<LhsState, RhsState> &rhs) const {
+  return std::tie(_lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &_lhs_state_cmp_order_in_state),
+                  _raw_rhs_state, _rhs_state_set, _is_final) <=>
+         std::tie(rhs._lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &rhs._lhs_state_cmp_order_in_state),
+                  rhs._raw_rhs_state, rhs._rhs_state_set, rhs._is_final);
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
 std::strong_ordering
 ConcatState<LhsState, RhsState>::cmp_order_in_state(const ConcatState &lhs,
                                                     const ConcatState &rhs) {
-  if (auto res = lhs._lhs_state.get_cmp_order_in_state()(lhs._lhs_state,
-                                                         rhs._lhs_state);
+  if (auto res =
+          lhs._lhs_state_cmp_order_in_state(lhs._lhs_state, rhs._lhs_state);
       res != std::strong_ordering::equal)
     return res;
 
