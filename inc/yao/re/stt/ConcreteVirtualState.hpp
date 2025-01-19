@@ -70,6 +70,8 @@ public:
 
 private:
   ConcreteState _concrete_state;
+  typename ConcreteState::CmpOrderInState
+      _concrete_state_cmp_order_in_state; // cache
 };
 
 YAO_WARN_POP

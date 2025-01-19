@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/ConcreteVirtualState.hpp"
 
+#include <array>
+#include <tuple>
 #include <typeindex>
 #include <utility>
 
@@ -15,7 +17,9 @@ namespace yao::re::stt {
 template <typename ConcreteState>
   requires c_r_no_cvref_State<ConcreteState>
 ConcreteVirtualState<ConcreteState>::ConcreteVirtualState(auto &&...args)
-    : _concrete_state{std::forward<decltype(args)>(args)...} {}
+    : _concrete_state{std::forward<decltype(args)>(args)...},
+      _concrete_state_cmp_order_in_state{
+          _concrete_state.get_cmp_order_in_state()} {}
 
 template <typename ConcreteState>
   requires c_r_no_cvref_State<ConcreteState>
@@ -68,6 +72,14 @@ template <typename ConcreteState>
   requires c_r_no_cvref_State<ConcreteState>
 bool ConcreteVirtualState<ConcreteState>::operator==(
     const ConcreteVirtualState &rhs) const {
+  // return std::tie(_concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &_concrete_state_cmp_order_in_state)) ==
+  //        std::tie(rhs._concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &rhs._concrete_state_cmp_order_in_state));
   return _concrete_state == rhs._concrete_state;
 }
 
@@ -75,6 +87,14 @@ template <typename ConcreteState>
   requires c_r_no_cvref_State<ConcreteState>
 auto ConcreteVirtualState<ConcreteState>::operator<=>(
     const ConcreteVirtualState &rhs) const {
+  // return std::tie(_concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &_concrete_state_cmp_order_in_state)) <=>
+  //        std::tie(rhs._concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &rhs._concrete_state_cmp_order_in_state));
   return _concrete_state <=> rhs._concrete_state;
 }
 
@@ -105,6 +125,14 @@ bool ConcreteVirtualState<ConcreteState>::operator==(
   auto that = dynamic_cast<const ConcreteVirtualState *>(&rhs);
   if (that == nullptr)
     return false;
+  // return std::tie(_concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &_concrete_state_cmp_order_in_state)) ==
+  //        std::tie(that->_concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &that->_concrete_state_cmp_order_in_state));
   return _concrete_state == that->_concrete_state;
 }
 
@@ -115,6 +143,14 @@ std::strong_ordering ConcreteVirtualState<ConcreteState>::operator<=>(
   auto that = dynamic_cast<const ConcreteVirtualState *>(&rhs);
   if (that == nullptr)
     return std::type_index{typeid(*this)} <=> std::type_index{typeid(rhs)};
+  // return std::tie(_concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &_concrete_state_cmp_order_in_state)) <=>
+  //        std::tie(that->_concrete_state,
+  //                 *reinterpret_cast<const std::array<
+  //                 char, sizeof(typename ConcreteState::CmpOrderInState)> *>(
+  //                 &that->_concrete_state_cmp_order_in_state));
   return _concrete_state <=> that->_concrete_state;
 }
 
@@ -126,7 +162,7 @@ std::strong_ordering ConcreteVirtualState<ConcreteState>::cmp_order_in_state(
       static_cast<const ConcreteVirtualState *>(&lhs);
   auto rhs_concrete_virtual_state =
       static_cast<const ConcreteVirtualState *>(&rhs);
-  return lhs_concrete_virtual_state->_concrete_state.get_cmp_order_in_state()(
+  return lhs_concrete_virtual_state->_concrete_state_cmp_order_in_state(
       lhs_concrete_virtual_state->_concrete_state,
       rhs_concrete_virtual_state->_concrete_state);
 }
