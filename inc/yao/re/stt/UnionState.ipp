@@ -3,6 +3,8 @@
 
 #include "yao/re/stt/UnionState.hpp"
 
+#include <array>
+#include <tuple>
 #include <utility>
 
 #include "yao/prt/print_indent.hpp"
@@ -17,7 +19,9 @@ template <typename _LhsState, typename _RhsState>
 UnionState<LhsState, RhsState>::UnionState(_LhsState &&lhs_state,
                                            _RhsState &&rhs_state)
     : _lhs_state{std::forward<_LhsState>(lhs_state)},
-      _rhs_state{std::forward<_RhsState>(rhs_state)} {}
+      _lhs_state_cmp_order_in_state{_lhs_state.get_cmp_order_in_state()},
+      _rhs_state{std::forward<_RhsState>(rhs_state)},
+      _rhs_state_cmp_order_in_state{_rhs_state.get_cmp_order_in_state()} {}
 
 template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
@@ -40,16 +44,67 @@ bool UnionState<LhsState, RhsState>::is_dead() const {
 
 template <typename LhsState, typename RhsState>
   requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+bool UnionState<LhsState, RhsState>::operator==(
+    const UnionState<LhsState, RhsState> &rhs) const {
+  return std::tie(_lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &_lhs_state_cmp_order_in_state),
+                  _rhs_state
+                  // ,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename RhsState::CmpOrderInState)> *>(
+                  //     &_rhs_state_cmp_order_in_state)
+                  ) ==
+         std::tie(rhs._lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &rhs._lhs_state_cmp_order_in_state),
+                  rhs._rhs_state
+                  // ,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename RhsState::CmpOrderInState)> *>(
+                  //     &rhs._rhs_state_cmp_order_in_state)
+         );
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
+std::strong_ordering UnionState<LhsState, RhsState>::operator<=>(
+    const UnionState<LhsState, RhsState> &rhs) const {
+  return std::tie(_lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &_lhs_state_cmp_order_in_state),
+                  _rhs_state
+                  // ,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename RhsState::CmpOrderInState)> *>(
+                  //     &_rhs_state_cmp_order_in_state)
+                  ) <=>
+         std::tie(rhs._lhs_state,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename LhsState::CmpOrderInState)> *>(
+                  //     &rhs._lhs_state_cmp_order_in_state),
+                  rhs._rhs_state
+                  // ,
+                  // *reinterpret_cast<const std::array<
+                  //     char, sizeof(typename RhsState::CmpOrderInState)> *>(
+                  //     &rhs._rhs_state_cmp_order_in_state)
+         );
+}
+
+template <typename LhsState, typename RhsState>
+  requires c_r_no_cvref_State_with_same_Symbol<LhsState, RhsState>
 std::strong_ordering
 UnionState<LhsState, RhsState>::cmp_order_in_state(const UnionState &lhs,
                                                    const UnionState &rhs) {
-  if (auto res = lhs._lhs_state.get_cmp_order_in_state()(lhs._lhs_state,
-                                                         rhs._lhs_state);
+  if (auto res =
+          lhs._lhs_state_cmp_order_in_state(lhs._lhs_state, rhs._lhs_state);
       res != std::strong_ordering::equal)
     return res;
 
-  return lhs._rhs_state.get_cmp_order_in_state()(lhs._rhs_state,
-                                                 rhs._rhs_state);
+  return lhs._rhs_state_cmp_order_in_state(lhs._rhs_state, rhs._rhs_state);
 }
 
 template <typename LhsState, typename RhsState>

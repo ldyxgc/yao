@@ -31,7 +31,8 @@ public:
   bool is_final() const;
   bool is_dead() const;
 
-  auto operator<=>(const UnionState &rhs) const = default;
+  bool operator==(const UnionState &rhs) const;
+  std::strong_ordering operator<=>(const UnionState &rhs) const;
 
   static std::strong_ordering cmp_order_in_state(const UnionState &lhs,
                                                  const UnionState &rhs);
@@ -46,7 +47,9 @@ public:
 
 private:
   LhsState _lhs_state;
+  typename LhsState::CmpOrderInState _lhs_state_cmp_order_in_state; // cache
   RhsState _rhs_state;
+  typename RhsState::CmpOrderInState _rhs_state_cmp_order_in_state; // cache
 };
 
 template <typename LhsState, typename RhsState>
